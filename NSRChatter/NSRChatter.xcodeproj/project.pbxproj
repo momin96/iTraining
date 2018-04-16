@@ -11,6 +11,7 @@
 		0E1D43C62084BA06006E88A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E1D43C52084BA06006E88A0 /* Assets.xcassets */; };
 		0E1D43C92084BA06006E88A0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E1D43C72084BA06006E88A0 /* Main.storyboard */; };
 		0E1D43D22084BA24006E88A0 /* NSRChatWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E1D43D12084BA24006E88A0 /* NSRChatWindowController.swift */; };
+		0E1D43D42084BE60006E88A0 /* NSRWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E1D43D32084BE60006E88A0 /* NSRWindowController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,7 @@
 		0E1D43CA2084BA06006E88A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0E1D43CB2084BA06006E88A0 /* NSRChatter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NSRChatter.entitlements; sourceTree = "<group>"; };
 		0E1D43D12084BA24006E88A0 /* NSRChatWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSRChatWindowController.swift; sourceTree = "<group>"; };
+		0E1D43D32084BE60006E88A0 /* NSRWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSRWindowController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,7 +39,6 @@
 		0E1D43B52084BA06006E88A0 = {
 			isa = PBXGroup;
 			children = (
-				0E1D43D12084BA24006E88A0 /* NSRChatWindowController.swift */,
 				0E1D43C02084BA06006E88A0 /* NSRChatter */,
 				0E1D43BF2084BA06006E88A0 /* Products */,
 			);
@@ -55,6 +56,8 @@
 			isa = PBXGroup;
 			children = (
 				0E1D43C12084BA06006E88A0 /* AppDelegate.swift */,
+				0E1D43D12084BA24006E88A0 /* NSRChatWindowController.swift */,
+				0E1D43D32084BE60006E88A0 /* NSRWindowController.swift */,
 				0E1D43C52084BA06006E88A0 /* Assets.xcassets */,
 				0E1D43C72084BA06006E88A0 /* Main.storyboard */,
 				0E1D43CA2084BA06006E88A0 /* Info.plist */,
@@ -134,6 +137,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E1D43D42084BE60006E88A0 /* NSRWindowController.swift in Sources */,
 				0E1D43C22084BA06006E88A0 /* AppDelegate.swift in Sources */,
 				0E1D43D22084BA24006E88A0 /* NSRChatWindowController.swift in Sources */,
 			);

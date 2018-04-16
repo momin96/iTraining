@@ -22,9 +22,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     
-    @IBAction func newChatWindow(sender : NSButton) {
-        
-    }
+
 
 }
-
