@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E1D4394208471FE006E88A0 /* CarArrayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E1D4393208471FE006E88A0 /* CarArrayController.swift */; };
 		0E1D7DE4207CC5B10007C0BB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E1D7DE3207CC5B10007C0BB /* AppDelegate.swift */; };
 		0E1D7DE6207CC5B10007C0BB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E1D7DE5207CC5B10007C0BB /* ViewController.swift */; };
 		0E1D7DE8207CC5B10007C0BB /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E1D7DE7207CC5B10007C0BB /* Document.swift */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0E1D4393208471FE006E88A0 /* CarArrayController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarArrayController.swift; sourceTree = "<group>"; };
 		0E1D7DE0207CC5B10007C0BB /* NSRCarLot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NSRCarLot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E1D7DE3207CC5B10007C0BB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0E1D7DE5207CC5B10007C0BB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -60,6 +62,7 @@
 				0E1D7DE3207CC5B10007C0BB /* AppDelegate.swift */,
 				0E1D7DE5207CC5B10007C0BB /* ViewController.swift */,
 				0E1D7DE7207CC5B10007C0BB /* Document.swift */,
+				0E1D4393208471FE006E88A0 /* CarArrayController.swift */,
 				0E1D7DEC207CC5B10007C0BB /* Assets.xcassets */,
 				0E1D7DEE207CC5B10007C0BB /* Main.storyboard */,
 				0E1D7DF1207CC5B10007C0BB /* Info.plist */,
@@ -140,6 +143,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E1D4394208471FE006E88A0 /* CarArrayController.swift in Sources */,
 				0E1D7DEB207CC5B10007C0BB /* Document.xcdatamodeld in Sources */,
 				0E1D7DE6207CC5B10007C0BB /* ViewController.swift in Sources */,
 				0E1D7DE4207CC5B10007C0BB /* AppDelegate.swift in Sources */,
