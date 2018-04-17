@@ -17,6 +17,11 @@ class NSRDieView: NSView {
         }
     }
     
+    var pressed : Bool = false {
+        didSet {
+            needsDisplay = true
+        }
+    }
     
     override var intrinsicContentSize: NSSize {
         return CGSize(width: 200, height: 200)
@@ -47,7 +52,11 @@ class NSRDieView: NSView {
         let padding = edgeLength / 10.0
        
         let drawingBounds = CGRect(x: 0, y: 0, width: edgeLength, height: edgeLength)
-        let dieFrame = drawingBounds.insetBy(dx: padding, dy: padding)
+        var dieFrame = drawingBounds.insetBy(dx: padding, dy: padding)
+        
+        if pressed {
+            dieFrame = dieFrame.offsetBy(dx: 0, dy: -edgeLength/40)
+        }
         
         return (edgeLength, dieFrame)
     }
@@ -67,7 +76,7 @@ class NSRDieView: NSView {
 
             let shadow = NSShadow()
             shadow.shadowOffset = NSSize(width: 0, height: -1)
-            shadow.shadowBlurRadius = edgeLength/20
+            shadow.shadowBlurRadius = pressed ? edgeLength/100 : edgeLength/20
             shadow.set()
 
             NSColor.white.set()
@@ -110,6 +119,27 @@ class NSRDieView: NSView {
             return list.index(of: value)
         }
         return nil;
+    }
+    
+    func randomize () {
+        intValue = Int(arc4random_uniform(5)) + 1
+    }
+    
+    override func mouseDown(with event: NSEvent) {
+        print("mouseDown")
+        pressed = true
+    }
+    
+    override func mouseDragged(with event: NSEvent) {
+        print("mouseDragged in location \(event.locationInWindow)")
+    }
+    
+    override func mouseUp(with event: NSEvent) {
+        print("mouseUp clickcount \(event.clickCount)")
+        if event.clickCount == 2 {
+            randomize()
+        }
+        pressed = false
     }
     
 }
