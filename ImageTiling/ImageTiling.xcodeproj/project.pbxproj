@@ -11,6 +11,7 @@
 		0EB624012085FD8D0025E80C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0EB624002085FD8D0025E80C /* Assets.xcassets */; };
 		0EB624042085FD8D0025E80C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0EB624022085FD8D0025E80C /* Main.storyboard */; };
 		0EB6240D2085FDBB0025E80C /* NSRMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB6240C2085FDBB0025E80C /* NSRMainViewController.swift */; };
+		0EB6240F2085FE3F0025E80C /* NSRTiledImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB6240E2085FE3F0025E80C /* NSRTiledImageView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,7 @@
 		0EB624052085FD8D0025E80C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0EB624062085FD8D0025E80C /* ImageTiling.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ImageTiling.entitlements; sourceTree = "<group>"; };
 		0EB6240C2085FDBB0025E80C /* NSRMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSRMainViewController.swift; sourceTree = "<group>"; };
+		0EB6240E2085FE3F0025E80C /* NSRTiledImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSRTiledImageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +59,7 @@
 				0EB6240C2085FDBB0025E80C /* NSRMainViewController.swift */,
 				0EB624002085FD8D0025E80C /* Assets.xcassets */,
 				0EB624022085FD8D0025E80C /* Main.storyboard */,
+				0EB6240E2085FE3F0025E80C /* NSRTiledImageView.swift */,
 				0EB624052085FD8D0025E80C /* Info.plist */,
 				0EB624062085FD8D0025E80C /* ImageTiling.entitlements */,
 			);
@@ -136,6 +139,7 @@
 			files = (
 				0EB6240D2085FDBB0025E80C /* NSRMainViewController.swift in Sources */,
 				0EB623FD2085FD8D0025E80C /* AppDelegate.swift in Sources */,
+				0EB6240F2085FE3F0025E80C /* NSRTiledImageView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

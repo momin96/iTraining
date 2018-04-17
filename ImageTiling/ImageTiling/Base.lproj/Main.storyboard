@@ -707,13 +707,49 @@
             <objects>
                 <viewController identifier="NSRMainViewController" storyboardIdentifier="NSRMainViewController" id="XfG-lQ-9wD" customClass="NSRMainViewController" customModule="ImageTiling" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <rect key="frame" x="0.0" y="0.0" width="445" height="310"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RLU-4N-uVI">
+                                <rect key="frame" x="8" y="8" width="429" height="294"/>
+                                <clipView key="contentView" id="DgT-lf-CNr">
+                                    <rect key="frame" x="1" y="1" width="412" height="277"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="532-CS-YF8" customClass="NSRTiledImageView" customModule="ImageTiling" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="-17" width="429" height="294"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="image" keyPath="image" value="NSComputer"/>
+                                            </userDefinedRuntimeAttributes>
+                                        </customView>
+                                    </subviews>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </clipView>
+                                <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="6Ef-fm-AAw">
+                                    <rect key="frame" x="1" y="278" width="412" height="15"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="8iS-Sr-h0k">
+                                    <rect key="frame" x="413" y="1" width="15" height="277"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="RLU-4N-uVI" secondAttribute="trailing" constant="8" id="2bn-le-7TV"/>
+                            <constraint firstAttribute="bottom" secondItem="RLU-4N-uVI" secondAttribute="bottom" constant="8" id="M0w-H5-zAw"/>
+                            <constraint firstItem="RLU-4N-uVI" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="8" id="sFL-hT-VbH"/>
+                            <constraint firstItem="RLU-4N-uVI" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="8" id="ty5-Jd-77v"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="655"/>
+            <point key="canvasLocation" x="76" y="777"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="NSComputer" width="32" height="32"/>
+    </resources>
 </document>
