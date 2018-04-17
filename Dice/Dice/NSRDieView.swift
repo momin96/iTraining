@@ -17,6 +17,11 @@ class NSRDieView: NSView {
         }
     }
     
+    
+    override var intrinsicContentSize: NSSize {
+        return CGSize(width: 200, height: 200)
+    }
+    
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
 
@@ -58,9 +63,18 @@ class NSRDieView: NSView {
             let dotRadius = edgeLength / 12.0
             let dotFrame = dieFrame.insetBy(dx: dotRadius * 2.5, dy: dotRadius * 2.5)
             
+            NSGraphicsContext.saveGraphicsState()
+
+            let shadow = NSShadow()
+            shadow.shadowOffset = NSSize(width: 0, height: -1)
+            shadow.shadowBlurRadius = edgeLength/20
+            shadow.set()
+
             NSColor.white.set()
             let path = NSBezierPath(roundedRect: dieFrame, xRadius: cornerRadius, yRadius: cornerRadius)
             path.fill()
+
+            NSGraphicsContext.restoreGraphicsState()
             
             NSColor.black.set()
             
