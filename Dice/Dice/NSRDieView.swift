@@ -46,6 +46,34 @@ class NSRDieView: NSView {
     }
  
     
+    override var acceptsFirstResponder: Bool {
+        return true
+    }
+    
+    override func becomeFirstResponder() -> Bool {
+        return true
+    }
+    
+    override func resignFirstResponder() -> Bool {
+        return true
+    }
+    
+    override func keyDown(with event: NSEvent) {
+        interpretKeyEvents([event])
+    }
+    
+    override func insertText(_ insertString: Any) {
+        let text = insertString as! String
+        if let number = Int(text) {
+            intValue = number
+        }
+        
+        
+        
+    }
+    
+    
+    
     func metricForSize(_ size : CGSize) -> (edgeLength : CGFloat, dieFrame : CGRect) {
         
         let edgeLength = min(size.width, size.height)
@@ -127,7 +155,10 @@ class NSRDieView: NSView {
     
     override func mouseDown(with event: NSEvent) {
         print("mouseDown")
-        pressed = true
+        
+        let dieFrame = metricForSize(bounds.size).dieFrame
+        let pointInView = convert(event.locationInWindow, from: nil)
+        pressed = dieFrame.contains(pointInView)
     }
     
     override func mouseDragged(with event: NSEvent) {
