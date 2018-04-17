@@ -45,7 +45,7 @@ class NSRDieView: NSView {
         
     }
  
-    
+    // MARK: First Responder
     override var acceptsFirstResponder: Bool {
         return true
     }
@@ -67,12 +67,23 @@ class NSRDieView: NSView {
         if let number = Int(text) {
             intValue = number
         }
-        
-        
-        
     }
     
+    override func drawFocusRingMask() {
+        NSBezierPath.fill(bounds)
+    }
     
+    override var focusRingMaskBounds: NSRect {
+        return bounds
+    }
+    
+    override func insertTab(_ sender: Any?) {
+        window?.selectNextKeyView(sender)
+    }
+    
+    override func insertBacktab(_ sender: Any?) {
+        window?.selectPreviousKeyView(sender)
+    }
     
     func metricForSize(_ size : CGSize) -> (edgeLength : CGFloat, dieFrame : CGRect) {
         
