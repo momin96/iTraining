@@ -8,19 +8,21 @@
 
 /* Begin PBXBuildFile section */
 		0EB623DD2085BC500025E80C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB623DC2085BC500025E80C /* AppDelegate.swift */; };
-		0EB623DF2085BC500025E80C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB623DE2085BC500025E80C /* ViewController.swift */; };
 		0EB623E12085BC500025E80C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0EB623E02085BC500025E80C /* Assets.xcassets */; };
 		0EB623E42085BC500025E80C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0EB623E22085BC500025E80C /* Main.storyboard */; };
+		0EB623ED2085BC7F0025E80C /* NSRMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB623EC2085BC7F0025E80C /* NSRMainViewController.swift */; };
+		0EB623EF2085BCAE0025E80C /* NSRDieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB623EE2085BCAE0025E80C /* NSRDieView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0EB623D92085BC500025E80C /* Dice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0EB623DC2085BC500025E80C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		0EB623DE2085BC500025E80C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		0EB623E02085BC500025E80C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0EB623E32085BC500025E80C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0EB623E52085BC500025E80C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0EB623E62085BC500025E80C /* Dice.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Dice.entitlements; sourceTree = "<group>"; };
+		0EB623EC2085BC7F0025E80C /* NSRMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSRMainViewController.swift; sourceTree = "<group>"; };
+		0EB623EE2085BCAE0025E80C /* NSRDieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSRDieView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,7 +56,8 @@
 			isa = PBXGroup;
 			children = (
 				0EB623DC2085BC500025E80C /* AppDelegate.swift */,
-				0EB623DE2085BC500025E80C /* ViewController.swift */,
+				0EB623EC2085BC7F0025E80C /* NSRMainViewController.swift */,
+				0EB623EE2085BCAE0025E80C /* NSRDieView.swift */,
 				0EB623E02085BC500025E80C /* Assets.xcassets */,
 				0EB623E22085BC500025E80C /* Main.storyboard */,
 				0EB623E52085BC500025E80C /* Info.plist */,
@@ -134,8 +137,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0EB623DF2085BC500025E80C /* ViewController.swift in Sources */,
+				0EB623ED2085BC7F0025E80C /* NSRMainViewController.swift in Sources */,
 				0EB623DD2085BC500025E80C /* AppDelegate.swift in Sources */,
+				0EB623EF2085BCAE0025E80C /* NSRDieView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
