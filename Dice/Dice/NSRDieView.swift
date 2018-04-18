@@ -150,6 +150,20 @@ class NSRDieView: NSView {
                     drawDot(u: 1, v: 0.5)
                 }
             }
+            else {
+                var paraStyle = NSParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
+                paraStyle.alignment = .center
+                let font = NSFont.systemFont(ofSize:edgeLength*0.5 )
+                
+                var attributes : [NSAttributedStringKey : Any] = [NSAttributedStringKey : Any]()
+                attributes.updateValue(font, forKey: NSAttributedStringKey.font)
+                attributes.updateValue(NSColor.black, forKey: NSAttributedStringKey.foregroundColor)
+                attributes.updateValue(paraStyle, forKey: NSAttributedStringKey.paragraphStyle)
+
+                let string = "\(intValue)" as NSString
+//                string.draw(in: dieFrame, withAttributes: attributes)
+                string.drawCenteredIn(Rect: dieFrame, attributes: attributes)
+            }
         }
     }
     
@@ -185,3 +199,4 @@ class NSRDieView: NSView {
     }
     
 }
+

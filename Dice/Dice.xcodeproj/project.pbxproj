@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E5227EB208703CD008D4C6B /* NSString+Drawing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5227EA208703CD008D4C6B /* NSString+Drawing.swift */; };
 		0EB623DD2085BC500025E80C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB623DC2085BC500025E80C /* AppDelegate.swift */; };
 		0EB623E12085BC500025E80C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0EB623E02085BC500025E80C /* Assets.xcassets */; };
 		0EB623E42085BC500025E80C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0EB623E22085BC500025E80C /* Main.storyboard */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0E5227EA208703CD008D4C6B /* NSString+Drawing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSString+Drawing.swift"; sourceTree = "<group>"; };
 		0EB623D92085BC500025E80C /* Dice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0EB623DC2085BC500025E80C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0EB623E02085BC500025E80C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -55,6 +57,7 @@
 		0EB623DB2085BC500025E80C /* Dice */ = {
 			isa = PBXGroup;
 			children = (
+				0E5227EA208703CD008D4C6B /* NSString+Drawing.swift */,
 				0EB623DC2085BC500025E80C /* AppDelegate.swift */,
 				0EB623EC2085BC7F0025E80C /* NSRMainViewController.swift */,
 				0EB623EE2085BCAE0025E80C /* NSRDieView.swift */,
@@ -137,6 +140,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E5227EB208703CD008D4C6B /* NSString+Drawing.swift in Sources */,
 				0EB623ED2085BC7F0025E80C /* NSRMainViewController.swift in Sources */,
 				0EB623DD2085BC500025E80C /* AppDelegate.swift in Sources */,
 				0EB623EF2085BCAE0025E80C /* NSRDieView.swift in Sources */,
