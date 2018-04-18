@@ -151,7 +151,7 @@ class NSRDieView: NSView {
                 }
             }
             else {
-                var paraStyle = NSParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
+                let paraStyle = NSParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
                 paraStyle.alignment = .center
                 let font = NSFont.systemFont(ofSize:edgeLength*0.5 )
                 
@@ -197,6 +197,54 @@ class NSRDieView: NSView {
         }
         pressed = false
     }
+    
+    
+    @IBAction func savePDF(_ sender : NSMenuItem) {
+        let savePanel = NSSavePanel()
+        savePanel.allowedFileTypes = ["pdf"]
+        savePanel.beginSheetModal(for: window!) { (result) in
+            if result == NSApplication.ModalResponse.OK {
+                let data = self.dataWithPDF(inside: self.bounds)
+                let error : Error?
+                do {
+                    try! data.write(to: savePanel.url!, options: Data.WritingOptions.atomic)
+                }
+                catch {
+                    let alert = NSAlert(error: error)
+                    alert.runModal()
+                }
+            }
+        }
+    }
+    
+    @IBAction func cut(_ sender : NSMenuItem) {
+        writeToPasteBoard(NSPasteboard.general)
+        intValue = nil
+    }
+
+    @IBAction func copy(_ sender : NSMenuItem) {
+        writeToPasteBoard(NSPasteboard.general)
+    }
+    @IBAction func paste(_ sender : NSMenuItem) {
+        readFromPasteboard(NSPasteboard.general)
+    }
+    
+    func writeToPasteBoard(_ pasteboard : NSPasteboard) {
+        if let intValue = intValue {
+            pasteboard.clearContents()
+            pasteboard.writeObjects(["\(intValue)" as NSPasteboardWriting])
+        }
+    }
+    
+    func readFromPasteboard(_ pasteboard : NSPasteboard) -> Bool{
+        let objects = pasteboard.readObjects(forClasses: [NSString.self], options: [:]) as! [String]
+        if let str = objects.first {
+            intValue = Int(str)
+            return true
+        }
+        return false
+    }
+    
     
 }
 
