@@ -30,6 +30,8 @@ class NSRDieView: NSView, NSDraggingSource {
     
     var mouseDownEvent : NSEvent?
     
+    var rollsRemaining : Int = 0
+    
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         commonInit()
@@ -256,7 +258,8 @@ class NSRDieView: NSView, NSDraggingSource {
     override func mouseUp(with event: NSEvent) {
         print("mouseUp clickcount \(event.clickCount)")
         if event.clickCount == 2 {
-            randomize()
+//            randomize()
+            roll()
         }
         pressed = false
     }
@@ -308,6 +311,23 @@ class NSRDieView: NSView, NSDraggingSource {
         return false
     }
     
+    func roll() {
+        rollsRemaining = 10
+        Timer.scheduledTimer(timeInterval: 0.15, target: self, selector: #selector(rollTick(_:)), userInfo: nil, repeats: true)
+        window?.makeFirstResponder(nil)
+    }
+    
+    @objc func rollTick(_ sender : Timer) {
+        let lastIntValue = intValue
+        while intValue == lastIntValue {
+            randomize()
+        }
+        rollsRemaining -= 1
+        if rollsRemaining == 0 {
+            sender.invalidate()
+            window?.makeFirstResponder(self)
+        }
+    }
     
     // MARK: Drag Source
     func draggingSession(_ session: NSDraggingSession, sourceOperationMaskFor context: NSDraggingContext) -> NSDragOperation {
@@ -344,6 +364,13 @@ class NSRDieView: NSView, NSDraggingSource {
     override func concludeDragOperation(_ sender: NSDraggingInfo?) {
         highlightForDraging = false
     }
+//    override func draggingUpdated(_ sender: NSDraggingInfo) -> NSDragOperation {
+//        printView("Operation Mask = \(sender.draggingSourceOperationMask().rawValue)")
+//        if sender.draggingSource() as! NSRDieView == self {
+//            return []
+//        }
+//        return [.copy,.delete]
+//    }
     
 }
 
