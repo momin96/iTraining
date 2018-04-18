@@ -8,9 +8,8 @@
 
 import Cocoa
 
-class NSRDieView: NSView {
+class NSRDieView: NSView, NSDraggingSource {
 
-    
     var intValue : Int? = 5 {
         didSet {
             needsDisplay = true
@@ -22,6 +21,8 @@ class NSRDieView: NSView {
             needsDisplay = true
         }
     }
+    
+    var mouseDownEvent : NSEvent?
     
     override var intrinsicContentSize: NSSize {
         return CGSize(width: 200, height: 200)
@@ -180,7 +181,7 @@ class NSRDieView: NSView {
     
     override func mouseDown(with event: NSEvent) {
         print("mouseDown")
-        
+        mouseDownEvent = event
         let dieFrame = metricForSize(bounds.size).dieFrame
         let pointInView = convert(event.locationInWindow, from: nil)
         pressed = dieFrame.contains(pointInView)
@@ -188,6 +189,41 @@ class NSRDieView: NSView {
     
     override func mouseDragged(with event: NSEvent) {
         print("mouseDragged in location \(event.locationInWindow)")
+        
+        let downPoint = mouseDownEvent?.locationInWindow
+        let dragPoint = event.locationInWindow
+        
+        let distanceDragged = hypot((downPoint?.x)! - dragPoint.x , (downPoint?.y)! - dragPoint.y)
+        
+        if distanceDragged < 3 {
+            return
+        }
+        
+        pressed = false
+        
+        if let intValue = intValue {
+            let imageSize = bounds.size
+            let image = NSImage(size: imageSize, flipped: false, drawingHandler: { (imageBounds) -> Bool in
+                self.drawDieWithSize(imageBounds.size)
+                return true
+            })
+            
+            let draggingFrameOrigin = convert(downPoint!, from: nil)
+            
+            let draggingFrame = NSRect(origin: draggingFrameOrigin, size: imageSize).offsetBy(dx: -imageSize.width / 2, dy: -imageSize.height / 2)
+            
+            let item = NSDraggingItem(pasteboardWriter: String(intValue) as NSPasteboardWriting)
+            item.draggingFrame = draggingFrame
+            item.imageComponentsProvider = {
+                let component = NSDraggingImageComponent(key: .icon)
+                component.contents = image
+                component.frame = NSRect(origin: NSPoint(), size: imageSize)
+                
+                return [component]
+            }
+            beginDraggingSession(with: [item], event: mouseDownEvent!, source: self)
+        }
+        
     }
     
     override func mouseUp(with event: NSEvent) {
@@ -245,6 +281,11 @@ class NSRDieView: NSView {
         return false
     }
     
+    
+    // MARK: Drag Source
+    func draggingSession(_ session: NSDraggingSession, sourceOperationMaskFor context: NSDraggingContext) -> NSDragOperation {
+        return .copy
+    }
     
 }
 
