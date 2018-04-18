@@ -22,7 +22,27 @@ class NSRDieView: NSView, NSDraggingSource {
         }
     }
     
+    var highlightForDraging : Bool = false {
+        didSet {
+            needsDisplay = true
+        }
+    }
+    
     var mouseDownEvent : NSEvent?
+    
+    override init(frame frameRect: NSRect) {
+        super.init(frame: frameRect)
+        commonInit()
+    }
+    
+    required init?(coder decoder: NSCoder) {
+        super.init(coder: decoder)
+        commonInit()
+    }
+    
+    func commonInit()  {
+        self.registerForDraggedTypes([NSPasteboard.PasteboardType.string])
+    }
     
     override var intrinsicContentSize: NSSize {
         return CGSize(width: 200, height: 200)
@@ -42,7 +62,14 @@ class NSRDieView: NSView, NSDraggingSource {
 //        path.line(to: NSPoint.init(x: bounds.width, y: bounds.height))
 //        path.stroke()
         
-        drawDieWithSize(bounds.size)
+        
+        if highlightForDraging {
+            let gradiant = NSGradient(starting: NSColor.white, ending: backgroundColor)
+            gradiant?.draw(in: bounds, relativeCenterPosition: NSZeroPoint)
+        }
+        else {
+            drawDieWithSize(bounds.size)
+        }
         
     }
  
@@ -284,7 +311,38 @@ class NSRDieView: NSView, NSDraggingSource {
     
     // MARK: Drag Source
     func draggingSession(_ session: NSDraggingSession, sourceOperationMaskFor context: NSDraggingContext) -> NSDragOperation {
-        return .copy
+        return [.delete,.copy]
+    }
+    
+    func draggingSession(_ session: NSDraggingSession, endedAt screenPoint: NSPoint, operation: NSDragOperation) {
+        if operation == .delete {
+            intValue = nil
+        }
+    }
+    
+    override func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation {
+        if sender.draggingSource() as! NSRDieView == self {
+            return []
+        }
+        highlightForDraging = true
+        return sender.draggingSourceOperationMask()
+    }
+    
+    override func draggingExited(_ sender: NSDraggingInfo?) {
+        highlightForDraging = false
+    }
+    
+    override func prepareForDragOperation(_ sender: NSDraggingInfo) -> Bool {
+        return true
+    }
+    
+    override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
+        let ok = readFromPasteboard(sender.draggingPasteboard())
+        return ok
+    }
+    
+    override func concludeDragOperation(_ sender: NSDraggingInfo?) {
+        highlightForDraging = false
     }
     
 }
