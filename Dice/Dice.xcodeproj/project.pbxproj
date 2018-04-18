@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		0E5227EB208703CD008D4C6B /* NSString+Drawing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5227EA208703CD008D4C6B /* NSString+Drawing.swift */; };
+		0E5227F420875945008D4C6B /* ConfigurationWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5227F220875945008D4C6B /* ConfigurationWindowController.swift */; };
+		0E5227F520875945008D4C6B /* ConfigurationWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E5227F320875945008D4C6B /* ConfigurationWindowController.xib */; };
+		0E5227F7208761F0008D4C6B /* NSRMainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5227F6208761F0008D4C6B /* NSRMainWindowController.swift */; };
 		0EB623DD2085BC500025E80C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB623DC2085BC500025E80C /* AppDelegate.swift */; };
 		0EB623E12085BC500025E80C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0EB623E02085BC500025E80C /* Assets.xcassets */; };
 		0EB623E42085BC500025E80C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0EB623E22085BC500025E80C /* Main.storyboard */; };
@@ -17,6 +20,9 @@
 
 /* Begin PBXFileReference section */
 		0E5227EA208703CD008D4C6B /* NSString+Drawing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSString+Drawing.swift"; sourceTree = "<group>"; };
+		0E5227F220875945008D4C6B /* ConfigurationWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationWindowController.swift; sourceTree = "<group>"; };
+		0E5227F320875945008D4C6B /* ConfigurationWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConfigurationWindowController.xib; sourceTree = "<group>"; };
+		0E5227F6208761F0008D4C6B /* NSRMainWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSRMainWindowController.swift; sourceTree = "<group>"; };
 		0EB623D92085BC500025E80C /* Dice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0EB623DC2085BC500025E80C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0EB623E02085BC500025E80C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -58,6 +64,9 @@
 			isa = PBXGroup;
 			children = (
 				0E5227EA208703CD008D4C6B /* NSString+Drawing.swift */,
+				0E5227F220875945008D4C6B /* ConfigurationWindowController.swift */,
+				0E5227F6208761F0008D4C6B /* NSRMainWindowController.swift */,
+				0E5227F320875945008D4C6B /* ConfigurationWindowController.xib */,
 				0EB623DC2085BC500025E80C /* AppDelegate.swift */,
 				0EB623EC2085BC7F0025E80C /* NSRMainViewController.swift */,
 				0EB623EE2085BCAE0025E80C /* NSRDieView.swift */,
@@ -130,6 +139,7 @@
 			files = (
 				0EB623E12085BC500025E80C /* Assets.xcassets in Resources */,
 				0EB623E42085BC500025E80C /* Main.storyboard in Resources */,
+				0E5227F520875945008D4C6B /* ConfigurationWindowController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,6 +150,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E5227F7208761F0008D4C6B /* NSRMainWindowController.swift in Sources */,
+				0E5227F420875945008D4C6B /* ConfigurationWindowController.swift in Sources */,
 				0E5227EB208703CD008D4C6B /* NSString+Drawing.swift in Sources */,
 				0EB623ED2085BC7F0025E80C /* NSRMainViewController.swift in Sources */,
 				0EB623DD2085BC500025E80C /* AppDelegate.swift in Sources */,
