@@ -7,8 +7,25 @@
 //
 
 import UIKit
+import Foundation
 
-
+struct MyGitHub: Codable {
+    
+    let name : String?
+    let location : String?
+    let follower : Int?
+    let avatarUrl : URL?
+    let repos : Int?
+    
+    private enum CodingKeys: String, CodingKey {
+        case name
+        case location
+        case follower
+        case avatarURL = "avatar_url"
+        case repos = "public_repos"
+    }
+    
+}
 
 class ViewController: UIViewController {
 
@@ -18,8 +35,18 @@ class ViewController: UIViewController {
         
         guard let gitUrl = URL(string: "https://api.github.com/users/" + userText!) else { return }
         
-//        URLSession.shared.dataTask(with: gitUrl) { (data, response
-//            , error) in
+        URLSession.shared.dataTask(with: gitUrl) { (data, response
+            , error) in
+            
+            
+            guard let data = data else { return }
+            
+            do {
+                let decoder = JSONDecoder()
+                let gitData = try! decoder.decode(MyGitHub.self, from: data)
+                print(gitData.name)
+            }
+            
 //
 //            guard let data = data else { return }
 //            do {
@@ -57,7 +84,7 @@ class ViewController: UIViewController {
 //            } catch let err {
 //                print("Err", err)
 //            }
-//            }.resume()
+            }.resume()
         
         
         
