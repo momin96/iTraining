@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class NSRMainViewController: NSViewController {
+class NSRMainViewController: NSViewController, NSTableViewDelegate {
 
     @IBOutlet weak var arrayController: NSArrayController!
     @IBOutlet weak var tableView: NSTableView!
@@ -19,6 +19,11 @@ class NSRMainViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
+        
+        tableView.delegate = self
+        tableView.doubleAction = #selector(openClass(_:))
+        
         fetcher.fetchCoursesUsingCompletionHandler { (result) in
             switch result {
             case .Success(let courses) :
@@ -29,6 +34,12 @@ class NSRMainViewController: NSViewController {
             }
         }
     
+    }
+    
+    @objc func openClass(_ sender : Any) {
+        if let course = arrayController.selectedObjects.first as? NSRCourse {
+            NSWorkspace.shared.open(course.url)
+        }
     }
     
 }

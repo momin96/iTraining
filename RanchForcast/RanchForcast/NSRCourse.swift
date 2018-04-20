@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class NSRCourse: NSObject {
+@objc class NSRCourse: NSObject {
     @objc dynamic let title : String
     @objc dynamic let url : URL
     @objc dynamic let nextStartDate : Date
