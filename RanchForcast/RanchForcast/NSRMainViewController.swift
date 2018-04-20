@@ -10,6 +10,8 @@ import Cocoa
 
 class NSRMainViewController: NSViewController {
 
+    @IBOutlet weak var arrayController: NSArrayController!
+    @IBOutlet weak var tableView: NSTableView!
     
     let fetcher = NSRScheduleFetcher()
     @objc dynamic var courses : [NSRCourse] = []

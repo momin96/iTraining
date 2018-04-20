@@ -9,9 +9,9 @@
 import Cocoa
 
 class NSRCourse: NSObject {
-    let title : String
-    let url : URL
-    let nextStartDate : Date
+    @objc dynamic let title : String
+    @objc dynamic let url : URL
+    @objc dynamic let nextStartDate : Date
     
     init(title : String, url : URL, nextStartDate : Date) {
         self.title = title
