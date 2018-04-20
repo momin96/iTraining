@@ -10,9 +10,23 @@ import Cocoa
 
 class NSRMainViewController: NSViewController {
 
+    
+    let fetcher = NSRScheduleFetcher()
+    @objc dynamic var courses : [NSRCourse] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do view setup here.
+
+        fetcher.fetchCoursesUsingCompletionHandler { (result) in
+            switch result {
+            case .Success(let courses) :
+                self.courses = courses
+            case .Failure(let error) :
+                NSAlert(error: error).runModal()
+                self.courses = []
+            }
+        }
+    
     }
     
 }

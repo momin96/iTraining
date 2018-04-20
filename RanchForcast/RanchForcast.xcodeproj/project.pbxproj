@@ -11,6 +11,8 @@
 		0E85198320899B5700E8ADFF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E85198220899B5700E8ADFF /* Assets.xcassets */; };
 		0E85198620899B5700E8ADFF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E85198420899B5700E8ADFF /* Main.storyboard */; };
 		0E85198F2089ABF400E8ADFF /* NSRMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E85198E2089ABF400E8ADFF /* NSRMainViewController.swift */; };
+		0E8519912089AC4000E8ADFF /* NSRCourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8519902089AC4000E8ADFF /* NSRCourse.swift */; };
+		0E8519932089ACD800E8ADFF /* NSRScheduleFetched.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8519922089ACD800E8ADFF /* NSRScheduleFetched.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +23,8 @@
 		0E85198720899B5700E8ADFF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0E85198820899B5700E8ADFF /* RanchForcast.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RanchForcast.entitlements; sourceTree = "<group>"; };
 		0E85198E2089ABF400E8ADFF /* NSRMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSRMainViewController.swift; sourceTree = "<group>"; };
+		0E8519902089AC4000E8ADFF /* NSRCourse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSRCourse.swift; sourceTree = "<group>"; };
+		0E8519922089ACD800E8ADFF /* NSRScheduleFetched.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSRScheduleFetched.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +59,8 @@
 			children = (
 				0E85197E20899B5600E8ADFF /* AppDelegate.swift */,
 				0E85198E2089ABF400E8ADFF /* NSRMainViewController.swift */,
+				0E8519902089AC4000E8ADFF /* NSRCourse.swift */,
+				0E8519922089ACD800E8ADFF /* NSRScheduleFetched.swift */,
 				0E85198220899B5700E8ADFF /* Assets.xcassets */,
 				0E85198420899B5700E8ADFF /* Main.storyboard */,
 				0E85198720899B5700E8ADFF /* Info.plist */,
@@ -136,6 +142,8 @@
 			files = (
 				0E85197F20899B5600E8ADFF /* AppDelegate.swift in Sources */,
 				0E85198F2089ABF400E8ADFF /* NSRMainViewController.swift in Sources */,
+				0E8519932089ACD800E8ADFF /* NSRScheduleFetched.swift in Sources */,
+				0E8519912089AC4000E8ADFF /* NSRCourse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,7 +271,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = RanchForcast/RanchForcast.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = RanchForcast/Info.plist;
@@ -278,7 +285,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = RanchForcast/RanchForcast.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = RanchForcast/Info.plist;
