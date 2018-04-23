@@ -29,6 +29,7 @@ class NSRScheduleFetcher {
         let request = URLRequest(url: url)
         
         let task = session.dataTask(with: request) { (data, response, error) in
+            
             var result : FetchCourseResult
             print(data!)
             if data == nil {
@@ -36,8 +37,25 @@ class NSRScheduleFetcher {
             }
             else if let response = response as? HTTPURLResponse {
                 if response.statusCode == 200 {
-                    result = self.resultFromData(date: data!)
-                    print(result)
+                    
+                    let decoder = JSONDecoder()
+                    do {
+                        let decodableCourse = try decoder.decode(Courses.self, from: data!)
+                        print(decodableCourse)
+                        let cookedCourses = self.prepareListOf(courses: decodableCourse.courses)
+                        if let courses = cookedCourses {
+                            result = .Success(courses)
+                        }
+                        else {
+                            let error = self.errorWithCode(code: 0, localizedDescription: "Error while parsing data")
+                            result = .Failure(error)
+                        }
+                    }
+                    catch let err {
+                        print("Error \(err)")
+                        result = .Failure(err as NSError)
+                    }
+//                    result = self.resultFromData(date: data!)
                 }
                 else {
                     let error = self.errorWithCode(code: response.statusCode, localizedDescription: "Bad Status code \(response.statusCode)")
@@ -57,53 +75,72 @@ class NSRScheduleFetcher {
         task.resume()
     }
     
-    func courseFromDictionary(_ courseDict :NSDictionary) -> NSRCourse? {
+    func prepareListOf(courses rawCourses: [Course]) -> [NSRCourse]? {
         
-        let title = courseDict["title"] as! String
+        var courseList : [NSRCourse] = []
         
-        let urlString = courseDict["url"] as! String
-        
-        let upcomingArray = courseDict["upcoming"] as! [NSDictionary]
-        
-        let nextUpcomingDict = upcomingArray.first!
-        
-        let nextStartDateString = nextUpcomingDict["start_date"] as! String
-        
-        let url = NSURL(string: urlString)!
-        
-        let dateFormatter = DateFormatter()
-        
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        
-        let nextStartDate = dateFormatter.date(from: nextStartDateString)!
-        
-        return NSRCourse(title: title, url: url as URL, nextStartDate:
-            nextStartDate)
+        for rawCourse in rawCourses {
+            let upcoming = rawCourse.upcoming
+            if let single = upcoming.first {
+                
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd"
+                let nextStartDate = dateFormatter.date(from: single.startDate)!
+                
+                let cookedCourse =  NSRCourse(title: rawCourse.title, url: URL(string: rawCourse.url)!, nextStartDate: nextStartDate)
+                
+                courseList.append(cookedCourse)
+            }
+        }
+        return courseList
     }
     
     func errorWithCode (code : Int, localizedDescription : String) -> NSError {
         return NSError(domain: "ScheduleFetcher", code: code, userInfo: [NSLocalizedDescriptionKey : localizedDescription])
     }
     
+//    func courseFromDictionary(_ courseDict :NSDictionary) -> NSRCourse? {
+//
+//        let title = courseDict["title"] as! String
+//
+//        let urlString = courseDict["url"] as! String
+//
+//        let upcomingArray = courseDict["upcoming"] as! [NSDictionary]
+//
+//        let nextUpcomingDict = upcomingArray.first!
+//
+//        let nextStartDateString = nextUpcomingDict["start_date"] as! String
+//
+//        let url = NSURL(string: urlString)!
+//
+//        let dateFormatter = DateFormatter()
+//
+//        dateFormatter.dateFormat = "yyyy-MM-dd"
+//
+//        let nextStartDate = dateFormatter.date(from: nextStartDateString)!
+//
+//        return NSRCourse(title: title, url: url as URL, nextStartDate:
+//            nextStartDate)
+//    }
     
-    func resultFromData(date : Data) -> FetchCourseResult {
-        var error : NSError?
-        let topLevelDict = try! JSONSerialization.jsonObject(with: date, options: JSONSerialization.ReadingOptions.mutableContainers)
-        
-        if let topLevelDict = topLevelDict as? NSDictionary {
-            let courseDicts = topLevelDict["courses"] as? [NSDictionary]
-            
-            var courses : [NSRCourse] = []
-            for courseDict in courseDicts! {
-                if let course = courseFromDictionary(courseDict) {
-                    courses.append(course)
-                }
-            }
-            return .Success(courses)
-        }
-        else {
-            return .Failure(error!)
-        }
-    }
+//    func resultFromData(date : Data) -> FetchCourseResult {
+//        var error : NSError?
+//        let topLevelDict = try! JSONSerialization.jsonObject(with: date, options: JSONSerialization.ReadingOptions.mutableContainers)
+//
+//        if let topLevelDict = topLevelDict as? NSDictionary {
+//            let courseDicts = topLevelDict["courses"] as? [NSDictionary]
+//
+//            var courses : [NSRCourse] = []
+//            for courseDict in courseDicts! {
+//                if let course = courseFromDictionary(courseDict) {
+//                    courses.append(course)
+//                }
+//            }
+//            return .Success(courses)
+//        }
+//        else {
+//            return .Failure(error!)
+//        }
+//    }
     
 }
