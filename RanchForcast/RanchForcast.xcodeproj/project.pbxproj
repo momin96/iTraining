@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E0FE4D8208DF12A00CAFA06 /* NSRCourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8519902089AC4000E8ADFF /* NSRCourse.swift */; };
+		0E0FE4D9208DF15600CAFA06 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8519A92089F8C000E8ADFF /* Constants.swift */; };
+		0E0FE4DB208DF3FB00CAFA06 /* ScheduleFetcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E0FE4DA208DF3FB00CAFA06 /* ScheduleFetcherTests.swift */; };
+		0E0FE4DC208DF41200CAFA06 /* NSRScheduleFetched.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8519922089ACD800E8ADFF /* NSRScheduleFetched.swift */; };
 		0E85197F20899B5600E8ADFF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E85197E20899B5600E8ADFF /* AppDelegate.swift */; };
 		0E85198320899B5700E8ADFF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E85198220899B5700E8ADFF /* Assets.xcassets */; };
 		0E85198620899B5700E8ADFF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E85198420899B5700E8ADFF /* Main.storyboard */; };
@@ -29,6 +33,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0E0FE4DA208DF3FB00CAFA06 /* ScheduleFetcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleFetcherTests.swift; sourceTree = "<group>"; };
 		0E85197B20899B5600E8ADFF /* RanchForcast.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RanchForcast.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E85197E20899B5600E8ADFF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0E85198220899B5700E8ADFF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -101,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				0E8519A72089F83000E8ADFF /* CoursesTests.swift */,
+				0E0FE4DA208DF3FB00CAFA06 /* ScheduleFetcherTests.swift */,
 				0E8519A92089F8C000E8ADFF /* Constants.swift */,
 			);
 			name = RanchForecastTests;
@@ -230,8 +236,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E0FE4DC208DF41200CAFA06 /* NSRScheduleFetched.swift in Sources */,
+				0E0FE4D9208DF15600CAFA06 /* Constants.swift in Sources */,
+				0E0FE4D8208DF12A00CAFA06 /* NSRCourse.swift in Sources */,
 				0E8519A82089F83000E8ADFF /* CoursesTests.swift in Sources */,
 				0E8519A02089F81400E8ADFF /* RanchForcastTests.swift in Sources */,
+				0E0FE4DB208DF3FB00CAFA06 /* ScheduleFetcherTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

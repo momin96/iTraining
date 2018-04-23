@@ -7,15 +7,15 @@
 //
 
 import XCTest
-
+import RanchForcast
+    
 class CoursesTests: XCTestCase {
 
     func testCourseInitialization() {
-//        let course = NSRCourse(title : Constants.title, url : Constants.url, nextStartDate : Constants.date)
-//        
-//        XCTAssertEqual(course.title, pContents.title)
-//        XCTAssertEqual(course.url, Constants.url)
-//        XCTAssertEqual(course.nextStartDate, Constants.nextStartDate)
+        let course = NSRCourse(title : Constants.title, url : Constants.url!, nextStartDate : Constants.date)
+        XCTAssertEqual(course.title, Constants.title)
+        XCTAssertEqual(course.url, Constants.url)
+        XCTAssertEqual(course.nextStartDate, Constants.date)
 
     }
     
