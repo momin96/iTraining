@@ -11,11 +11,17 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
-    @IBOutlet weak var window: NSWindow!
+   var window: NSWindow?
 
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // Insert code here to initialize your application
+
+        let flowViewController = NSRImageViewController()
+        flowViewController.title = "Flow"
+        flowViewController.image = NSImage(imageLiteralResourceName: "flow")
+        let window = NSWindow(contentViewController: flowViewController)
+        window.makeKeyAndOrderFront(self)
+        self.window = window
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
