@@ -13,19 +13,27 @@ import UIKit
 import Foundation
 
 struct MyGitHub: Codable {
+    let name: String
+    let location: String
+    let followers: Int
+    let avatarURL: String
+    let repos: Int
+
+    private enum CodinKeys: String, CodingKey {
+        case name       = "name"
+        case location   = "location"
+        case followers   = "followers"
+        case repos      = "public_repos"
+        case avatarURL  = "avatar_url"
+    }
     
-    let name : String?
-    let location : String?
-    let follower : Int?
-    let avatarUrl : URL?
-    let repos : Int?
-    
-    private enum CodingKeys: String, CodingKey {
-        case name
-        case location
-        case follower
-        case avatarURL = "avatar_url"
-        case repos = "public_repos"
+    init(from decoder : Decoder) throws{
+        let value = try decoder.container(keyedBy: CodinKeys.self)
+        name = try value.decode(String.self, forKey: .name)
+        location = try value.decode(String.self, forKey: .location)
+        avatarURL = try value.decode(String.self, forKey: .avatarURL)
+        followers = try value.decode(Int.self, forKey: .followers)
+        repos = try value.decode(Int.self, forKey: .repos)
     }
     
 }
@@ -42,12 +50,35 @@ class ViewController: UIViewController {
             , error) in
             
             
-            guard let data = data else { return }
-            
+            guard let dt = data else { return }
+
             do {
                 let decoder = JSONDecoder()
-                let gitData = try! decoder.decode(MyGitHub.self, from: data)
-                print(gitData.name)
+                let gitData = try decoder.decode(MyGitHub.self, from: dt)
+                print(gitData.name as Any)
+
+                DispatchQueue.main.sync {
+                    let data = try? Data(contentsOf: URL(string: gitData.avatarURL)!)
+                        let image: UIImage = UIImage(data: data!)!
+                        self.gravatarImage.image = image
+              
+                        self.name.text = gitData.name
+          
+                        self.location.text = gitData.location
+   
+                        self.followers.text = String(gitData.followers)
+
+                        self.blog.text = String(gitData.repos)
+                    self.setLabelStatus(value: false)
+                }
+                
+                
+                
+//                let jsonData = try JSONSerialization.jsonObject(with: data!, options: .allowFragments)
+//                print(jsonData)
+            }
+            catch let err{
+                print("catch \(err)")
             }
             
 //
@@ -59,30 +90,6 @@ class ViewController: UIViewController {
 //
 //
 //
-//                DispatchQueue.main.sync {
-//                    if let gimage = gitData.avatarUrl {
-//                        let data = try? Data(contentsOf: gimage)
-//                        let image: UIImage = UIImage(data: data!)!
-//                        self.gravatarImage.image = image
-//                    }
-//
-//
-//                    if let gname = gitData.name {
-//                        self.name.text = gname
-//                    }
-//                    if let glocation = gitData.location {
-//                        self.location.text = glocation
-//                    }
-//
-//                    if let gfollowers = gitData.followers {
-//                        self.followers.text = String(gfollowers)
-//                    }
-//
-//                    if let grepos = gitData.repos {
-//                        self.blog.text = String(grepos)
-//                    }
-//                    self.setLabelStatus(value: false)
-//                }
 //
 //            } catch let err {
 //                print("Err", err)
