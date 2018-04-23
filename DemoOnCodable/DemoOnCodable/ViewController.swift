@@ -16,25 +16,25 @@ struct MyGitHub: Codable {
     let name: String
     let location: String
     let followers: Int
-    let avatarURL: String
-    let repos: Int
+//    let avatarURL: String
+//    let repos: Int
 
-    private enum CodinKeys: String, CodingKey {
-        case name       = "name"
-        case location   = "location"
-        case followers   = "followers"
-        case repos      = "public_repos"
-        case avatarURL  = "avatar_url"
-    }
-    
-    init(from decoder : Decoder) throws{
-        let value = try decoder.container(keyedBy: CodinKeys.self)
-        name = try value.decode(String.self, forKey: .name)
-        location = try value.decode(String.self, forKey: .location)
-        avatarURL = try value.decode(String.self, forKey: .avatarURL)
-        followers = try value.decode(Int.self, forKey: .followers)
-        repos = try value.decode(Int.self, forKey: .repos)
-    }
+//    private enum CodinKeys: String, CodingKey {
+//        case name       = "name"
+//        case location   = "location"
+//        case followers   = "followers"
+//        case repos      = "public_repos"
+//        case avatarURL  = "avatar_url"
+//    }
+//
+//    init(from decoder : Decoder) throws{
+//        let value = try decoder.container(keyedBy: CodinKeys.self)
+//        name = try value.decode(String.self, forKey: .name)
+//        location = try value.decode(String.self, forKey: .location)
+//        avatarURL = try value.decode(String.self, forKey: .avatarURL)
+//        followers = try value.decode(Int.self, forKey: .followers)
+//        repos = try value.decode(Int.self, forKey: .repos)
+//    }
     
 }
 
@@ -57,20 +57,20 @@ class ViewController: UIViewController {
                 let gitData = try decoder.decode(MyGitHub.self, from: dt)
                 print(gitData.name as Any)
 
-                DispatchQueue.main.sync {
-                    let data = try? Data(contentsOf: URL(string: gitData.avatarURL)!)
-                        let image: UIImage = UIImage(data: data!)!
-                        self.gravatarImage.image = image
-              
-                        self.name.text = gitData.name
-          
-                        self.location.text = gitData.location
-   
-                        self.followers.text = String(gitData.followers)
-
-                        self.blog.text = String(gitData.repos)
-                    self.setLabelStatus(value: false)
-                }
+//                DispatchQueue.main.sync {
+//                    let data = try? Data(contentsOf: URL(string: gitData.avatarURL)!)
+//                        let image: UIImage = UIImage(data: data!)!
+//                        self.gravatarImage.image = image
+//
+//                        self.name.text = gitData.name
+//
+//                        self.location.text = gitData.location
+//
+//                        self.followers.text = String(gitData.followers)
+//
+//                        self.blog.text = String(gitData.repos)
+//                    self.setLabelStatus(value: false)
+//                }
                 
                 
                 
