@@ -12,6 +12,7 @@
 		0E0FE4EF208E05E300CAFA06 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E0FE4ED208E05E300CAFA06 /* MainMenu.xib */; };
 		0E0FE4F9208E063A00CAFA06 /* NSRImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E0FE4F7208E063A00CAFA06 /* NSRImageViewController.swift */; };
 		0E0FE4FA208E063A00CAFA06 /* NSRImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E0FE4F8208E063A00CAFA06 /* NSRImageViewController.xib */; };
+		0EF9EEE2208EF6D4001A091E /* NSRNerdTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EF9EEE1208EF6D4001A091E /* NSRNerdTabViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		0E0FE4F1208E05E300CAFA06 /* View_Controls.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = View_Controls.entitlements; sourceTree = "<group>"; };
 		0E0FE4F7208E063A00CAFA06 /* NSRImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSRImageViewController.swift; sourceTree = "<group>"; };
 		0E0FE4F8208E063A00CAFA06 /* NSRImageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NSRImageViewController.xib; sourceTree = "<group>"; };
+		0EF9EEE1208EF6D4001A091E /* NSRNerdTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSRNerdTabViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +59,7 @@
 			children = (
 				0E0FE4E9208E05E300CAFA06 /* AppDelegate.swift */,
 				0E0FE4F7208E063A00CAFA06 /* NSRImageViewController.swift */,
+				0EF9EEE1208EF6D4001A091E /* NSRNerdTabViewController.swift */,
 				0E0FE4F8208E063A00CAFA06 /* NSRImageViewController.xib */,
 				0E0FE4EB208E05E300CAFA06 /* Assets.xcassets */,
 				0E0FE4ED208E05E300CAFA06 /* MainMenu.xib */,
@@ -139,6 +142,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0E0FE4F9208E063A00CAFA06 /* NSRImageViewController.swift in Sources */,
+				0EF9EEE2208EF6D4001A091E /* NSRNerdTabViewController.swift in Sources */,
 				0E0FE4EA208E05E300CAFA06 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

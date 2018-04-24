@@ -19,7 +19,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let flowViewController = NSRImageViewController()
         flowViewController.title = "Flow"
         flowViewController.image = NSImage(imageLiteralResourceName: "flow")
-        let window = NSWindow(contentViewController: flowViewController)
+        
+        let columnViewController = NSRImageViewController()
+        columnViewController.title = "Column"
+        columnViewController.image = NSImage(imageLiteralResourceName: "column")
+        
+        let tabViewController = NSRNerdTabViewController()
+        tabViewController.addChildViewController(flowViewController)
+        tabViewController.addChildViewController(columnViewController)
+        
+        let window = NSWindow(contentViewController: tabViewController)
         window.makeKeyAndOrderFront(self)
         self.window = window
     }
