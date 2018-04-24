@@ -23,7 +23,7 @@ class NSRWebViewController: NSViewController {
     
     
     func loadURL(_ url : URL) {
-        let request = URLRequest(url: url)
+        let request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 10.0)
         webView.load(request)
     }
     

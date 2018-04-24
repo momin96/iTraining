@@ -702,10 +702,10 @@
             </objects>
             <point key="canvasLocation" x="75" y="250"/>
         </scene>
-        <!--Split View Controller-->
+        <!--Main Split View Controller-->
         <scene sceneID="gMY-vx-OKg">
             <objects>
-                <splitViewController id="cWk-5P-Wdi" sceneMemberID="viewController">
+                <splitViewController identifier="NSRMainSplitViewController" storyboardIdentifier="NSRMainSplitViewController" id="cWk-5P-Wdi" customClass="NSRMainSplitViewController" customModule="Ranch_Forcast_Split" customModuleProvider="target" sceneMemberID="viewController">
                     <splitViewItems>
                         <splitViewItem id="oAI-cl-Z5O"/>
                         <splitViewItem id="RnF-IL-Y46"/>
