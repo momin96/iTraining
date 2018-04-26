@@ -12,6 +12,12 @@ class ViewController: NSViewController {
 
     var textLayer : CATextLayer!
     
+    let processingQueue: OperationQueue = {
+        let result = OperationQueue()
+        result.maxConcurrentOperationCount = 4
+        return result
+    }()
+    
     var text : String? {
         didSet {
             let font = NSFont.systemFont(ofSize: textLayer.fontSize)
@@ -46,44 +52,50 @@ class ViewController: NSViewController {
     }
     
     func addImagesfromFolrderURL(_ folderURL: URL) {
-        let t0 = Date.timeIntervalSinceReferenceDate
-        let fileManager = FileManager()
         
-        let directoryEnumerator = fileManager.enumerator(at: folderURL,
-                                                         includingPropertiesForKeys: nil,
-                                                         options:FileManager.DirectoryEnumerationOptions.init(rawValue: 0) ,
-                                                         errorHandler: nil)
-        
-        
-        var allowedFiles = 10
-        
-        while let url = directoryEnumerator?.nextObject() as? NSURL {
-            var isDirectoryValue: AnyObject?
-//            do {
-                let _ = try? url.getResourceValue(&isDirectoryValue, forKey: isDirectoryValue as! URLResourceKey)
-//            }
-//            catch let err {
-//                print("Error \(err)")
-//            }
+        processingQueue.addOperation {
             
-            if let isDirectory = isDirectoryValue as? NSNumber, isDirectory.boolValue == false {
-                let image = NSImage(contentsOf: url as URL)
-                if let img = image {
-                    allowedFiles -= 1
-                    if allowedFiles < 0 {
-                        break
+            let t0 = Date.timeIntervalSinceReferenceDate
+            let fileManager = FileManager()
+            
+            let directoryEnumerator = fileManager.enumerator(at: folderURL,
+                                                             includingPropertiesForKeys: nil,
+                                                             options:FileManager.DirectoryEnumerationOptions.init(rawValue: 0) ,
+                                                             errorHandler: nil)
+            
+            
+    //        var allowedFiles = 10
+            
+            while let url = directoryEnumerator?.nextObject() as? NSURL {
+                var isDirectoryValue: AnyObject?
+                do {
+                    let _ = try? url.getResourceValue(&isDirectoryValue, forKey:URLResourceKey.isDirectoryKey)
+                }
+                catch let err {
+                    print("Error \(err)")
+                }
+            
+                if let isDirectory = isDirectoryValue as? NSNumber, isDirectory.boolValue == false {
+                    self.processingQueue.addOperation {
+                        let image = NSImage(contentsOf: url as URL)
+                        if let img = image {
+                            //                    allowedFiles -= 1
+                            //                    if allowedFiles < 0 {
+                            //                        break
+                            //                    }
+                            
+                            let thumbImage = self.thumbImageForImage(img)
+                            OperationQueue.main.addOperation({
+                                self.presentImage(thumbImage)
+                                
+                                let t1 = Date.timeIntervalSinceReferenceDate
+                                let interval = t1 - t0
+                                self.text = String.init(format: "%0.1fs", interval)
+                            })
+                        }
                     }
-                    
-                    let thumbImage = thumbImageForImage(img)
-                    
-                    presentImage(thumbImage)
-                    
-                    let t1 = Date.timeIntervalSinceReferenceDate
-                    let interval = t1 - t0
-                    text = String.init(format: "%0.1fs", interval)
                 }
             }
-            
         }
     }
     
