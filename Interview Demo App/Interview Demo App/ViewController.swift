@@ -15,7 +15,14 @@ class ViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        DataFetcher.shared.getPersonList { (persons) in
+            
+            let sortedPerson = persons.sorted(by: { (p1, p2) -> Bool in
+                return p1 > p2
+            })
+            
+            self.persons = sortedPerson
+        }
     }
 
     override var representedObject: Any? {
