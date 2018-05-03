@@ -10,6 +10,8 @@ import Cocoa
 
 class ViewController: NSViewController {
 
+    @objc dynamic var persons : [Person] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
