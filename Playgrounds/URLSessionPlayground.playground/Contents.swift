@@ -27,8 +27,10 @@ imageCache.cachedResponse(for: urlRequest)
 let session = URLSession(configuration: .ephemeral);
 var dataTask : URLSessionDataTask?
 dataTask = session.dataTask(with: urlRequest) { (data, urlResponse, error) in
-
+    print("urlResponse \(String(describing: urlResponse))")
     let dataTaskCached = CachedURLResponse(response: urlResponse!, data: data!, userInfo: [:], storagePolicy: .allowed)
     
     imageCache.storeCachedResponse(dataTaskCached, for: dataTask!);
 }
+
+dataTask?.resume()

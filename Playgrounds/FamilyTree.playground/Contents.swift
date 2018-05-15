@@ -2,7 +2,7 @@
 
 import Foundation
 
-let API_ENDPOINT = "http://www.mocky.io/v2/5aa703fe2f000098008ea42b"
+let API_ENDPOINT = "https://api.myjson.com/bins/1hb6a2"
 
 enum FamilyStature: String, Decodable {
     case GrandFather    = "Grand Father"
@@ -48,7 +48,7 @@ class NSRDataFetcher: NSObject {
         print("Get data \(session), \(url)")
 
         session.dataTask(with: url) { (data, response, err) in
-            print("response \(response)")
+            print("response \(String(describing: response))")
             completionHandler(data, response, err)
             }.resume()
     }
