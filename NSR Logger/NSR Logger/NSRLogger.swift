@@ -11,6 +11,13 @@ import UIKit
 
 var viewControllersCollection : [String : ViewLogger] = [:]
 
+class NSRLogger: NSObject {
+    
+    override init() {
+        UIViewController.configureViewLogger()
+    }
+}
+
 extension UIViewController {
     
     class func configureViewLogger() {
@@ -32,8 +39,6 @@ extension UIViewController {
 
         let viewLoggerObject = ViewLogger(viewVisibleTime: Date())
         
-//        print(" \(className) appears on \(String(describing: viewLoggerObject.viewVisibleTime))" )
-        
         viewControllersCollection.updateValue(viewLoggerObject, forKey: className)
     }
     
@@ -45,7 +50,6 @@ extension UIViewController {
         
         viewLoggerObject?.calculateViewDeltaWith(viewHiddenTime: Date())
         
-//        print(" \(className) disappeared on \(String(describing: viewLoggerObject?.viewHiddenTime))" )
         if let delta = viewLoggerObject?.viewDelta {
             let timeString = String.init(format: "%.3f", delta)
             print(" \(className) was visible for \(timeString) seconds" )
