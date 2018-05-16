@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 
+var viewControllersCollection : [String : ViewLogger] = [:]
+
 extension UIViewController {
     
     class func configureViewLogger() {
@@ -27,21 +29,42 @@ extension UIViewController {
     @objc func swizzledViewWillAppear(_ animated: Bool) {
         
         let className = NSStringFromClass(self.classForCoder)
-        print(" \(className)'s View appears" )
 
+        let viewLoggerObject = ViewLogger(viewVisibleTime: Date())
+        
+//        print(" \(className) appears on \(String(describing: viewLoggerObject.viewVisibleTime))" )
+        
+        viewControllersCollection.updateValue(viewLoggerObject, forKey: className)
     }
     
     @objc func swizzledViewWillDidappear(_ animated: Bool) {
-        print("View disappears")
+
+        let className = NSStringFromClass(self.classForCoder)
+
+        var viewLoggerObject = viewControllersCollection[className]
+        
+        viewLoggerObject?.calculateViewDeltaWith(viewHiddenTime: Date())
+        
+//        print(" \(className) disappeared on \(String(describing: viewLoggerObject?.viewHiddenTime))" )
+        if let delta = viewLoggerObject?.viewDelta {
+            let timeString = String.init(format: "%.3f", delta)
+            print(" \(className) was visible for \(timeString) seconds" )
+        }
 
     }
-    
-    
 }
 
-
 struct ViewLogger {
-    var visibleTime : TimeInterval
-    var hiddenTime : TimeInterval
-    var delta : TimeInterval
+    var viewVisibleTime : Date?
+    var viewHiddenTime : Date?
+    var viewDelta : TimeInterval?
+    
+    init(viewVisibleTime : Date) {
+        self.viewVisibleTime = viewVisibleTime
+    }
+    
+    mutating func calculateViewDeltaWith(viewHiddenTime: Date) {
+        self.viewHiddenTime = viewHiddenTime
+        self.viewDelta = self.viewHiddenTime?.timeIntervalSince(self.viewVisibleTime!)
+    }    
 }

@@ -31,9 +31,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Present"/>
                                 <connections>
-                                    <segue destination="Fg9-7m-VC5" kind="popoverPresentation" popoverAnchorView="yq8-Fo-I03" id="1vV-fZ-hza">
-                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                                    </segue>
+                                    <action selector="presentController:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YfG-a8-mfe"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -46,36 +44,42 @@
             </objects>
             <point key="canvasLocation" x="456.80000000000001" y="118.29085457271366"/>
         </scene>
-        <!--Title-->
+        <!--First View-->
         <scene sceneID="bkH-yy-8aD">
             <objects>
-                <viewController id="tfd-4C-hdk" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FirstViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="tfd-4C-hdk" customClass="FirstViewController" customModule="NSR_Logger" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="w8M-aV-Egu">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <viewLayoutGuide key="safeArea" id="c1O-9T-igL"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Title" id="ig8-io-RP8">
-                        <barButtonItem key="rightBarButtonItem" title="Item" id="b2Y-wH-HuJ"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="First View" id="ig8-io-RP8"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mZI-IZ-MMU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1348" y="-149"/>
+            <point key="canvasLocation" x="1348" y="-149.77511244377811"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Second Table View Controller-->
         <scene sceneID="3oL-Tj-Nm7">
             <objects>
-                <tableViewController id="Fg9-7m-VC5" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SecondTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Fg9-7m-VC5" customClass="SecondTableViewController" customModule="NSR_Logger" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="3Jg-ug-wzW">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <button key="tableHeaderView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="w0f-1F-F8G">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Dismis"/>
+                            <connections>
+                                <action selector="dismiss:" destination="Fg9-7m-VC5" eventType="touchUpInside" id="BsW-H6-uiM"/>
+                            </connections>
+                        </button>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="2du-Zw-Jr1">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="72" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2du-Zw-Jr1" id="ogE-X6-jBR">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -88,10 +92,13 @@
                             <outlet property="delegate" destination="Fg9-7m-VC5" id="QFg-hF-Yi1"/>
                         </connections>
                     </tableView>
+                    <toolbarItems/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6wD-R5-wrB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1348" y="583"/>
+            <point key="canvasLocation" x="1348" y="603"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="MNh-RL-LU9">
