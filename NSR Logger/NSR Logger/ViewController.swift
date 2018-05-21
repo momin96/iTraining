@@ -62,9 +62,23 @@ class SecondTableViewController: UITableViewController {
     }
 }
 
-class FirstViewController: UIViewController {
+class FirstViewController: UIViewController, UIScrollViewDelegate {
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var tableView: UITableView!
+    
+    override func viewDidLoad() {
+        scrollView.contentSize = CGSize(width: 500, height: 500)
+    }
 
+    @objc func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
+//        print("FirstViewController scrollViewWillBeginDecelerating")
+    }
+    
+    @objc func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+//        print("FirstViewController scrollViewDidEndDecelerating")
+    }
 }
+
 
 let LIMIT = 10
 
