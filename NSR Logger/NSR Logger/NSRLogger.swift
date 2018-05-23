@@ -124,27 +124,7 @@ extension UIViewController {
     }
 }
 
-/**
- Check which class confirm to specified protocol, if confirms,
- then check class can respond to selector passed.
- 
- 
- - Parameter confrimProtocol: Protocol name that need to be confirmed by many classes.
- 
- - Parameter selector: Selector that need to respond to against many classes.
- 
- - Returns: Optional of type AnyClass
- */
 
-private func didClassConfirms(toProtocol confrimProtocol : Protocol, andRespondToSelector selector: Selector) -> AnyClass? {
-    
-    for cls in classes {
-        if class_conformsToProtocol(cls, confrimProtocol), class_respondsToSelector(cls, selector)  {
-            return cls
-        }
-    }
-    return nil
-}
 
 
 struct ViewLogger {
@@ -164,6 +144,33 @@ struct ViewLogger {
 
 // MARK: Support methods
 
+/**
+ Check which class confirm to specified protocol, if confirms,
+ then check class can respond to selector passed.
+ 
+ 
+ - Parameter confrimProtocol: Protocol name that need to be confirmed by many classes.
+ 
+ - Parameter selector: Selector that need to respond to against many classes.
+ 
+ - Returns: Optional of type AnyClass
+ */
+private func didClassConfirms(toProtocol confrimProtocol : Protocol, andRespondToSelector selector: Selector) -> AnyClass? {
+    
+    for cls in classes {
+        if class_conformsToProtocol(cls, confrimProtocol), class_respondsToSelector(cls, selector)  {
+            return cls
+        }
+    }
+    return nil
+}
+
+
+/**
+    Responsible for returning all classes in current platform.
+ 
+ - Returns: Array of AnyClass
+*/
 private func objc_getClasses() -> [AnyClass] {
     
     let expectedClassCount = objc_getClassList(nil, 0)
@@ -187,6 +194,10 @@ private func objc_getClasses() -> [AnyClass] {
     return classes
 }
 
+/**
+ Perform initentional crash in debug mode
+ 
+ */
 private func debugFatalError(_ errMessage : String) {
     #if DEBUG
         fatalError(errMessage)
