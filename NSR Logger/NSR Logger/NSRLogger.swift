@@ -30,9 +30,11 @@ extension UIViewController {
     
     class func configureViewLogger() {
         
+        // Selectors
         let appearOriginalSEL = #selector(UIViewController.viewWillAppear(_:))
         let appearSwizzledSEL = #selector(UIViewController.swizzledViewWillAppear(_:))
         
+        // Methods
         let appearOrigionalMethod = class_getInstanceMethod(UIViewController.self, appearOriginalSEL)
         let appearSwizzledMethod = class_getInstanceMethod(UIViewController.self, appearSwizzledSEL)
         
@@ -42,15 +44,16 @@ extension UIViewController {
             class_replaceMethod(self, appearSwizzledSEL, method_getImplementation(appearOrigionalMethod!), method_getTypeEncoding(appearOrigionalMethod!))
         }
         else {
+            // Implementation
             method_exchangeImplementations(appearOrigionalMethod!, appearSwizzledMethod!)
         }
         
         
-        
+        // Selectors
         let disappearOrigionalSEL = #selector(UIViewController.viewWillDisappear(_:))
         let disappearSwizzledSEL = #selector(UIViewController.swizzledViewWillDidappear(_:))
         
-        
+        // Methods
         let disappearOrigionalMethod = class_getInstanceMethod(UIViewController.self, disappearOrigionalSEL)
         let disappearSizzeledMethod = class_getInstanceMethod(UIViewController.self, disappearSwizzledSEL)
         
@@ -60,6 +63,7 @@ extension UIViewController {
             class_replaceMethod(self, disappearSwizzledSEL, method_getImplementation(disappearOrigionalMethod!), method_getTypeEncoding(disappearOrigionalMethod!))
         }
         else {
+            // Implementation
             method_exchangeImplementations(disappearOrigionalMethod!, disappearSizzeledMethod!)
         }
     }
@@ -92,18 +96,41 @@ extension UIViewController {
     // MARK: UIScrollView swizzle
     class func configureScroller () {
         
-        let descSEL = #selector(UIScrollViewDelegate.scrollViewWillBeginDecelerating(_:))
+        scrollBeginDeceleratingConfig()
         
-        let didConfirmedAndRespond : AnyClass? = didClassConfirms(toProtocol: UIScrollViewDelegate.self,andRespondToSelector: descSEL)
+        scrollEndDeceleratingConfig()
         
-        if let classConfirmed = didConfirmedAndRespond {
-            print("class \(classConfirmed)")
-            let beginDeceleratingOrigionalMethod = class_getInstanceMethod(classConfirmed, descSEL)
-            let descSwizzleSEL = #selector(self.swizzleScrollViewWillBeginDecelerating(_:))
+    }
+    
+    // MARK: Swizzled Method
+    @objc func swizzleScrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
+        print("swizzle ScrollView Will Begin Decelerating")
+    }
+    
+    @objc func swizzleScrollViewWillEndDecelerating(_ scrollView: UIScrollView) {
+        print("swizzle ScrollView Will End Decelerating")
 
+    }
+    
+    
+    // MARK: Config support methods
+    
+    private class func scrollBeginDeceleratingConfig () {
+        
+        // Selectors
+        let descSEL = #selector(UIScrollViewDelegate.scrollViewWillBeginDecelerating(_:))
+        let descSwizzleSEL = #selector(self.swizzleScrollViewWillBeginDecelerating(_:))
+
+        let didBeginDeceleratingRespond : AnyClass? = didClassConfirms(toProtocol: UIScrollViewDelegate.self, andRespondToSelector: descSEL)
+        
+        if let decelerating = didBeginDeceleratingRespond {
+
+            // Methods
+            let beginDeceleratingOrigionalMethod = class_getInstanceMethod(decelerating, descSEL)
             let beginDeceleratingSwizzelMethod = class_getInstanceMethod(self, descSwizzleSEL)
             
             if let originalMethod = beginDeceleratingOrigionalMethod, let swizzleMethod = beginDeceleratingSwizzelMethod {
+                // Implementation
                 method_exchangeImplementations(originalMethod, swizzleMethod)
             }
             else {
@@ -111,21 +138,38 @@ extension UIViewController {
             }
         }
         else {
-            debugFatalError("Nil classConfirmed")
+            debugFatalError("Nil didBeginDeceleratingRespond")
         }
-        
-        
-        
-        
     }
     
-    @objc func swizzleScrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
-        print("swizzleScrollViewWillBeginDecelerating")
+    private class func scrollEndDeceleratingConfig () {
+        
+        // Selectors
+        let endDeceleratingSEL = #selector(UIScrollViewDelegate.scrollViewDidEndDecelerating(_:))
+        let endDeceleratingSwizzleSEL = #selector(self.swizzleScrollViewWillEndDecelerating(_:))
+
+        let didEndDeceleratingRespond : AnyClass? = didClassConfirms(toProtocol: UIScrollViewDelegate.self, andRespondToSelector: endDeceleratingSEL)
+        
+        if let decelerating = didEndDeceleratingRespond {
+            
+            // Methods
+            let methodEndDeceleratingOrigional = class_getInstanceMethod(decelerating, endDeceleratingSEL)
+            let methodEndDeceleratingSwizzle = class_getInstanceMethod(self, endDeceleratingSwizzleSEL)
+            
+            if let origionalMethod = methodEndDeceleratingOrigional, let swizzleMethod = methodEndDeceleratingSwizzle {
+                // Implementation
+                method_exchangeImplementations(origionalMethod, swizzleMethod)
+            }
+            else {
+                debugFatalError("Nil origionalMethod or swizzleMethod")
+            }
+        }
+        else {
+            debugFatalError("Nil didEndDeceleratingRespond")
+        }
     }
+    
 }
-
-
-
 
 struct ViewLogger {
     var viewVisibleTime : Date?
