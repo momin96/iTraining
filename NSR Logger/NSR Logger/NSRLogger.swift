@@ -105,11 +105,13 @@ extension UIViewController {
     // MARK: Swizzled Method
     @objc func swizzleScrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
         print("swizzle ScrollView Will Begin Decelerating")
+        
+        // Passing control to original method
+        self.swizzleScrollViewWillBeginDecelerating(scrollView)
     }
     
     @objc func swizzleScrollViewWillEndDecelerating(_ scrollView: UIScrollView) {
         print("swizzle ScrollView Will End Decelerating")
-
     }
     
     
@@ -123,10 +125,10 @@ extension UIViewController {
 
         let didBeginDeceleratingRespond : AnyClass? = didClassConfirms(toProtocol: UIScrollViewDelegate.self, andRespondToSelector: descSEL)
         
-        if let decelerating = didBeginDeceleratingRespond {
+        if let deceleratingClass = didBeginDeceleratingRespond {
 
             // Methods
-            let beginDeceleratingOrigionalMethod = class_getInstanceMethod(decelerating, descSEL)
+            let beginDeceleratingOrigionalMethod = class_getInstanceMethod(deceleratingClass, descSEL)
             let beginDeceleratingSwizzelMethod = class_getInstanceMethod(self, descSwizzleSEL)
             
             if let originalMethod = beginDeceleratingOrigionalMethod, let swizzleMethod = beginDeceleratingSwizzelMethod {
@@ -150,10 +152,10 @@ extension UIViewController {
 
         let didEndDeceleratingRespond : AnyClass? = didClassConfirms(toProtocol: UIScrollViewDelegate.self, andRespondToSelector: endDeceleratingSEL)
         
-        if let decelerating = didEndDeceleratingRespond {
+        if let deceleratingClass = didEndDeceleratingRespond {
             
             // Methods
-            let methodEndDeceleratingOrigional = class_getInstanceMethod(decelerating, endDeceleratingSEL)
+            let methodEndDeceleratingOrigional = class_getInstanceMethod(deceleratingClass, endDeceleratingSEL)
             let methodEndDeceleratingSwizzle = class_getInstanceMethod(self, endDeceleratingSwizzleSEL)
             
             if let origionalMethod = methodEndDeceleratingOrigional, let swizzleMethod = methodEndDeceleratingSwizzle {

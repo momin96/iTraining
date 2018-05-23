@@ -70,12 +70,12 @@ class FirstViewController: UIViewController, UIScrollViewDelegate {
         scrollView.contentSize = CGSize(width: 500, height: 500)
     }
 
-    @objc func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
-//        print("FirstViewController scrollViewWillBeginDecelerating")
+    func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
+        print("FirstViewController scrollViewWillBeginDecelerating")
     }
     
-    @objc func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-//        print("FirstViewController scrollViewDidEndDecelerating")
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        print("FirstViewController scrollViewDidEndDecelerating")
     }
 }
 
