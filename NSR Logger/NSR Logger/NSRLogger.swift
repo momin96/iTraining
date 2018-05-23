@@ -9,75 +9,24 @@
 import Foundation
 import UIKit
 
-var viewControllersCollection : [String : ViewLogger] = [:]
+private var viewControllersCollection : [String : ViewLogger] = [:]
+
+private var classes = [AnyClass]()
+
 
 class NSRLogger: NSObject {
     
     override init() {
+        classes = objc_getClasses()
         UIViewController.configureViewLogger()
-        UIScrollView.configureScroller()
+        UIViewController.configureScroller()
     }
-}
-
-extension UIScrollView {
-    
-    class func configureScroller () {
-    
-        let descSEL = #selector(UIScrollViewDelegate.scrollViewWillBeginDecelerating(_:))
-        let descSwizzleSEL = #selector(UIScrollView.swizzleScrollViewWillBeginDecelerating(_:))
-
-        var beginDeceleratingOrigionalMethod : Method?
-        
-       let classes = objc_getClasses()
-    
-        for cls in classes {
-            if class_conformsToProtocol(cls, UIScrollViewDelegate.self) {
-                if class_respondsToSelector(cls, descSEL) {
-                    print("class \(cls)")
-                    print(descSEL)
-                    beginDeceleratingOrigionalMethod = class_getInstanceMethod(cls, descSEL)
-                }
-            }
-        }
-        
-        let beginDeceleratingSwizzelMethod = class_getInstanceMethod(UIScrollView.self, descSwizzleSEL)
-
-        if let originalMethod = beginDeceleratingOrigionalMethod, let swizzleMethod = beginDeceleratingSwizzelMethod {
-            method_exchangeImplementations(originalMethod, swizzleMethod)
-        }
-        
-    }
-    
-    @objc func swizzleScrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
-        print("swizzleScrollViewWillBeginDecelerating")
-    }
-}
-
-func objc_getClasses() -> [AnyClass] {
-    
-    
-    let expectedClassCount = objc_getClassList(nil, 0)
-    
-    let allClasses = UnsafeMutablePointer<AnyClass?>.allocate(capacity: Int(expectedClassCount))
-    
-    let cls = AutoreleasingUnsafeMutablePointer<AnyClass>(allClasses)
-    
-    let actualClassCount : Int32 = objc_getClassList(cls, expectedClassCount)
-    
-    var classes = [AnyClass]()
-    
-    for i in 0..<actualClassCount {
-        if let currentClass : AnyClass = allClasses[Int(i)] {
-            classes.append(currentClass)
-        }
-    }
-    
-    allClasses.deallocate(capacity: Int(expectedClassCount))
-    
-    return classes
 }
 
 extension UIViewController {
+    
+    
+    // MARK: UIViewController Swizzle
     
     class func configureViewLogger() {
         
@@ -119,16 +68,16 @@ extension UIViewController {
     @objc func swizzledViewWillAppear(_ animated: Bool) {
         
         let className = NSStringFromClass(self.classForCoder)
-
+        
         let viewLoggerObject = ViewLogger(viewVisibleTime: Date())
         
         viewControllersCollection.updateValue(viewLoggerObject, forKey: className)
     }
     
     @objc func swizzledViewWillDidappear(_ animated: Bool) {
-
+        
         let className = NSStringFromClass(self.classForCoder)
-
+        
         var viewLoggerObject = viewControllersCollection[className]
         
         viewLoggerObject?.calculateViewDeltaWith(viewHiddenTime: Date())
@@ -137,9 +86,67 @@ extension UIViewController {
             let timeString = String.init(format: "%.3f", delta)
             print(" \(className) was visible for \(timeString) seconds" )
         }
+        
+    }
+    
+    // MARK: UIScrollView swizzle
+    class func configureScroller () {
+        
+        let descSEL = #selector(UIScrollViewDelegate.scrollViewWillBeginDecelerating(_:))
+        
+        let didConfirmedAndRespond : AnyClass? = didClassConfirms(toProtocol: UIScrollViewDelegate.self,andRespondToSelector: descSEL)
+        
+        if let classConfirmed = didConfirmedAndRespond {
+            print("class \(classConfirmed)")
+            let beginDeceleratingOrigionalMethod = class_getInstanceMethod(classConfirmed, descSEL)
+            let descSwizzleSEL = #selector(self.swizzleScrollViewWillBeginDecelerating(_:))
 
+            let beginDeceleratingSwizzelMethod = class_getInstanceMethod(self, descSwizzleSEL)
+            
+            if let originalMethod = beginDeceleratingOrigionalMethod, let swizzleMethod = beginDeceleratingSwizzelMethod {
+                method_exchangeImplementations(originalMethod, swizzleMethod)
+            }
+            else {
+                debugFatalError("Nil originalMethod or swizzleMethod")
+            }
+        }
+        else {
+            debugFatalError("Nil classConfirmed")
+        }
+        
+        
+        
+        
+    }
+    
+    @objc func swizzleScrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
+        print("swizzleScrollViewWillBeginDecelerating")
     }
 }
+
+/**
+ Check which class confirm to specified protocol, if confirms,
+ then check class can respond to selector passed.
+ 
+ -Parameter confrimProtocol: Protocol name that need to be confirmed by many classes
+ 
+ Returns:
+ */
+
+private func didClassConfirms(toProtocol confrimProtocol : Protocol, andRespondToSelector selector: Selector) -> AnyClass? {
+    
+    for cls in classes {
+        print(cls)
+        if class_conformsToProtocol(cls, confrimProtocol), class_respondsToSelector(cls, selector)  {
+            print("--------")
+            print(cls)
+            return cls
+        }
+    }
+    
+    return nil
+}
+
 
 struct ViewLogger {
     var viewVisibleTime : Date?
@@ -154,4 +161,35 @@ struct ViewLogger {
         self.viewHiddenTime = viewHiddenTime
         self.viewDelta = self.viewHiddenTime?.timeIntervalSince(self.viewVisibleTime!)
     }    
+}
+
+// MARK: Support methods
+
+private func objc_getClasses() -> [AnyClass] {
+    
+    let expectedClassCount = objc_getClassList(nil, 0)
+    
+    let allClasses = UnsafeMutablePointer<AnyClass?>.allocate(capacity: Int(expectedClassCount))
+    
+    let cls = AutoreleasingUnsafeMutablePointer<AnyClass>(allClasses)
+    
+    let actualClassCount : Int32 = objc_getClassList(cls, expectedClassCount)
+    
+    var classes = [AnyClass]()
+    
+    for i in 0..<actualClassCount {
+        if let currentClass : AnyClass = allClasses[Int(i)] {
+            classes.append(currentClass)
+        }
+    }
+    
+    allClasses.deallocate(capacity: Int(expectedClassCount))
+    
+    return classes
+}
+
+private func debugFatalError(_ errMessage : String) {
+    #if DEBUG
+        fatalError(errMessage)
+    #endif
 }
