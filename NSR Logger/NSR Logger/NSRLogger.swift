@@ -128,22 +128,21 @@ extension UIViewController {
  Check which class confirm to specified protocol, if confirms,
  then check class can respond to selector passed.
  
- -Parameter confrimProtocol: Protocol name that need to be confirmed by many classes
  
- Returns:
+ - Parameter confrimProtocol: Protocol name that need to be confirmed by many classes.
+ 
+ - Parameter selector: Selector that need to respond to against many classes.
+ 
+ - Returns: Optional of type AnyClass
  */
 
 private func didClassConfirms(toProtocol confrimProtocol : Protocol, andRespondToSelector selector: Selector) -> AnyClass? {
     
     for cls in classes {
-        print(cls)
         if class_conformsToProtocol(cls, confrimProtocol), class_respondsToSelector(cls, selector)  {
-            print("--------")
-            print(cls)
             return cls
         }
     }
-    
     return nil
 }
 
