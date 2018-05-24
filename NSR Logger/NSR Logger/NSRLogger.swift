@@ -223,9 +223,7 @@ private func didClassConfirms(toProtocol confrimProtocol : Protocol, andRespondT
     for cls in classes {
         print("cls \(i) \(cls) ")
         i+=1
-        
-        print (cls.class().isKind(UIView.self))
-        
+                
         if class_conformsToProtocol(cls, confrimProtocol){
             if class_respondsToSelector(cls, selector)  {
             print("---------")
