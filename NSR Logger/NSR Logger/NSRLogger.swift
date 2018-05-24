@@ -17,9 +17,15 @@ private var classes = [AnyClass]()
 class NSRLogger: NSObject {
     
     override init() {
-        classes = objc_getClasses()
+        
         UIViewController.configureViewLogger()
-        UIViewController.configureScroller()
+        
+        let operationQueue = OperationQueue()
+        
+        operationQueue.addOperation {
+            classes = objc_getClasses()
+            UIViewController.configureScroller()
+        }
     }
 }
 
@@ -123,21 +129,24 @@ extension UIViewController {
         let descSEL = #selector(UIScrollViewDelegate.scrollViewWillBeginDecelerating(_:))
         let descSwizzleSEL = #selector(self.swizzleScrollViewWillBeginDecelerating(_:))
 
-        let didBeginDeceleratingRespond : AnyClass? = didClassConfirms(toProtocol: UIScrollViewDelegate.self, andRespondToSelector: descSEL)
+        let didBeginDeceleratingRespond : [AnyClass]? = didClassConfirms(toProtocol: UIScrollViewDelegate.self, andRespondToSelector: descSEL)
         
-        if let deceleratingClass = didBeginDeceleratingRespond {
+        if let deceleratingClasses = didBeginDeceleratingRespond {
 
-            // Methods
-            let beginDeceleratingOrigionalMethod = class_getInstanceMethod(deceleratingClass, descSEL)
-            let beginDeceleratingSwizzelMethod = class_getInstanceMethod(self, descSwizzleSEL)
-            
-            if let originalMethod = beginDeceleratingOrigionalMethod, let swizzleMethod = beginDeceleratingSwizzelMethod {
-                // Implementation
-                method_exchangeImplementations(originalMethod, swizzleMethod)
+            for deceleratingClass in deceleratingClasses {
+                // Methods
+                let beginDeceleratingOrigionalMethod = class_getInstanceMethod(deceleratingClass, descSEL)
+                let beginDeceleratingSwizzelMethod = class_getInstanceMethod(self, descSwizzleSEL)
+                
+                if let originalMethod = beginDeceleratingOrigionalMethod, let swizzleMethod = beginDeceleratingSwizzelMethod {
+                    // Implementation
+                    method_exchangeImplementations(originalMethod, swizzleMethod)
+                }
+                else {
+                    debugFatalError("Nil originalMethod or swizzleMethod")
+                }
             }
-            else {
-                debugFatalError("Nil originalMethod or swizzleMethod")
-            }
+
         }
         else {
             debugFatalError("Nil didBeginDeceleratingRespond")
@@ -150,20 +159,23 @@ extension UIViewController {
         let endDeceleratingSEL = #selector(UIScrollViewDelegate.scrollViewDidEndDecelerating(_:))
         let endDeceleratingSwizzleSEL = #selector(self.swizzleScrollViewWillEndDecelerating(_:))
 
-        let didEndDeceleratingRespond : AnyClass? = didClassConfirms(toProtocol: UIScrollViewDelegate.self, andRespondToSelector: endDeceleratingSEL)
+        let didEndDeceleratingRespond : [AnyClass]? = didClassConfirms(toProtocol: UIScrollViewDelegate.self, andRespondToSelector: endDeceleratingSEL)
         
-        if let deceleratingClass = didEndDeceleratingRespond {
+        if let deceleratingClasses = didEndDeceleratingRespond {
             
-            // Methods
-            let methodEndDeceleratingOrigional = class_getInstanceMethod(deceleratingClass, endDeceleratingSEL)
-            let methodEndDeceleratingSwizzle = class_getInstanceMethod(self, endDeceleratingSwizzleSEL)
-            
-            if let origionalMethod = methodEndDeceleratingOrigional, let swizzleMethod = methodEndDeceleratingSwizzle {
-                // Implementation
-                method_exchangeImplementations(origionalMethod, swizzleMethod)
-            }
-            else {
-                debugFatalError("Nil origionalMethod or swizzleMethod")
+            for deceleratingClass in deceleratingClasses {
+
+                // Methods
+                let methodEndDeceleratingOrigional = class_getInstanceMethod(deceleratingClass, endDeceleratingSEL)
+                let methodEndDeceleratingSwizzle = class_getInstanceMethod(self, endDeceleratingSwizzleSEL)
+                
+                if let origionalMethod = methodEndDeceleratingOrigional, let swizzleMethod = methodEndDeceleratingSwizzle {
+                    // Implementation
+                    method_exchangeImplementations(origionalMethod, swizzleMethod)
+                }
+                else {
+                    debugFatalError("Nil origionalMethod or swizzleMethod")
+                }
             }
         }
         else {
@@ -201,14 +213,31 @@ struct ViewLogger {
  
  - Returns: Optional of type AnyClass
  */
-private func didClassConfirms(toProtocol confrimProtocol : Protocol, andRespondToSelector selector: Selector) -> AnyClass? {
+private func didClassConfirms(toProtocol confrimProtocol : Protocol, andRespondToSelector selector: Selector) -> [AnyClass]? {
     
+    var confirmedClasses : [AnyClass]? = []
+    
+    print("Selector : \(selector)")
+    print("confrimProtocol \(confrimProtocol)")
+    var i = 1
     for cls in classes {
-        if class_conformsToProtocol(cls, confrimProtocol), class_respondsToSelector(cls, selector)  {
-            return cls
+        print("cls \(i) \(cls) ")
+        i+=1
+        
+        print (cls.class().isKind(UIView.self))
+        
+        if class_conformsToProtocol(cls, confrimProtocol){
+            if class_respondsToSelector(cls, selector)  {
+            print("---------")
+            print("cls \(cls)")
+            confirmedClasses?.append(cls)
+//            return cls
+        }
+            
         }
     }
-    return nil
+    
+    return confirmedClasses
 }
 
 
