@@ -39,10 +39,10 @@ class ViewController: UIViewController {
 
     }
     
-    @IBAction func presentController(_ sender: UIButton) {
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "SecondTableViewController")
-        self.present(vc!, animated: true, completion: nil)
-    }
+//    @IBAction func presentController(_ sender: UIButton) {
+//        let vc = self.storyboard?.instantiateViewController(withIdentifier: "SecondTableViewController")
+//        self.present(vc!, animated: true, completion: nil)
+//    }
     
 }
 
@@ -60,6 +60,15 @@ class SecondTableViewController: UITableViewController {
             
         }
     }
+    
+    override func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
+        print("SecondTableViewController scrollViewWillBeginDecelerating")
+    }
+    
+    override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        print("SecondTableViewController scrollViewDidEndDecelerating")
+    }
+    
 }
 
 class FirstViewController: UIViewController, UIScrollViewDelegate {
@@ -74,9 +83,9 @@ class FirstViewController: UIViewController, UIScrollViewDelegate {
         print("FirstViewController scrollViewWillBeginDecelerating")
     }
     
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        print("FirstViewController scrollViewDidEndDecelerating")
-    }
+//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+//        print("FirstViewController scrollViewDidEndDecelerating")
+//    }
 }
 
 
