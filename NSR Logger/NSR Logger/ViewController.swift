@@ -10,6 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var label: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -19,6 +20,15 @@ class ViewController: UIViewController {
             let model = MyGenericModel()
             globalContainer.encryptAndStoreGenericModel(model)
         }
+        
+        
+        let tapGesture = UITapGestureRecognizer.init(target: self, action: #selector(tappedAction(_:)))
+        label.addGestureRecognizer(tapGesture);
+        
+    }
+    
+    @objc func tappedAction(_ gesture: UIGestureRecognizer) {
+        print("tappedAction");
     }
 
     override func didReceiveMemoryWarning() {

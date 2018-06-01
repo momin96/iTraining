@@ -257,8 +257,13 @@ private func objc_getClasses() -> [AnyClass] {
     var classes = [AnyClass]()
     
     for i in 0..<actualClassCount {
-        if let currentClass : AnyClass = allClasses[Int(i)] {
-            classes.append(currentClass)
+        autoreleasepool() {
+            if let currentClass : AnyClass = allClasses[Int(i)] {
+                let bundle = Bundle(for: currentClass)
+                if bundle == Bundle.main {
+                    classes.append(currentClass)
+                }
+            }
         }
     }
     
