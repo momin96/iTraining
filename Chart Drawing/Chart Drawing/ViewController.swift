@@ -13,7 +13,7 @@ class ViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let inputData = [["a","10"],["b","50"],["c","30"],["d","20"],["e","40"]]
+        let inputData = [["a","10"],["b","50"],["c","40"],["d","20"],["e","30"]]
         
         
         let frame = CGRect(x: 20, y: 20, width: self.view.frame.width - 40, height: self.view.frame.height - 40)
