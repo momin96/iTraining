@@ -13,19 +13,16 @@ class ViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let inputData = [["a","10"],["b","50"],["c","40"],["d","20"],["e","30"]]
-        
+        let inputData = [["a","10"],["b","30"],["c","20"],["d","40"],["e","50"]]
         
         let frame = CGRect(x: 20, y: 20, width: self.view.frame.width - 40, height: self.view.frame.height - 40)
         
         
         let lineChart = LineChart.init(frame: frame)
         lineChart.inputData = inputData        
-        lineChart.renderLineChart()
-        
         self.view.addSubview(lineChart)
-        
-        
+
+        lineChart.renderLineChart()
         
     }
 

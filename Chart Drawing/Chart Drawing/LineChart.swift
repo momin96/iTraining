@@ -9,18 +9,23 @@
 import Cocoa
 
 
+let axisWidth : CGFloat = 1
+
 let lineWidth : CGFloat = 5
 let lineMargin : CGFloat = 5
-let pointArea : CGFloat = 5
+
+let pointArea : CGFloat = 10
 
 let pointMargin : CGFloat = lineMargin - 2
 
 let ZERO = 0
 
-class LineChart: NSView, HorizontalAxis, VerticalAxis, AxisPoint {
- 
+class LineChart: NSView, Axis, AxisPoint {
     
+
     
+    private var lineColor : NSColor = NSColor.blue
+
     // MARK: public properties
     public var inputData = [[String]]()
     
@@ -40,8 +45,9 @@ class LineChart: NSView, HorizontalAxis, VerticalAxis, AxisPoint {
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
         
-        NSColor.gray.setFill()
-        dirtyRect.fill()
+        
+        calculateAxis()
+        calculateDOTPointForVerticalAndhorizontalAxis()
     }
     
     override init(frame frameRect: NSRect) {
@@ -50,44 +56,30 @@ class LineChart: NSView, HorizontalAxis, VerticalAxis, AxisPoint {
     
     required init?(coder decoder: NSCoder) {
         super.init(coder: decoder)
+
     }
     
     // MARK:Public functions
     public func renderLineChart() {
         
-        drawVerticalAxis()
-        
-        drawHorizontalAxis()
-        
-        calculateDOTPointForVerticalAndhorizontalAxis()
-        
-        calculateDOTPointForChart()
-        
     }
     
+
     
     // MARK: Private functions
-    
-    private func calculateDOTPointForChart() {
-        // Drawing points on View
-        //                    let point = NSPoint(x: CGFloat(horizontalPoints), y: CGFloat(verticalPoints))
-        //                    points.append(point)
-        //                    let pointView = createPointView(point)
-        //                    self.addSubview(pointView)
-    }
     
     private func calculateDOTPointForVerticalAndhorizontalAxis () {
         
         let count = inputData.count
         
-        let verticalSegment : Int = Int((verticalLeftMeasurer?.frame.height)!) / count
+        let verticalSegment : Int = Int(self.frame.height) / count
         var verticalPoints = ZERO
         
-        let horizontalSegment : Int = Int((horizontalBottomMeasurer?.frame.width)!) / count
+        let horizontalSegment : Int = Int(self.frame.width) / count
         var horizontalPoints = ZERO
         
         
-        let ppi = pointPerInput((verticalLeftMeasurer?.frame.height)!, inputData: inputData)
+        let ppi = pointPerInput(self.frame.height, inputData: inputData)
         
         for input in inputData {
             
@@ -95,13 +87,13 @@ class LineChart: NSView, HorizontalAxis, VerticalAxis, AxisPoint {
             verticalPoints += verticalSegment    // 0+50,50+50,100+50.....200+50
             
             let verticalLinePoint = CGPoint(x: pointMargin, y: CGFloat(verticalPoints))
-            drawAxisPoint(on: verticalLinePoint)
+//            drawAxisPoint(on: verticalLinePoint)
             
             // Horizontal bottom side seperator line
             horizontalPoints += horizontalSegment    // 0+50,50+50,100+50.....200+50
             
             let horizontalLinePoint = CGPoint(x: CGFloat(horizontalPoints), y: pointMargin)
-            drawAxisPoint(on: horizontalLinePoint)
+//            drawAxisPoint(on: horizontalLinePoint)
          
             
             let x : Int = ppi * Int(input[1])!
@@ -114,45 +106,8 @@ class LineChart: NSView, HorizontalAxis, VerticalAxis, AxisPoint {
     
     
     // MARK: Support Method
-    private func createSeperatorWithRect(_ rect : CGRect) -> NSView{
-        let seperator = NSView(frame: rect)
-        NSColor.blue.setFill()
-//        rect.fill()
-        return seperator
-    }
-    
-    
 
-    
-    private func createPointView(_ point: NSPoint) -> NSView {
-        
-        let pointView = NSView(frame: CGRect(x: point.x - pointArea,
-                                             y: point.y - pointArea,
-                                             width: pointArea * 2,
-                                             height: pointArea * 2))
-        pointView.layer = CALayer()
-        pointView.wantsLayer = true
-        pointView.layer?.masksToBounds = true
-        pointView.layer?.cornerRadius = 10
-        
-        NSColor.red.setFill()
-        pointView.frame.fill()
-        
-        
-        return pointView
-    }
-    
-    private func drawLine (toPoint point: NSPoint) {
-        let path = NSBezierPath()
-        path.move(to: startpoint)
-        path.line(to: point)
-        path.lineWidth = lineWidth - 2
-        path.stroke()
-        
-        startpoint = point
-        
-    }
-    
+
     
     //MARK: Protocol Implementation
     
@@ -169,61 +124,75 @@ class LineChart: NSView, HorizontalAxis, VerticalAxis, AxisPoint {
         return ppi
     }
     
-    func drawVerticalAxis() {
-        verticalLeftMeasurer?.removeFromSuperview()
-        verticalLeftMeasurer = createSeperatorWithRect(CGRect(x: lineMargin,
-                                                              y: lineMargin,
-                                                              width: lineWidth,
-                                                              height: self.frame.height - lineMargin))
-        self.addSubview(verticalLeftMeasurer!)
-    }
     
-    func drawHorizontalAxis() {
-        
-        horizontalBottomMeasurer?.removeFromSuperview()
-        
-        horizontalBottomMeasurer = createSeperatorWithRect(CGRect(x: lineMargin,
-                                                                  y: lineMargin,
-                                                                  width: self.frame.width - lineMargin,
-                                                                  height:lineWidth ))
-        self.addSubview(horizontalBottomMeasurer!)
-    }
     
+    
+    func drawAxis(onFrame rect : CGRect) {
+        
+        NSGraphicsContext.saveGraphicsState()
+        NSColor.red.set()
+        let bPath = NSBezierPath(rect: rect)
+        bPath.fill()
+        NSGraphicsContext.restoreGraphicsState()
+    }
     
     func drawAxisPoint(on point: NSPoint) {
         
-        let pointView : NSView = NSView(frame: CGRect(x: point.x,
-                                                      y: point.y,
-                                                      width: pointArea,
-                                                      height: pointArea))
-        NSColor.red.setFill()
-//        pointView.frame.fill()
-        self.addSubview(pointView)
+        let rect = CGRect(x: point.x - pointArea / 2,
+                          y: point.y - pointArea / 2,
+                          width: pointArea,
+                          height: pointArea)
+        
+        NSGraphicsContext.saveGraphicsState()
+        
+        NSColor.orange.set()
+        let path = NSBezierPath(roundedRect: rect,
+                                xRadius: pointArea/2,
+                                yRadius: pointArea/2)
+        path.fill()
+        
+        NSGraphicsContext.restoreGraphicsState()
+        
     }
     
     func drawLineOnChart(withPoint point: CGPoint) {
         
         drawAxisPoint(on: point)
         
+        NSGraphicsContext.saveGraphicsState()
+        lineColor.set()
         let path = NSBezierPath()
         path.move(to: startpoint)
         path.line(to: point)
-        path.lineWidth = lineWidth - 2
+        path.lineWidth = axisWidth
         path.stroke()
-        
+        NSGraphicsContext.restoreGraphicsState()
         startpoint = point
     }
     
+    func calculateAxis() {
+        let verticalAxisLine : CGRect = CGRect(x: lineMargin,
+                                               y: lineMargin,
+                                               width: axisWidth,
+                                               height: self.frame.height - lineMargin)
+        drawAxis(onFrame: verticalAxisLine)
+        
+        let horizontalAxisLine = CGRect(x: lineMargin,
+                                        y: lineMargin,
+                                        width: self.frame.width - lineMargin,
+                                        height:axisWidth )
+        drawAxis(onFrame: horizontalAxisLine)
+        
+    }
 }
 
-
-protocol HorizontalAxis {
-    func drawHorizontalAxis ()
+protocol Axis {
+    
+    func calculateAxis()
+    
+    func drawAxis(onFrame rect : CGRect)
 }
 
-protocol VerticalAxis {
-    func drawVerticalAxis()
-}
 
 protocol AxisPoint {
     func drawAxisPoint(on point: NSPoint)
