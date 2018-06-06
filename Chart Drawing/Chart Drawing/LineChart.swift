@@ -20,7 +20,7 @@ let pointMargin : CGFloat = lineMargin - 2
 
 let ZERO = 0
 
-class LineChart: NSView, Axis, AxisPoint {
+class LineChart: NSView, AxisPoint {
     
 
     
@@ -72,12 +72,11 @@ class LineChart: NSView, Axis, AxisPoint {
         
         let count = inputData.count
         
-        let verticalSegment : Int = Int(self.frame.height) / count
+        let verticalSegment : Int = Int(self.frame.height - pointArea) / count
         var verticalPoints = ZERO
         
-        let horizontalSegment : Int = Int(self.frame.width) / count
+        let horizontalSegment : Int = Int(self.frame.width - pointArea) / count
         var horizontalPoints = ZERO
-        
         
         let ppi = pointPerInput(self.frame.height, inputData: inputData)
         
@@ -107,11 +106,7 @@ class LineChart: NSView, Axis, AxisPoint {
     
     // MARK: Support Method
 
-
-    
-    //MARK: Protocol Implementation
-    
-    func pointPerInput(_ maxFrame: CGFloat, inputData: [[String]]) -> Int {
+    private func pointPerInput(_ maxFrame: CGFloat, inputData: [[String]]) -> Int {
         
         let output = inputData.map { inp in
             return Int(inp[1])!
@@ -124,9 +119,8 @@ class LineChart: NSView, Axis, AxisPoint {
         return ppi
     }
     
-    
-    
-    
+    //MARK: Protocol Implementation
+
     func drawAxis(onFrame rect : CGRect) {
         
         NSGraphicsContext.saveGraphicsState()
@@ -136,7 +130,7 @@ class LineChart: NSView, Axis, AxisPoint {
         NSGraphicsContext.restoreGraphicsState()
     }
     
-    func drawAxisPoint(on point: NSPoint) {
+    func drawPoint(_ point: NSPoint) {
         
         let rect = CGRect(x: point.x - pointArea / 2,
                           y: point.y - pointArea / 2,
@@ -157,7 +151,7 @@ class LineChart: NSView, Axis, AxisPoint {
     
     func drawLineOnChart(withPoint point: CGPoint) {
         
-        drawAxisPoint(on: point)
+        drawPoint(point)
         
         NSGraphicsContext.saveGraphicsState()
         lineColor.set()
@@ -194,9 +188,9 @@ protocol Axis {
 }
 
 
-protocol AxisPoint {
-    func drawAxisPoint(on point: NSPoint)
-    
+protocol AxisPoint : Axis {
+    func drawPoint(_ point: NSPoint)
+
     func drawLineOnChart(withPoint point : CGPoint)
 }
 
