@@ -74,9 +74,6 @@ class LineChart: NSView, AxisPoint {
         let verticalSegment : Int = Int(self.frame.height - pointArea) / count
         var verticalPoints = ZERO
         
-//        let horizontalSegment : Int = Int(self.frame.width - pointArea) / count
-//        var horizontalPoints = ZERO
-        
         let ppi = pointPerInput(self.frame.height, inputData: inputData)
         
         for input in inputData {
@@ -84,21 +81,20 @@ class LineChart: NSView, AxisPoint {
             let vInput = input.first!
             let hInput = input.last!
             
+            let x : Int = ppi * Int(input[1])!
+
             // Vertical left side seperator line
             verticalPoints += verticalSegment    // 0+50,50+50,100+50.....200+50
             
-            let verticalLinePoint = CGPoint(x: (lineMargin - textPadding), y: CGFloat(verticalPoints) - pointArea)
+            let verticalLinePoint = CGPoint(x: (lineMargin - textPadding),
+                                            y: CGFloat(verticalPoints) - pointArea)
 
-
-            // Horizontal bottom side seperator line
-//            horizontalPoints += horizontalSegment    // 0+50,50+50,100+50.....200+50
-            
-            let x : Int = ppi * Int(input[1])!
-
-            let horizontalLinePoint = CGPoint(x: CGFloat(x) - pointArea, y: (lineMargin - textPadding))
+            let horizontalLinePoint = CGPoint(x: CGFloat(x) - pointArea,
+                                              y: (lineMargin - textPadding))
             
             
             writeAxisText(vInput, onPoint: horizontalLinePoint)
+            
             writeAxisText(hInput, onPoint: verticalLinePoint)
 
             
@@ -189,6 +185,8 @@ class LineChart: NSView, AxisPoint {
         
         let textLabel = NSTextField(string: text)
         textLabel.sizeToFit()
+        textLabel.backgroundColor = NSColor.clear
+        textLabel.isBordered = false
         textLabel.setFrameOrigin(point)
         self.addSubview(textLabel)
     }
