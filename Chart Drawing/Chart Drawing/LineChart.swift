@@ -11,12 +11,11 @@ import Cocoa
 
 let axisWidth : CGFloat = 1
 
-let lineWidth : CGFloat = 5
-let lineMargin : CGFloat = 5
+let lineMargin : CGFloat = 35
+
+let textPadding : CGFloat = 25
 
 let pointArea : CGFloat = 10
-
-let pointMargin : CGFloat = lineMargin - 2
 
 let ZERO = 0
 
@@ -38,7 +37,7 @@ class LineChart: NSView, AxisPoint {
     
     private var points = [NSPoint]()
     
-    private var startpoint : CGPoint = CGPoint(x: lineWidth, y: lineMargin)
+    private var startpoint : CGPoint = CGPoint(x: lineMargin, y: lineMargin)
     
     
     // MARK: System provided
@@ -75,27 +74,34 @@ class LineChart: NSView, AxisPoint {
         let verticalSegment : Int = Int(self.frame.height - pointArea) / count
         var verticalPoints = ZERO
         
-        let horizontalSegment : Int = Int(self.frame.width - pointArea) / count
-        var horizontalPoints = ZERO
+//        let horizontalSegment : Int = Int(self.frame.width - pointArea) / count
+//        var horizontalPoints = ZERO
         
         let ppi = pointPerInput(self.frame.height, inputData: inputData)
         
         for input in inputData {
             
+            let vInput = input.first!
+            let hInput = input.last!
+            
             // Vertical left side seperator line
             verticalPoints += verticalSegment    // 0+50,50+50,100+50.....200+50
             
-            let verticalLinePoint = CGPoint(x: pointMargin, y: CGFloat(verticalPoints))
-//            drawAxisPoint(on: verticalLinePoint)
-            
+            let verticalLinePoint = CGPoint(x: (lineMargin - textPadding), y: CGFloat(verticalPoints) - pointArea)
+
+
             // Horizontal bottom side seperator line
-            horizontalPoints += horizontalSegment    // 0+50,50+50,100+50.....200+50
-            
-            let horizontalLinePoint = CGPoint(x: CGFloat(horizontalPoints), y: pointMargin)
-//            drawAxisPoint(on: horizontalLinePoint)
-         
+//            horizontalPoints += horizontalSegment    // 0+50,50+50,100+50.....200+50
             
             let x : Int = ppi * Int(input[1])!
+
+            let horizontalLinePoint = CGPoint(x: CGFloat(x) - pointArea, y: (lineMargin - textPadding))
+            
+            
+            writeAxisText(vInput, onPoint: horizontalLinePoint)
+            writeAxisText(hInput, onPoint: verticalLinePoint)
+
+            
             let point = CGPoint(x: CGFloat(x), y: CGFloat(verticalPoints))
             drawLineOnChart(withPoint: point)
             
@@ -178,6 +184,14 @@ class LineChart: NSView, AxisPoint {
         drawAxis(onFrame: horizontalAxisLine)
         
     }
+    
+    func writeAxisText(_ text: String, onPoint point: CGPoint) {
+        
+        let textLabel = NSTextField(string: text)
+        textLabel.sizeToFit()
+        textLabel.setFrameOrigin(point)
+        self.addSubview(textLabel)
+    }
 }
 
 protocol Axis {
@@ -192,6 +206,8 @@ protocol AxisPoint : Axis {
     func drawPoint(_ point: NSPoint)
 
     func drawLineOnChart(withPoint point : CGPoint)
+    
+    func writeAxisText(_ text : String, onPoint point: CGPoint)
 }
 
 
