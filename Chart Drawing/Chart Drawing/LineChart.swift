@@ -22,9 +22,6 @@ let ZERO = 0
 class LineChart: NSView, AxisPoint {
     
 
-    
-    private var lineColor : NSColor = NSColor.blue
-
     // MARK: public properties
     public var inputData = [[String]]()
     
@@ -39,6 +36,8 @@ class LineChart: NSView, AxisPoint {
     
     private var startpoint : CGPoint = CGPoint(x: lineMargin, y: lineMargin)
     
+    private var lineColor : NSColor = NSColor.blue
+
     
     // MARK: System provided
     override func draw(_ dirtyRect: NSRect) {
@@ -57,14 +56,7 @@ class LineChart: NSView, AxisPoint {
         super.init(coder: decoder)
 
     }
-    
-    // MARK:Public functions
-    public func renderLineChart() {
-        
-    }
-    
 
-    
     // MARK: Private functions
     
     private func calculateDOTPointForVerticalAndhorizontalAxis () {
@@ -82,7 +74,6 @@ class LineChart: NSView, AxisPoint {
             let vInput = input.first!
             let hInput = input.last!
             
-            
             // Vertical left side seperator line
             verticalPoints += verticalSegment    // 0+50,50+50,100+50.....200+50
             
@@ -94,36 +85,25 @@ class LineChart: NSView, AxisPoint {
             let horizontalLinePoint = CGPoint(x: CGFloat(horizontalPoints) - (pointArea/2.0),
                                               y: (lineMargin - textPadding))
             
+            // Write input text on Horizontal Axis, Bottom line
             writeAxisText(vInput, onPoint: horizontalLinePoint)
             
+            // Writesinput text on Vertical line, Left side line
             writeAxisText(hInput, onPoint: verticalLinePoint)
-
             
+            // 50*(0+1), 50*(2+1),50*(1+1)....... 50*(4+1),
             let x = horizontalSegment * (i+1)
+            
             let y = verticalSegment * (Int(input[1])!/10)
             
             let point = CGPoint(x: CGFloat(x), y: CGFloat(y))
+            
+            /// Places point on inside chart axis & then draws line inbetween those points
             drawLineOnChart(withPoint: point)
             
         }
     }
     
-    
-    
-    // MARK: Support Method
-
-    private func pointPerInput(_ maxFrame: CGFloat, inputData: [[String]]) -> Int {
-        
-        let output = inputData.map { inp in
-            return Int(inp[1])!
-        }
-        
-        let maxValue = output.reduce(output[0], { max($0, $1) })
-        
-        let ppi = Int(maxFrame) / maxValue  // 250/50 = 5
-        
-        return ppi
-    }
     
     //MARK: Protocol Implementation
 

@@ -17,12 +17,9 @@ class ViewController: NSViewController {
         
         let frame = CGRect(x: 20, y: 20, width: self.view.frame.width - 40, height: self.view.frame.height - 40)
         
-        
         let lineChart = LineChart.init(frame: frame)
         lineChart.inputData = inputData        
         self.view.addSubview(lineChart)
-
-        lineChart.renderLineChart()
         
     }
 
