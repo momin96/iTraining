@@ -74,31 +74,35 @@ class LineChart: NSView, AxisPoint {
         let verticalSegment : Int = Int(self.frame.height - pointArea) / count
         var verticalPoints = ZERO
         
-        let ppi = pointPerInput(self.frame.height, inputData: inputData)
+        let horizontalSegment : Int = Int(self.frame.width - pointArea) / count
+        var horizontalPoints = ZERO
         
-        for input in inputData {
-            
+        for i in 0..<count {
+            let input = inputData[i]
             let vInput = input.first!
             let hInput = input.last!
             
-            let x : Int = ppi * Int(input[1])!
-
+            
             // Vertical left side seperator line
             verticalPoints += verticalSegment    // 0+50,50+50,100+50.....200+50
             
-            let verticalLinePoint = CGPoint(x: (lineMargin - textPadding),
-                                            y: CGFloat(verticalPoints) - pointArea)
-
-            let horizontalLinePoint = CGPoint(x: CGFloat(x) - pointArea,
-                                              y: (lineMargin - textPadding))
+            horizontalPoints += horizontalSegment
             
+            let verticalLinePoint = CGPoint(x: (lineMargin - textPadding),
+                                            y: CGFloat(verticalPoints) - (pointArea*2.0))
+
+            let horizontalLinePoint = CGPoint(x: CGFloat(horizontalPoints) - (pointArea/2.0),
+                                              y: (lineMargin - textPadding))
             
             writeAxisText(vInput, onPoint: horizontalLinePoint)
             
             writeAxisText(hInput, onPoint: verticalLinePoint)
 
             
-            let point = CGPoint(x: CGFloat(x), y: CGFloat(verticalPoints))
+            let x = horizontalSegment * (i+1)
+            let y = verticalSegment * (Int(input[1])!/10)
+            
+            let point = CGPoint(x: CGFloat(x), y: CGFloat(y))
             drawLineOnChart(withPoint: point)
             
         }
@@ -187,6 +191,7 @@ class LineChart: NSView, AxisPoint {
         textLabel.sizeToFit()
         textLabel.backgroundColor = NSColor.clear
         textLabel.isBordered = false
+        textLabel.isEditable = false
         textLabel.setFrameOrigin(point)
         self.addSubview(textLabel)
     }
