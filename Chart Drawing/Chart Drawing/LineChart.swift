@@ -32,7 +32,7 @@ class LineChart: NSView, AxisPoint {
     
     private var verticalLeftMeasurer : NSView?
     
-    private var points = [NSPoint]()
+    private var points = [CGPoint]()
     
     private var startpoint : CGPoint = CGPoint(x: lineMargin, y: lineMargin)
     
@@ -142,15 +142,6 @@ class LineChart: NSView, AxisPoint {
         pathLayer.strokeEnd = 1.0
         self.layer?.addSublayer(pathLayer)
     }
-
-    func drawAxis(onFrame rect : CGRect) {
-        
-        NSGraphicsContext.saveGraphicsState()
-        NSColor.red.set()
-        let bPath = NSBezierPath(rect: rect)
-        bPath.fill()
-        NSGraphicsContext.restoreGraphicsState()
-    }
     
     func drawPoint(_ point: NSPoint) {
         
@@ -159,17 +150,19 @@ class LineChart: NSView, AxisPoint {
                           width: pointArea,
                           height: pointArea)
         
-        NSGraphicsContext.saveGraphicsState()
         
-        NSColor.orange.set()
-        let path = NSBezierPath(roundedRect: rect,
-                                xRadius: pointArea/2,
-                                yRadius: pointArea/2)
-//        path.fill()
-        path.stroke()
+        let circle = CGMutablePath()
+        circle.addRoundedRect(in: rect, cornerWidth: rect.width / 2.0, cornerHeight: rect.height / 2.0)
         
-        NSGraphicsContext.restoreGraphicsState()
-        
+        let circleLayer = CAShapeLayer()
+        circleLayer.lineWidth  = axisWidth
+        circleLayer.path = circle
+        circleLayer.strokeColor = NSColor.orange.cgColor
+        circleLayer.fillColor = nil
+        circleLayer.strokeEnd = 1.0
+
+        self.layer?.addSublayer(circleLayer)
+
     }
     
     /*
@@ -224,22 +217,9 @@ class LineChart: NSView, AxisPoint {
     
     func calculateAxis() {
         
-        
         generateVerticalAxis()
         
         generateHorizontalAxis()
-        
-//        let verticalAxisLine : CGRect = CGRect(x: lineMargin,
-//                                               y: lineMargin,
-//                                               width: axisWidth,
-//                                               height: self.frame.height - lineMargin)
-//        drawAxis(onFrame: verticalAxisLine)
-//
-//        let horizontalAxisLine = CGRect(x: lineMargin,
-//                                        y: lineMargin,
-//                                        width: self.frame.width - lineMargin,
-//                                        height:axisWidth )
-//        drawAxis(onFrame: horizontalAxisLine)
         
     }
     
@@ -261,8 +241,6 @@ protocol Axis {
     
     func calculateAxis()
     
-    func drawAxis(onFrame rect : CGRect)
-    
     func generateVerticalAxis()
     
     func generateHorizontalAxis ()
@@ -270,7 +248,6 @@ protocol Axis {
     func renderAxes(withStartPoint start : CGPoint, endPoint end: CGPoint)
     
 }
-
 
 protocol AxisPoint : Axis {
     
