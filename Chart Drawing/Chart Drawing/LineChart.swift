@@ -25,6 +25,7 @@ class LineChart: NSView, AxisPoint {
     // MARK: public properties
     public var inputData = [[String]]()
     
+    public var inputDataSeries : DataSeries?
     
     // MARK: Private properties
     
@@ -260,3 +261,43 @@ protocol AxisPoint : Axis {
 
 
 
+protocol LocationCalculation {
+    
+    func calculatePointsLocations(inFrame frame : CGRect)
+    
+}
+
+
+
+struct PointLocation : LocationCalculation {
+    
+    func calculatePointsLocations(inFrame frame: CGRect) {
+        
+    }
+    
+    
+    private var frame = CGRect()
+    
+    private var inputData = [String]()
+    
+    init(withFrame rect : CGRect, inputData : [String]) {
+        
+    }
+}
+
+
+struct DataSeries {
+    private var onXAxis : [Any]
+    private var onYAxis : [Any]
+    
+//    init() {
+//        self.onYAxis = [0]
+//        self.onYAxis = [0]
+//    }
+    
+    init(onXAxis xAxis : [Any], onYAxis yAxis: [Any]) {
+        onXAxis = xAxis
+        onYAxis = yAxis
+    }
+    
+}
