@@ -36,8 +36,8 @@ class LineChart: NSView, AxisPoint {
     
     private var startpoint : CGPoint = CGPoint(x: lineMargin, y: lineMargin)
     
-    private var lineColor : NSColor = NSColor.blue
-
+    private var lineColor : NSColor = NSColor.black
+    
     
     // MARK: System provided
     override func draw(_ dirtyRect: NSRect) {
@@ -69,6 +69,8 @@ class LineChart: NSView, AxisPoint {
         let horizontalSegment : Int = Int(self.frame.width - pointArea) / count
         var horizontalPoints = ZERO
         
+        var pointsList = [CGPoint]()
+        
         for i in 0..<count {
             let input = inputData[i]
             let vInput = input.first!
@@ -98,10 +100,14 @@ class LineChart: NSView, AxisPoint {
             
             let point = CGPoint(x: CGFloat(x), y: CGFloat(y))
             
-            /// Places point on inside chart axis & then draws line inbetween those points
-            drawLineOnChart(withPoint: point)
+            pointsList.append(point)
+            
+            /// Places point on inside chart axis
+            drawPoint(point)
             
         }
+        
+        drawLine(withPoints: pointsList)
     }
     
     
@@ -135,19 +141,54 @@ class LineChart: NSView, AxisPoint {
         
     }
     
+    /*
     func drawLineOnChart(withPoint point: CGPoint) {
         
         drawPoint(point)
         
-        NSGraphicsContext.saveGraphicsState()
-        lineColor.set()
-        let path = NSBezierPath()
-        path.move(to: startpoint)
-        path.line(to: point)
-        path.lineWidth = axisWidth
-        path.stroke()
-        NSGraphicsContext.restoreGraphicsState()
+        let cgContext = NSGraphicsContext.current?.cgContext
+
+        cgContext?.saveGState()
+        
+        let cgPath = CGMutablePath()
+        cgPath.move(to: startpoint)
+        cgPath.addLine(to: point)
+        cgPath.closeSubpath()
+        cgContext?.setLineWidth(1.0)
+        cgContext?.setStrokeColor(lineColor.cgColor)
+        cgContext?.addPath(cgPath)
+        cgContext?.drawPath(using: .stroke)
+        
+        cgContext?.restoreGState()
+
         startpoint = point
+    }
+    */
+    
+    func drawLine(withPoints points: [CGPoint]) {
+        
+        let path = CGMutablePath()
+        path.move(to: startpoint)
+        for point in points {
+            path.addLine(to: point)
+        }
+        
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.frame = self.bounds
+        shapeLayer.path = path
+        shapeLayer.lineWidth = 1.5
+        shapeLayer.strokeColor = lineColor.cgColor
+        shapeLayer.fillColor = nil
+        shapeLayer.strokeEnd = 1.0
+        self.layer?.addSublayer(shapeLayer)
+        
+        let drawAnimation = CABasicAnimation(keyPath: "strokeEnd")
+        drawAnimation.fromValue = 0.0
+        drawAnimation.toValue = 0.1
+        drawAnimation.duration = 2.5
+        drawAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
+        shapeLayer.add(drawAnimation, forKey: "strokeEndAnimation")
+        
     }
     
     func calculateAxis() {
@@ -186,9 +227,10 @@ protocol Axis {
 
 
 protocol AxisPoint : Axis {
+    
     func drawPoint(_ point: NSPoint)
-
-    func drawLineOnChart(withPoint point : CGPoint)
+    
+    func drawLine(withPoints points: [CGPoint])
     
     func writeAxisText(_ text : String, onPoint point: CGPoint)
 }
