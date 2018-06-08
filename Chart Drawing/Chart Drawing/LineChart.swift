@@ -135,7 +135,8 @@ class LineChart: NSView, AxisPoint {
         let path = NSBezierPath(roundedRect: rect,
                                 xRadius: pointArea/2,
                                 yRadius: pointArea/2)
-        path.fill()
+//        path.fill()
+        path.stroke()
         
         NSGraphicsContext.restoreGraphicsState()
         
@@ -184,7 +185,7 @@ class LineChart: NSView, AxisPoint {
         
         let drawAnimation = CABasicAnimation(keyPath: "strokeEnd")
         drawAnimation.fromValue = 0.0
-        drawAnimation.toValue = 0.1
+        drawAnimation.toValue = 1.0
         drawAnimation.duration = 2.5
         drawAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
         shapeLayer.add(drawAnimation, forKey: "strokeEndAnimation")
