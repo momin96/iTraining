@@ -46,7 +46,9 @@ class LineChart: NSView, AxisPoint {
         
         
         calculateAxis()
-        calculateDOTPointForVerticalAndhorizontalAxis()
+        calculatePoitsForVerticalAxis()
+        calculatePointsForHorizontalAxis()
+//        calculateDOTPointForVerticalAndhorizontalAxis()
     }
     
     override init(frame frameRect: NSRect) {
@@ -59,6 +61,54 @@ class LineChart: NSView, AxisPoint {
     }
 
     // MARK: Private functions
+    
+    
+    private func calculatePoitsForVerticalAxis () {
+        let vCount = (inputDataSeries?.onYAxis.count)!
+        
+        let verticalSegment : Int = Int(self.frame.height - pointArea) / vCount
+        var verticalPoints = ZERO
+        
+        let sortedItems : [Int] = (((inputDataSeries?.onYAxis) as? [Int])?.sorted(by: { (i0, i1) -> Bool in
+            return i0 < i1
+        }))!
+        
+        for i in 0..<vCount {
+            
+            // Vertical left side seperator line
+            verticalPoints += verticalSegment    // 0+50,50+50,100+50.....200+50
+            
+            let verticalLinePoint = CGPoint(x: (lineMargin - textPadding),
+                                            y: CGFloat(verticalPoints) - (pointArea*2.0))
+            
+            let hInput = String(sortedItems[i])
+            
+            writeAxisText(hInput, onPoint: verticalLinePoint)
+
+        
+        }
+    }
+    
+    private func calculatePointsForHorizontalAxis () {
+        let vCount = (inputDataSeries?.onXAxis.count)!
+        
+        let horizontalSegment : Int = Int(self.frame.width - pointArea * 3) / vCount
+        var horizontalPoints = ZERO
+        
+        for i in 0..<vCount {
+            // Horizontal bottom side seperator line
+            horizontalPoints += horizontalSegment
+            
+            let horizontalLinePoint = CGPoint(x: CGFloat(horizontalPoints) - (pointArea*2.0),
+                                              y: (lineMargin - textPadding))
+            
+            let vInput = inputDataSeries?.onXAxis[i] as! String
+            
+            writeAxisText(vInput, onPoint: horizontalLinePoint)
+
+        }
+    }
+    
     
     private func calculateDOTPointForVerticalAndhorizontalAxis () {
         
@@ -287,8 +337,8 @@ struct PointLocation : LocationCalculation {
 
 
 struct DataSeries {
-    private var onXAxis : [Any]
-    private var onYAxis : [Any]
+    var onXAxis : [Any]
+    var onYAxis : [Any]
     
 //    init() {
 //        self.onYAxis = [0]
