@@ -6,6 +6,8 @@
 //  Copyright © 2017 AppCoda. All rights reserved.
 //
 
+// https://www.appcoda.com/vision-framework-introduction/
+
 import UIKit
 import AVFoundation
 import Vision
@@ -137,5 +139,23 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
-    
+    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
+            return
+        }
+        
+        var requestOptions:[VNImageOption : Any] = [:]
+        
+        if let camData = CMGetAttachment(sampleBuffer, kCMSampleBufferAttachmentKey_CameraIntrinsicMatrix, nil) {
+            requestOptions = [.cameraIntrinsics:camData]
+        }
+        
+        let imageRequestHandler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer, orientation: CGImagePropertyOrientation(rawValue: 6)!, options: requestOptions)
+        
+        do {
+            try imageRequestHandler.perform(self.request)
+        } catch {
+            print(error)
+        }
+    }
 }
