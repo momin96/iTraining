@@ -48,9 +48,12 @@
                                         <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <state key="normal" title="+"/>
+                                        <connections>
+                                            <action selector="incrementItem:" destination="gTV-IL-0wX" eventType="touchUpInside" id="EAK-kO-og6"/>
+                                        </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="99" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="veP-wD-hHQ">
-                                        <rect key="frame" x="34.5" y="0.0" width="16.5" height="30"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="veP-wD-hHQ">
+                                        <rect key="frame" x="38.5" y="0.0" width="8.5" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -59,6 +62,9 @@
                                         <rect key="frame" x="55.5" y="0.0" width="30" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <state key="normal" title="-"/>
+                                        <connections>
+                                            <action selector="decrementItem:" destination="gTV-IL-0wX" eventType="touchUpInside" id="GSo-7F-CsP"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -108,6 +114,17 @@
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="171" height="200"/>
+            <connections>
+                <outlet property="containerView" destination="jGC-wg-pmb" id="59r-c7-Rbc"/>
+                <outlet property="increamentItem" destination="hLG-2s-SgR" id="eAh-Qc-uTg"/>
+                <outlet property="itemDecrementButton" destination="Teq-bZ-Sme" id="jMv-Pz-l9z"/>
+                <outlet property="itemImageView" destination="CO4-41-slS" id="DMF-jr-ibI"/>
+                <outlet property="itemIncreamentButton" destination="hLG-2s-SgR" id="KhL-1T-G3r"/>
+                <outlet property="itemName" destination="lSE-DO-f9a" id="9Cz-R0-s7j"/>
+                <outlet property="itemPackQty" destination="E7A-BN-0Po" id="Nn2-qE-hZR"/>
+                <outlet property="itemPrice" destination="sSN-CP-OHD" id="knQ-vU-gib"/>
+                <outlet property="itemTotalQty" destination="veP-wD-hHQ" id="Mpg-L7-NaN"/>
+            </connections>
             <point key="canvasLocation" x="47.5" y="42"/>
         </collectionViewCell>
     </objects>
