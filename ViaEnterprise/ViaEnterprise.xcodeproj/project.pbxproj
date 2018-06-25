@@ -7,13 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0E99185B20E0B45400418488 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E99185A20E0B45400418488 /* AppDelegate.swift */; };
-		0E99185D20E0B45400418488 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E99185C20E0B45400418488 /* ViewController.swift */; };
 		0E99186020E0B45400418488 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E99185E20E0B45400418488 /* Main.storyboard */; };
 		0E99186220E0B45900418488 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E99186120E0B45900418488 /* Assets.xcassets */; };
 		0E99186520E0B45900418488 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E99186320E0B45900418488 /* LaunchScreen.storyboard */; };
 		0E99187020E0B45900418488 /* ViaEnterpriseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E99186F20E0B45900418488 /* ViaEnterpriseTests.swift */; };
 		0E99187B20E0B45900418488 /* ViaEnterpriseUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E99187A20E0B45900418488 /* ViaEnterpriseUITests.swift */; };
+		0E99189220E0B97100418488 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E99188E20E0B97100418488 /* AppDelegate.swift */; };
+		0E99189320E0B97100418488 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E99189120E0B97100418488 /* Item.swift */; };
+		0E99189820E0B9CF00418488 /* ItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E99189720E0B9CF00418488 /* ItemViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,8 +36,6 @@
 
 /* Begin PBXFileReference section */
 		0E99185720E0B45400418488 /* ViaEnterprise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ViaEnterprise.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		0E99185A20E0B45400418488 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		0E99185C20E0B45400418488 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		0E99185F20E0B45400418488 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0E99186120E0B45900418488 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0E99186420E0B45900418488 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -47,6 +46,9 @@
 		0E99187620E0B45900418488 /* ViaEnterpriseUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ViaEnterpriseUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E99187A20E0B45900418488 /* ViaEnterpriseUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViaEnterpriseUITests.swift; sourceTree = "<group>"; };
 		0E99187C20E0B45900418488 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0E99188E20E0B97100418488 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		0E99189120E0B97100418488 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		0E99189720E0B9CF00418488 /* ItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,8 +99,7 @@
 		0E99185920E0B45400418488 /* ViaEnterprise */ = {
 			isa = PBXGroup;
 			children = (
-				0E99185A20E0B45400418488 /* AppDelegate.swift */,
-				0E99185C20E0B45400418488 /* ViewController.swift */,
+				0E99188D20E0B97100418488 /* Source Code */,
 				0E99185E20E0B45400418488 /* Main.storyboard */,
 				0E99186120E0B45900418488 /* Assets.xcassets */,
 				0E99186320E0B45900418488 /* LaunchScreen.storyboard */,
@@ -123,6 +124,32 @@
 				0E99187C20E0B45900418488 /* Info.plist */,
 			);
 			path = ViaEnterpriseUITests;
+			sourceTree = "<group>";
+		};
+		0E99188D20E0B97100418488 /* Source Code */ = {
+			isa = PBXGroup;
+			children = (
+				0E99188E20E0B97100418488 /* AppDelegate.swift */,
+				0E99188F20E0B97100418488 /* Controllers */,
+				0E99189020E0B97100418488 /* Models */,
+			);
+			path = "Source Code";
+			sourceTree = "<group>";
+		};
+		0E99188F20E0B97100418488 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				0E99189720E0B9CF00418488 /* ItemViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		0E99189020E0B97100418488 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				0E99189120E0B97100418488 /* Item.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -189,10 +216,11 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0930;
 				LastUpgradeCheck = 0930;
-				ORGANIZATIONNAME = "Via Enterprise";
+				ORGANIZATIONNAME = Exilant;
 				TargetAttributes = {
 					0E99185620E0B45400418488 = {
 						CreatedOnToolsVersion = 9.3;
+						LastSwiftMigration = 0930;
 					};
 					0E99186A20E0B45900418488 = {
 						CreatedOnToolsVersion = 9.3;
@@ -256,8 +284,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0E99185D20E0B45400418488 /* ViewController.swift in Sources */,
-				0E99185B20E0B45400418488 /* AppDelegate.swift in Sources */,
+				0E99189320E0B97100418488 /* Item.swift in Sources */,
+				0E99189220E0B97100418488 /* AppDelegate.swift in Sources */,
+				0E99189820E0B9CF00418488 /* ItemViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -430,6 +459,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = ViaEnterprise/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -439,6 +469,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.viatech.ViaEnterprise;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -448,6 +479,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = ViaEnterprise/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
