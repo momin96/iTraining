@@ -42,12 +42,24 @@
                                         <rect key="frame" x="28.5" y="0.0" width="318.5" height="45"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lub-ZF-CLv">
-                                                <rect key="frame" x="0.0" y="7.5" width="148" height="30"/>
-                                                <state key="normal" title="Normal Items"/>
+                                                <rect key="frame" x="0.0" y="6" width="148" height="33"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                                <state key="normal" title="Normal Items">
+                                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="tappedNormalPayButton:" destination="PRp-YM-D4v" eventType="touchUpInside" id="Oce-5a-rpd"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cEG-wf-nV6">
-                                                <rect key="frame" x="148" y="7.5" width="170.5" height="30"/>
-                                                <state key="normal" title="Extra Pay Items"/>
+                                                <rect key="frame" x="148" y="6" width="170.5" height="33"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                                <state key="normal" title="Extra Pay Items">
+                                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="tappedExtraPayButton:" destination="PRp-YM-D4v" eventType="touchUpInside" id="M5v-ey-uoP"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -63,7 +75,19 @@
                             </view>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="39u-Lh-P3J">
                                 <rect key="frame" x="0.0" y="109" width="375" height="558"/>
+                                <subviews>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="07P-LP-AYl" customClass="GenericTableView" customModule="ViaEnterprise" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="558"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </tableView>
+                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="07P-LP-AYl" secondAttribute="trailing" id="1bq-t8-oLc"/>
+                                    <constraint firstItem="07P-LP-AYl" firstAttribute="leading" secondItem="39u-Lh-P3J" secondAttribute="leading" id="5j8-bO-vIY"/>
+                                    <constraint firstItem="07P-LP-AYl" firstAttribute="top" secondItem="39u-Lh-P3J" secondAttribute="top" id="DxP-gR-ac9"/>
+                                    <constraint firstAttribute="bottom" secondItem="07P-LP-AYl" secondAttribute="bottom" id="LVC-QI-Utj"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -80,8 +104,11 @@
                     </view>
                     <navigationItem key="navigationItem" id="bBH-A8-SvR"/>
                     <connections>
+                        <outlet property="bodyView" destination="39u-Lh-P3J" id="ZGw-Pz-xXO"/>
                         <outlet property="extraPayItemButton" destination="cEG-wf-nV6" id="4sp-DQ-Kzk"/>
+                        <outlet property="headerView" destination="F5h-9f-EFA" id="46Y-nm-Xf2"/>
                         <outlet property="normalItemButton" destination="lub-ZF-CLv" id="POj-wf-arx"/>
+                        <outlet property="tableView" destination="07P-LP-AYl" id="RXu-lX-wq8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k4v-i9-sEH" userLabel="First Responder" sceneMemberID="firstResponder"/>

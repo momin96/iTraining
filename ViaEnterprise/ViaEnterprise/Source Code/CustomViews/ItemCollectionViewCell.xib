@@ -116,8 +116,7 @@
             <size key="customSize" width="171" height="200"/>
             <connections>
                 <outlet property="containerView" destination="jGC-wg-pmb" id="59r-c7-Rbc"/>
-                <outlet property="increamentItem" destination="hLG-2s-SgR" id="eAh-Qc-uTg"/>
-                <outlet property="itemDecrementButton" destination="Teq-bZ-Sme" id="jMv-Pz-l9z"/>
+                <outlet property="itemDecrementButton" destination="Teq-bZ-Sme" id="Y9K-VL-P3c"/>
                 <outlet property="itemImageView" destination="CO4-41-slS" id="DMF-jr-ibI"/>
                 <outlet property="itemIncreamentButton" destination="hLG-2s-SgR" id="KhL-1T-G3r"/>
                 <outlet property="itemName" destination="lSE-DO-f9a" id="9Cz-R0-s7j"/>

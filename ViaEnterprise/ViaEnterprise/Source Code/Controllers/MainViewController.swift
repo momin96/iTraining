@@ -11,11 +11,14 @@ import UIKit
 
 class MainViewController: UIViewController {
 
+    @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var normalItemButton: UIButton!
-    
     @IBOutlet weak var extraPayItemButton: UIButton!
     
+    @IBOutlet weak var bodyView: UIView!
+    @IBOutlet weak var tableView: GenericTableView!
     
+    var dataList : [Category]?
     
     //MARK: Life cycle
     deinit {
@@ -24,7 +27,7 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        prepareData()
         intialSetup()
         
     }
@@ -34,6 +37,25 @@ class MainViewController: UIViewController {
 
     }
 
+    func prepareData() {
+        
+        let it1 = Item("Coca Cola", imageUrl: "", price: 12.0, quantity: 1)
+        let it2 = Item("Coca Cola", imageUrl: "", price: 10.0, quantity: 1)
+        let it3 = Item("Coca Cola", imageUrl: "", price: 9.0, quantity: 1)
+        
+        
+        let it4 = Item("Apple", imageUrl: "", price: 19.0, quantity: 1)
+        let it5 = Item("Orange", imageUrl: "", price: 13.0, quantity: 1)
+        let it6 = Item("Grape", imageUrl: "", price: 15.0, quantity: 1)
+
+        
+        let c1 = Category("Drinks", items: [it1, it2, it3])
+        let c2 = Category("Fruits", items: [it4, it5, it6])
+        
+        dataList = [c1, c2]
+        
+    }
+    
     
     // MARK: Privat
     private func intialSetup () {
@@ -42,6 +64,18 @@ class MainViewController: UIViewController {
         
         extraPayItemButton.setBottomLine(thickness: nil, color: nil)
         extraPayItemButton.bottomLine(ShouldHide: true)
+        
+        tableView.initialSetup()
+        
+    }
+    
+    //MARK: Target Action methods
+    
+    @IBAction func tappedNormalPayButton(_ sender: UIButton) {
+        
+    }
+    
+    @IBAction func tappedExtraPayButton(_ sender: UIButton) {
     }
     
 }

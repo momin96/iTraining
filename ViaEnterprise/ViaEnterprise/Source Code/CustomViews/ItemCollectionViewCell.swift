@@ -27,6 +27,11 @@ class ItemCollectionViewCell: UICollectionViewCell {
 
     }
     
+    public func configureCellWith (item i: Item) {
+        self.itemName.text = i.name
+        self.itemPrice.text = String(i.price!)
+        self.itemPackQty.text = String(i.quantity!)
+    }
     
     @IBAction func decrementItem(_ sender: UIButton) {
     

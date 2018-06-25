@@ -23,6 +23,7 @@
 		0E9918A620E0C43200418488 /* cocacola.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0E9918A520E0C43200418488 /* cocacola.jpg */; };
 		0E9918A820E0CF3A00418488 /* GenericTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9918A720E0CF3A00418488 /* GenericTableView.swift */; };
 		0E9918AB20E0F1BD00418488 /* GenericCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9918AA20E0F1BD00418488 /* GenericCode.swift */; };
+		0E9918AD20E100B100418488 /* hamburger.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E9918AC20E100B100418488 /* hamburger.png */; };
 		12A5B57267C91E0F1E217230 /* Pods_ViaEnterprise.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FDC30439DAF03255FE6ECEE /* Pods_ViaEnterprise.framework */; };
 		3AF22F7915B7FF4DD09B2AF7 /* Pods_ViaEnterpriseUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84DDF5C0D63437291EC16154 /* Pods_ViaEnterpriseUITests.framework */; };
 		45494A92A2C7A9C493ACF07B /* Pods_ViaEnterpriseTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB3D1C97F6DBB3A4C8410F38 /* Pods_ViaEnterpriseTests.framework */; };
@@ -67,6 +68,7 @@
 		0E9918A520E0C43200418488 /* cocacola.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cocacola.jpg; sourceTree = "<group>"; };
 		0E9918A720E0CF3A00418488 /* GenericTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericTableView.swift; sourceTree = "<group>"; };
 		0E9918AA20E0F1BD00418488 /* GenericCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericCode.swift; sourceTree = "<group>"; };
+		0E9918AC20E100B100418488 /* hamburger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hamburger.png; sourceTree = "<group>"; };
 		17607E374C83817C6A96DFEA /* Pods-ViaEnterprise.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ViaEnterprise.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ViaEnterprise/Pods-ViaEnterprise.debug.xcconfig"; sourceTree = "<group>"; };
 		4FDC30439DAF03255FE6ECEE /* Pods_ViaEnterprise.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ViaEnterprise.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		63900453A5AA1200D6A5073C /* Pods-ViaEnterpriseUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ViaEnterpriseUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ViaEnterpriseUITests/Pods-ViaEnterpriseUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 				0E99186320E0B45900418488 /* LaunchScreen.storyboard */,
 				0E99186620E0B45900418488 /* Info.plist */,
 				0E9918A520E0C43200418488 /* cocacola.jpg */,
+				0E9918AC20E100B100418488 /* hamburger.png */,
 			);
 			path = ViaEnterprise;
 			sourceTree = "<group>";
@@ -345,6 +348,7 @@
 				0E99186520E0B45900418488 /* LaunchScreen.storyboard in Resources */,
 				0E99189E20E0BBAA00418488 /* ItemCollectionViewCell.xib in Resources */,
 				0E99186220E0B45900418488 /* Assets.xcassets in Resources */,
+				0E9918AD20E100B100418488 /* hamburger.png in Resources */,
 				0E9918A220E0BBDB00418488 /* ItemTableViewCell.xib in Resources */,
 				0E99186020E0B45400418488 /* Main.storyboard in Resources */,
 			);
