@@ -8,4 +8,9 @@
 
 import Foundation
 
-
+struct Item {
+    var name: String?
+    var imageUrl: String?
+    var price: Double?
+    var quantity: Int?
+}
