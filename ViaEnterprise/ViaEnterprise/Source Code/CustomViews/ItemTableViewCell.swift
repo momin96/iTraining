@@ -8,18 +8,34 @@
 
 import UIKit
 
+let ITEM_COLLECTION_VIEW_CELL = "ItemCollectionViewCell"
+
 class ItemTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var itemCollectionView: UICollectionView!
+    let itemCellIdentifier = "itemCollectionCell"
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        itemCollectionView.register(UINib(nibName: ITEM_COLLECTION_VIEW_CELL, bundle: nil), forCellWithReuseIdentifier: itemCellIdentifier)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
     }
+}
+
+extension ItemTableViewCell: UICollectionViewDataSource, UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 3
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let itemCell : ItemCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: itemCellIdentifier, for: indexPath) as! ItemCollectionViewCell
+        
+        return itemCell
+    }
+    
     
 }

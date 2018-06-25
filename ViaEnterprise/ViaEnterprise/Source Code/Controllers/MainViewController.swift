@@ -8,28 +8,51 @@
 
 import UIKit
 
+let ITEM_TABLE_VIEW_CELL = "ItemTableViewCell"
+
 class MainViewController: UIViewController {
 
+    @IBOutlet weak var itemTableView: UITableView!
+    
+    let itemCellIdentifier = "itemTableViewCell"
+    
+    
+    //MARK: Life cycle
+    deinit {
+        print("deinit MainViewController")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        initialSetup()
+        
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
     }
-    */
+    
+    //MARK: Private functions
+    
+    private func initialSetup () {
+        itemTableView.register(UINib(nibName: ITEM_TABLE_VIEW_CELL, bundle: nil), forCellReuseIdentifier: itemCellIdentifier)
+    }
+    
+    
+}
 
+extension MainViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 3
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let itemTableCell : ItemTableViewCell = tableView.dequeueReusableCell(withIdentifier: itemCellIdentifier, for: indexPath) as! ItemTableViewCell
+        
+        return itemTableCell
+    }
+    
+    
 }
