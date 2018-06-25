@@ -1,0 +1,6 @@
+framework module Pods_ViaEnterprise {
+  umbrella header "Pods-ViaEnterprise-umbrella.h"
+
+  export *
+  module * { export * }
+}

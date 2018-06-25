@@ -1,0 +1,18 @@
+platform :ios, '9.0'
+
+target 'ViaEnterprise' do
+  use_frameworks!
+
+	pod 'ReactiveCocoa', '~> 7.0'
+	pod 'SDWebImage', '~> 4.0'
+  target 'ViaEnterpriseTests' do
+    inherit! :search_paths
+
+  end
+
+  target 'ViaEnterpriseUITests' do
+    inherit! :search_paths
+
+  end
+
+end
