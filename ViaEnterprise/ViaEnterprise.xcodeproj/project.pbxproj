@@ -21,6 +21,7 @@
 		0E9918A220E0BBDB00418488 /* ItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E9918A020E0BBDB00418488 /* ItemTableViewCell.xib */; };
 		0E9918A420E0BC2400418488 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9918A320E0BC2400418488 /* MainViewController.swift */; };
 		0E9918A620E0C43200418488 /* cocacola.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0E9918A520E0C43200418488 /* cocacola.jpg */; };
+		0E9918A820E0CF3A00418488 /* GenericTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9918A720E0CF3A00418488 /* GenericTableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 		0E9918A020E0BBDB00418488 /* ItemTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ItemTableViewCell.xib; sourceTree = "<group>"; };
 		0E9918A320E0BC2400418488 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		0E9918A520E0C43200418488 /* cocacola.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cocacola.jpg; sourceTree = "<group>"; };
+		0E9918A720E0CF3A00418488 /* GenericTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericTableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,6 +174,7 @@
 				0E99189C20E0BBAA00418488 /* ItemCollectionViewCell.xib */,
 				0E99189F20E0BBDB00418488 /* ItemTableViewCell.swift */,
 				0E9918A020E0BBDB00418488 /* ItemTableViewCell.xib */,
+				0E9918A720E0CF3A00418488 /* GenericTableView.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -313,6 +316,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0E99189320E0B97100418488 /* Item.swift in Sources */,
+				0E9918A820E0CF3A00418488 /* GenericTableView.swift in Sources */,
 				0E99189D20E0BBAA00418488 /* ItemCollectionViewCell.swift in Sources */,
 				0E9918A120E0BBDB00418488 /* ItemTableViewCell.swift in Sources */,
 				0E99189220E0B97100418488 /* AppDelegate.swift in Sources */,
