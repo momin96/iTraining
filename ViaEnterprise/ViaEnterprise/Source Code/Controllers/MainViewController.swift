@@ -11,6 +11,12 @@ import UIKit
 
 class MainViewController: UIViewController {
 
+    @IBOutlet weak var normalItemButton: UIButton!
+    
+    @IBOutlet weak var extraPayItemButton: UIButton!
+    
+    
+    
     //MARK: Life cycle
     deinit {
         print("deinit MainViewController")
@@ -19,6 +25,7 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        intialSetup()
         
     }
     
@@ -27,5 +34,15 @@ class MainViewController: UIViewController {
 
     }
 
+    
+    // MARK: Privat
+    private func intialSetup () {
+        normalItemButton.setBottomLine(thickness: nil, color: nil)
+        normalItemButton.bottomLine(ShouldHide: false)
+        
+        extraPayItemButton.setBottomLine(thickness: nil, color: nil)
+        extraPayItemButton.bottomLine(ShouldHide: true)
+    }
+    
 }
 
