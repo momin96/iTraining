@@ -29,6 +29,7 @@ class MainViewController: UIViewController {
     //MARK: Life cycle
     deinit {
         print("deinit MainViewController")
+        unregisterKVO()
     }
     
     override func viewDidLoad() {
@@ -37,6 +38,22 @@ class MainViewController: UIViewController {
         intialSetup()
         
     }
+    
+    override func observeValue(forKeyPath keyPath: String?,
+                               of object: Any?,
+                               change: [NSKeyValueChangeKey : Any]?,
+                               context: UnsafeMutableRawPointer?) {
+        
+        let appDelegate : AppDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        if keyPath == #keyPath(AppDelegate.globalItemPrice) {
+            print(appDelegate.globalItemPrice)
+        }
+        else if keyPath == #keyPath(AppDelegate.globalItemQty) {
+            print(appDelegate.globalItemQty)
+        }
+    }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -73,6 +90,8 @@ class MainViewController: UIViewController {
         
         navigationInitialSetup()
         
+        registerKVO ()
+        
         tableView.initialSetup()
         
     }
@@ -93,6 +112,20 @@ class MainViewController: UIViewController {
         print("tappedCheckoutButton")
     }
     
+    
+    private func registerKVO () {
+        
+        let appDelegate : AppDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.addObserver(self, forKeyPath: #keyPath(AppDelegate.globalItemPrice), options: [.old, .new], context: nil)
+        appDelegate.addObserver(self, forKeyPath: #keyPath(AppDelegate.globalItemQty), options: [.old, .new], context: nil)
+    }
+    
+    private func unregisterKVO () {
+        let appDelegate : AppDelegate = UIApplication.shared.delegate as! AppDelegate
+
+        appDelegate.removeObserver(self, forKeyPath: #keyPath(AppDelegate.globalItemPrice))
+        appDelegate.removeObserver(self, forKeyPath: #keyPath(AppDelegate.globalItemQty))
+    }
     
     //MARK: Target Action methods
     

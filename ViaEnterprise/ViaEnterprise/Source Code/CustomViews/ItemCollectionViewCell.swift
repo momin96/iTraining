@@ -75,23 +75,23 @@ class ItemCollectionViewCell: UICollectionViewCell {
         item?.totalAmount = orderedAmount
     }
     
-    private func sendOrderAmount() {
-        
-    }
-    
-    
     
     // MARK: Target Action functions
     @IBAction func decrementItem(_ sender: UIButton) {
+        if orderedQty > 0 {
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            
+            appDelegate.globalItemQty -= 1
+            appDelegate.globalItemPrice -= (item?.price)!
+        }
         orderedQty -= 1
-        sendOrderAmount()
     }
     
     @IBAction func incrementItem(_ sender: UIButton) {
         orderedQty += 1
-        sendOrderAmount()
+
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.globalItemQty += 1
+        appDelegate.globalItemPrice += (item?.price)!
     }
-
-
-    
 }
