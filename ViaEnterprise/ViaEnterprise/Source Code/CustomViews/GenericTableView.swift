@@ -14,9 +14,9 @@ class GenericTableView: UITableView, UITableViewDelegate, UITableViewDataSource 
     
     let itemCellIdentifier = "itemTableViewCell"
     
-    var dataList : [Category]? = {
-        willSet {
-            self.reload()
+    var dataList : [Category] = [Category]() {
+        didSet {
+            self.reloadData()
         }
     }
     
@@ -27,16 +27,16 @@ class GenericTableView: UITableView, UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let list = dataList {
-            return list.count
-        }
-        return 0
+//        if let list = dataList {
+            return dataList.count
+//        }
+//        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let itemTableCell : ItemTableViewCell = tableView.dequeueReusableCell(withIdentifier: itemCellIdentifier, for: indexPath) as! ItemTableViewCell
         
-        let category: Category = dataList![indexPath.row]
+        let category: Category = dataList[indexPath.row]
         
         itemTableCell.items = category.items
         

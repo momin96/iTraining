@@ -46,4 +46,14 @@ extension UIButton {
         }
     }
     
+
+    
+}
+
+extension UIView {
+    
+    func drawBorderOf(thickness thick: CGFloat?, color: UIColor?) {
+        self.layer.borderWidth = thick ?? 1.0
+        self.layer.borderColor = color?.cgColor ?? UIColor.darkGray.cgColor
+    }
 }

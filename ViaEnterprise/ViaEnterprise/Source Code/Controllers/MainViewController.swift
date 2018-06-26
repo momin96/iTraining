@@ -18,7 +18,13 @@ class MainViewController: UIViewController {
     @IBOutlet weak var bodyView: UIView!
     @IBOutlet weak var tableView: GenericTableView!
     
-    var dataList : [Category]?
+    var dataList : [Category]? {
+        didSet{
+            if let list = dataList {
+                tableView.dataList = list
+            }
+        }
+    }
     
     //MARK: Life cycle
     deinit {
