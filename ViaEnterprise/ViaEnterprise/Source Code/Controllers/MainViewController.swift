@@ -55,7 +55,7 @@ class MainViewController: UIViewController {
         let it6 = Item("Grape", imageUrl: "", price: 15.0, quantity: 1)
 
         
-        let c1 = Category("Drinks", items: [it1, it2, it3])
+        let c1 = Category("Drinks", items: [it1, it2, it3, it4, it5, it6])
         let c2 = Category("Fruits", items: [it4, it5, it6])
         
         dataList = [c1, c2]
@@ -71,9 +71,28 @@ class MainViewController: UIViewController {
         extraPayItemButton.setBottomLine(thickness: nil, color: nil)
         extraPayItemButton.bottomLine(ShouldHide: true)
         
+        navigationInitialSetup()
+        
         tableView.initialSetup()
         
     }
+    
+    // TODO: Not visible on UI, need to work on it
+    private func navigationInitialSetup () {
+        
+        let rightItem = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        rightItem.addTarget(self, action: #selector(tappedCheckoutButton(_:)), for: .touchUpInside)
+        rightItem.setTitle("Checkout", for: .normal)
+        rightItem.titleLabel?.textColor = .blue
+        rightItem.tintColor = .blue
+        let right = UIBarButtonItem(customView: rightItem);
+        self.navigationItem.rightBarButtonItem = right
+    }
+    
+    @objc private func tappedCheckoutButton(_ sender: Any) {
+        print("tappedCheckoutButton")
+    }
+    
     
     //MARK: Target Action methods
     
