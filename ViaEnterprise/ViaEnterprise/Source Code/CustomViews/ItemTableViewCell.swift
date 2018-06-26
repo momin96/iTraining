@@ -46,6 +46,14 @@ extension ItemTableViewCell: UICollectionViewDataSource, UICollectionViewDelegat
         
         return itemCell
     }
-    
-    
 }
+
+
+class TableHeaderView: UIView {
+    
+    @IBOutlet weak var title: UILabel!
+    @IBOutlet weak var textButton: UIButton!
+    @IBOutlet weak var arrowButton: UIButton!
+
+}
+

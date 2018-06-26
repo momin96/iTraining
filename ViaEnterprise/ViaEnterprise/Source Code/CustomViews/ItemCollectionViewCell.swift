@@ -95,3 +95,5 @@ class ItemCollectionViewCell: UICollectionViewCell {
         appDelegate.globalItemPrice += (item?.price)!
     }
 }
+
+

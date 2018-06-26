@@ -26,6 +26,8 @@ class GenericTableView: UITableView, UITableViewDelegate, UITableViewDataSource 
         self.dataSource = self
     }
     
+    
+    // MARK: Table View Data source functions
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataList.count
     }
@@ -41,7 +43,49 @@ class GenericTableView: UITableView, UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 230
+        return 230.0
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return dataList.count
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 45.0;
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let tableHeaderView  = Bundle.main.loadNibNamed("TableHeaderView",
+                                                        owner: self,
+                                                        options: nil)?.first as! TableHeaderView
+        
+        var str = ""
+
+        if let name = dataList[section].name {
+            tableHeaderView.title.text = name
+            
+            str = "More " + name
+        }
+        else{
+            tableHeaderView.title.text = ""
+        }
+        
+        tableHeaderView.textButton.setTitle(str, for: .normal)
+
+        tableHeaderView.textButton.addTarget(section,
+                                             action: #selector(tappedTableViewHeader(_:)),
+                                             for: .touchUpInside)
+        
+        tableHeaderView.arrowButton.addTarget(section,
+                                             action: #selector(tappedTableViewHeader(_:)),
+                                             for: .touchUpInside)
+        
+        
+        return tableHeaderView
+    }
+    
+    @objc func tappedTableViewHeader (_ sender: Any) {
+        print("tappedTableViewHeader")
     }
 }
 

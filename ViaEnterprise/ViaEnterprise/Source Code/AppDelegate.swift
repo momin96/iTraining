@@ -11,18 +11,12 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    
     /// Only Item collection View must write to this global variable
     @objc dynamic var globalItemPrice: Double = 0.0
     
     /// Only Item collection View must write to this global variable
     @objc dynamic var globalItemQty: Int = 0
     
-    func printValue () {
-        print("globalItemPrice \(globalItemPrice)")
-        
-        print("globalItemQty \(globalItemQty)")
-    }
     
     var window: UIWindow?
 
