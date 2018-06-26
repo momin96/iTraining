@@ -29,13 +29,13 @@ class GenericTableView: UITableView, UITableViewDelegate, UITableViewDataSource 
     
     // MARK: Table View Data source functions
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataList.count
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let itemTableCell : ItemTableViewCell = tableView.dequeueReusableCell(withIdentifier: itemCellIdentifier, for: indexPath) as! ItemTableViewCell
         
-        let category: Category = dataList[indexPath.row]
+        let category: Category = dataList[indexPath.section]
         
         itemTableCell.items = category.items
         
@@ -60,7 +60,6 @@ class GenericTableView: UITableView, UITableViewDelegate, UITableViewDataSource 
                                                         options: nil)?.first as! TableHeaderView
         
         var str = ""
-
         if let name = dataList[section].name {
             tableHeaderView.title.text = name
             
@@ -72,15 +71,13 @@ class GenericTableView: UITableView, UITableViewDelegate, UITableViewDataSource 
         
         tableHeaderView.textButton.setTitle(str, for: .normal)
 
-        tableHeaderView.textButton.addTarget(section,
+        tableHeaderView.textButton.addTarget(self,
                                              action: #selector(tappedTableViewHeader(_:)),
                                              for: .touchUpInside)
         
-        tableHeaderView.arrowButton.addTarget(section,
+        tableHeaderView.arrowButton.addTarget(self,
                                              action: #selector(tappedTableViewHeader(_:)),
                                              for: .touchUpInside)
-        
-        
         return tableHeaderView
     }
     
