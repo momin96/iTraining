@@ -8,16 +8,22 @@
 
 import Foundation
 import Firebase
+import FirebaseFirestore
 
 class DatabaseManager: NSObject {
     
     static let shared = DatabaseManager()
-    
-    private var dbRef = Firestore.firestore()
+    var dbRef : Firestore?
     
     override init() {
         FirebaseApp.configure()
+        dbRef = Firestore.firestore()
     }
+    
+    func fetch() {
+        
+    }
+    
     
     
 }
