@@ -43,11 +43,18 @@ class ItemCollectionViewCell: UICollectionViewCell {
     
     //MARK: Public functions
     public func configureCellWith (item i: Item) {
-        self.itemName.text = i.name
-        self.itemPrice.text = "$ " + String(i.price!) + " Per Pack"
-        self.itemPackQty.text =  String(i.quantity!) + " Pack(s)"
-        
         item = i
+
+        self.itemName.text = i.name
+        self.itemPrice.text = "$ " + String(i.price) + " Per Pack"
+        self.itemPackQty.text =  String(i.quantity) + " Pack(s)"
+       
+        // Testing
+        if i.name == "Coca Cola" {
+            
+        }
+        itemTotalQty.text = String(i.totalQty)
+        orderedQty = i.totalQty
     }
     
     //MARK: Private functions
@@ -64,7 +71,8 @@ class ItemCollectionViewCell: UICollectionViewCell {
         itemTotalQty.text = String(qty)
         
         orderedAmount = (item?.price)! * Double(qty)
-        
+        item?.totalQty = qty
+        item?.totalAmount = orderedAmount
     }
     
     private func sendOrderAmount() {

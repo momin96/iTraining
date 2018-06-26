@@ -46,8 +46,8 @@ class MainViewController: UIViewController {
     func prepareData() {
         
         let it1 = Item("Coca Cola", imageUrl: "", price: 12.0, quantity: 1)
-        let it2 = Item("Coca Cola", imageUrl: "", price: 10.0, quantity: 1)
-        let it3 = Item("Coca Cola", imageUrl: "", price: 9.0, quantity: 1)
+        let it2 = Item("Pepsi", imageUrl: "", price: 10.0, quantity: 1)
+        let it3 = Item("Limca", imageUrl: "", price: 9.0, quantity: 1)
         
         
         let it4 = Item("Apple", imageUrl: "", price: 19.0, quantity: 1)

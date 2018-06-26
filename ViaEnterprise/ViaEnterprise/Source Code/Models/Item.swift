@@ -8,13 +8,14 @@
 
 import Foundation
 
-struct Item {
+class Item {
     var name: String?
     var imageUrl: String?
-    var price: Double?
-    var quantity: Int?
+    var price: Double = 0.0
+    var quantity: Int = 0
     
-    var totalQty: Int?
+    var totalQty: Int = 0
+    var totalAmount : Double = 0.0
     
     init(_ name: String, imageUrl: String, price: Double, quantity: Int) {
         self.name = name
