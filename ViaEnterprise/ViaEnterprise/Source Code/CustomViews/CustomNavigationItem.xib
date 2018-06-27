@@ -10,32 +10,54 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomNavigationItem" customModule="ViaEnterprise" customModuleProvider="target">
-            <connections>
-                <outlet property="navigationItemButton" destination="nWo-mv-OIC" id="GdL-Xm-U9h"/>
-            </connections>
-        </placeholder>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view clipsSubviews="YES" contentMode="scaleToFill" id="iN0-l3-epB">
+        <view clipsSubviews="YES" contentMode="scaleToFill" id="iN0-l3-epB" customClass="CustomNavigationItem" customModule="ViaEnterprise" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nWo-mv-OIC">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MGd-eQ-bY3">
                     <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
-                    <state key="normal" title="Button"/>
-                </button>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u1c-al-3hh">
+                            <rect key="frame" x="0.0" y="6" width="40" height="34"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nWo-mv-OIC">
+                            <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="nWo-mv-OIC" secondAttribute="bottom" id="E2z-dd-rbk"/>
+                        <constraint firstAttribute="trailing" secondItem="u1c-al-3hh" secondAttribute="trailing" id="MIk-ed-Ptd"/>
+                        <constraint firstItem="u1c-al-3hh" firstAttribute="leading" secondItem="MGd-eQ-bY3" secondAttribute="leading" id="PRq-64-Aa0"/>
+                        <constraint firstAttribute="bottom" secondItem="u1c-al-3hh" secondAttribute="bottom" id="UIV-6G-XXj"/>
+                        <constraint firstItem="nWo-mv-OIC" firstAttribute="leading" secondItem="MGd-eQ-bY3" secondAttribute="leading" id="hny-Jl-riD"/>
+                        <constraint firstAttribute="trailing" secondItem="nWo-mv-OIC" secondAttribute="trailing" id="jra-SO-lnY"/>
+                        <constraint firstItem="nWo-mv-OIC" firstAttribute="top" secondItem="MGd-eQ-bY3" secondAttribute="top" id="t3D-c8-rEG"/>
+                        <constraint firstItem="u1c-al-3hh" firstAttribute="top" secondItem="MGd-eQ-bY3" secondAttribute="top" constant="6" id="wFP-m9-L5n"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="nWo-mv-OIC" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="8PH-4n-lec"/>
-                <constraint firstItem="nWo-mv-OIC" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="E3M-3A-sNH"/>
-                <constraint firstItem="nWo-mv-OIC" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="ECf-61-00b"/>
-                <constraint firstItem="nWo-mv-OIC" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="pWS-1G-4pB"/>
+                <constraint firstAttribute="bottom" secondItem="MGd-eQ-bY3" secondAttribute="bottom" id="0Ic-iY-c9k"/>
+                <constraint firstItem="MGd-eQ-bY3" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="9Jf-GS-UvE"/>
+                <constraint firstItem="MGd-eQ-bY3" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="gax-t9-VWx"/>
+                <constraint firstAttribute="trailing" secondItem="MGd-eQ-bY3" secondAttribute="trailing" id="mcY-wD-VrN"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="containerView" destination="MGd-eQ-bY3" id="2yj-Ok-SVK"/>
+                <outlet property="itemLabel" destination="u1c-al-3hh" id="e5u-Ya-yPu"/>
+                <outlet property="navigationItemButton" destination="nWo-mv-OIC" id="BbX-k0-t1z"/>
+            </connections>
             <point key="canvasLocation" x="-132" y="-257.5"/>
         </view>
     </objects>

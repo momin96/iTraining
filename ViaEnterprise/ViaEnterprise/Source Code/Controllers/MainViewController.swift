@@ -39,20 +39,7 @@ class MainViewController: UIViewController {
         
     }
     
-    override func observeValue(forKeyPath keyPath: String?,
-                               of object: Any?,
-                               change: [NSKeyValueChangeKey : Any]?,
-                               context: UnsafeMutableRawPointer?) {
-        
-        let appDelegate : AppDelegate = UIApplication.shared.delegate as! AppDelegate
-        
-        if keyPath == #keyPath(AppDelegate.globalItemPrice) {
-            print(appDelegate.globalItemPrice)
-        }
-        else if keyPath == #keyPath(AppDelegate.globalItemQty) {
-            print(appDelegate.globalItemQty)
-        }
-    }
+    
     
     
     override func didReceiveMemoryWarning() {
@@ -80,7 +67,7 @@ class MainViewController: UIViewController {
     }
     
     
-    // MARK: Privat
+    // MARK: Private functions
     private func intialSetup () {
         normalItemButton.setBottomLine(thickness: nil, color: nil)
         normalItemButton.bottomLine(ShouldHide: false)
@@ -96,22 +83,40 @@ class MainViewController: UIViewController {
         
     }
     
-    // TODO: Not visible on UI, need to work on it
     private func navigationInitialSetup () {
         
-        let rightItem = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-        rightItem.addTarget(self, action: #selector(tappedCheckoutButton(_:)), for: .touchUpInside)
-        rightItem.setTitle("Checkout", for: .normal)
-        rightItem.titleLabel?.textColor = .blue
-        rightItem.tintColor = .blue
-        let right = UIBarButtonItem(customView: rightItem);
-        self.navigationItem.rightBarButtonItem = right
+        let customItemView = Bundle.main.loadNibNamed("CustomNavigationItem", owner: self, options: nil)?.first as! CustomNavigationItem
+        
+        let rightImage = UIImage(named: "shoppingBag")
+        customItemView.navigationItemButton.setImage(rightImage, for: .normal)
+        customItemView.itemLabel.text = "0"
+        customItemView.navigationItemButton.addTarget(self,
+                                                      action: #selector(tappedCheckoutButton(_:)),
+                                                      for: .touchUpInside)
+        
+        let rightItem = UIBarButtonItem(customView: customItemView);
+        
+        self.navigationItem.rightBarButtonItem = rightItem
+        
+        let leftImage = UIImage(named: "hamburgerMenu")
+        let leftItem = UIBarButtonItem(image: leftImage,
+                                    style: UIBarButtonItemStyle.plain,
+                                    target: self,
+                                    action: #selector(tappedHamburgButton(_:)))
+
+        
+        self.navigationItem.leftBarButtonItem = leftItem
     }
     
     @objc private func tappedCheckoutButton(_ sender: Any) {
         print("tappedCheckoutButton")
     }
     
+    @objc private func tappedHamburgButton(_ sender: Any) {
+        print("tappedHamburgButton")
+    }
+    
+    //MARK: KVO functions
     
     private func registerKVO () {
         
@@ -126,6 +131,27 @@ class MainViewController: UIViewController {
         appDelegate.removeObserver(self, forKeyPath: #keyPath(AppDelegate.globalItemPrice))
         appDelegate.removeObserver(self, forKeyPath: #keyPath(AppDelegate.globalItemQty))
     }
+    
+    override func observeValue(forKeyPath keyPath: String?,
+                               of object: Any?,
+                               change: [NSKeyValueChangeKey : Any]?,
+                               context: UnsafeMutableRawPointer?) {
+        
+        let appDelegate : AppDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        if keyPath == #keyPath(AppDelegate.globalItemPrice) {
+            print(appDelegate.globalItemPrice)
+        }
+        else if keyPath == #keyPath(AppDelegate.globalItemQty) {
+            print(appDelegate.globalItemQty)
+            
+            if let customView : CustomNavigationItem = navigationItem.rightBarButtonItem?.customView as? CustomNavigationItem {
+                customView.itemLabel.text = String(appDelegate.globalItemQty)
+            }
+        }
+    }
+    
+    
     
     //MARK: Target Action methods
     

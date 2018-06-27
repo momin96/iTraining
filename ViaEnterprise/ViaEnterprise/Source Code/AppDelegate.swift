@@ -15,8 +15,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     @objc dynamic var globalItemPrice: Double = 0.0
     
     /// Only Item collection View must write to this global variable
-    @objc dynamic var globalItemQty: Int = 0
+    @objc dynamic var globalItemQty: Int = 0 {
+        didSet {
+            printValue()
+        }
+    }
     
+    func printValue () {
+        print("globalItemQty \(globalItemQty)");
+    }
     
     var window: UIWindow?
 

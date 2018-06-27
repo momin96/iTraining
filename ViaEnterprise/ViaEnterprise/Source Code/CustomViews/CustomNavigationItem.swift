@@ -12,7 +12,8 @@ class CustomNavigationItem: UIView {
 
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var navigationItemButton: UIButton!
-    
+    @IBOutlet weak var itemLabel: UILabel!
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -25,9 +26,9 @@ class CustomNavigationItem: UIView {
     }
     
     private func commonInit() {
-        Bundle.main.loadNibNamed("CustomNavigationItem", owner: self, options: nil)
-        navigationItemButton.titleLabel?.textColor = UIColor.blue
-        navigationItemButton.backgroundColor = .red
-        self.backgroundColor = .yellow
+////        Bundle.main.loadNibNamed("CustomNavigationItem", owner: self, options: nil)
+//        navigationItemButton.titleLabel?.textColor = UIColor.blue
+//        navigationItemButton.backgroundColor = .red
+//        self.backgroundColor = .yellow
     }
 }
