@@ -131,10 +131,21 @@ class MainViewController: UIViewController {
     
     @IBAction func tappedNormalPayButton(_ sender: UIButton) {
         
+        sender.bottomLine(ShouldHide: true)
+        extraPayItemButton.bottomLine(ShouldHide: false)
+        
     }
     
     @IBAction func tappedExtraPayButton(_ sender: UIButton) {
+        
+        sender.bottomLine(ShouldHide: true)
+        normalItemButton.bottomLine(ShouldHide: false)
+        
     }
+    
+    
+    
+    
     
 }
 
