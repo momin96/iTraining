@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E6446E920E34451000FD9ED /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0E6446E820E34451000FD9ED /* GoogleService-Info.plist */; };
+		0E6446ED20E344E1000FD9ED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E6446EC20E344E0000FD9ED /* Assets.xcassets */; };
 		0E99186020E0B45400418488 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E99185E20E0B45400418488 /* Main.storyboard */; };
-		0E99186220E0B45900418488 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E99186120E0B45900418488 /* Assets.xcassets */; };
 		0E99186520E0B45900418488 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E99186320E0B45900418488 /* LaunchScreen.storyboard */; };
 		0E99187020E0B45900418488 /* ViaEnterpriseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E99186F20E0B45900418488 /* ViaEnterpriseTests.swift */; };
 		0E99187B20E0B45900418488 /* ViaEnterpriseUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E99187A20E0B45900418488 /* ViaEnterpriseUITests.swift */; };
@@ -51,9 +52,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0E6446E820E34451000FD9ED /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0E6446EC20E344E0000FD9ED /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0E99185720E0B45400418488 /* ViaEnterprise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ViaEnterprise.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E99185F20E0B45400418488 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		0E99186120E0B45900418488 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0E99186420E0B45900418488 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0E99186620E0B45900418488 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0E99186B20E0B45900418488 /* ViaEnterpriseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ViaEnterpriseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -143,10 +145,11 @@
 			children = (
 				0E99188D20E0B97100418488 /* Source Code */,
 				0E99185E20E0B45400418488 /* Main.storyboard */,
-				0E99186120E0B45900418488 /* Assets.xcassets */,
 				0EA1547320E282DD00013B3A /* Managers */,
 				0E99186320E0B45900418488 /* LaunchScreen.storyboard */,
 				0E99186620E0B45900418488 /* Info.plist */,
+				0E6446EC20E344E0000FD9ED /* Assets.xcassets */,
+				0E6446E820E34451000FD9ED /* GoogleService-Info.plist */,
 				0E9918A520E0C43200418488 /* cocacola.jpg */,
 				0E9918AC20E100B100418488 /* hamburger.png */,
 			);
@@ -366,12 +369,13 @@
 			files = (
 				0EA1546E20E20B3800013B3A /* CustomNavigationItem.xib in Resources */,
 				0E99189920E0BA7B00418488 /* Info.plist in Resources */,
+				0E6446ED20E344E1000FD9ED /* Assets.xcassets in Resources */,
 				0E9918A620E0C43200418488 /* cocacola.jpg in Resources */,
 				0E99186520E0B45900418488 /* LaunchScreen.storyboard in Resources */,
 				0E99189E20E0BBAA00418488 /* ItemCollectionViewCell.xib in Resources */,
-				0E99186220E0B45900418488 /* Assets.xcassets in Resources */,
 				0E9918AD20E100B100418488 /* hamburger.png in Resources */,
 				0E9918A220E0BBDB00418488 /* ItemTableViewCell.xib in Resources */,
+				0E6446E920E34451000FD9ED /* GoogleService-Info.plist in Resources */,
 				0EA1547220E254B000013B3A /* TableHeaderView.xib in Resources */,
 				0E99186020E0B45400418488 /* Main.storyboard in Resources */,
 			);
