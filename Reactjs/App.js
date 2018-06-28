@@ -7,7 +7,14 @@
 
   constructor(props) {
     super(props);
-    this.state = {value: ''};
+    this.state = {value: '',
+    itemName:'Apple ',
+    itemCategory:'Fruit',
+    itemDesc:'An Apple a day keeps, doctor away',
+    itemQty:'6',
+    itemPrice:'12.5',
+    itemMisc:'I like Apple, & its product"'
+  };
     this.selectedFile = {value: ''};
 
     this.handleChange = this.handleChange.bind(this);
@@ -24,8 +31,33 @@
     this.setState({value: event.target.value});
   }
 
-  handleSubmit(event) {
-    console.log("submit tapped");
+  handleSubmit = (event) => {
+
+    var name = this.state.itemName;
+    var category = this.state.itemCategory;
+    var price = this.state.itemPrice;
+    var qty = this.state.itemQty;
+    var desc = this.state.itemDesc;
+    var misc = this.state.itemMisc;
+    
+    if (name && category &&  price && qty ) {
+
+      var dict = {
+        "itemName" : name,
+        "itemDesc" : desc,
+        "itemCategory": category,
+        "itemPrice" : price,
+        "itemQty" : qty,
+        "itemMisc" : misc
+      }
+
+      console.log("dict : "+dict);
+
+    }
+    else {
+            console.log("Please fill in mandatory feilds");
+    }
+
   }
 
   uploadHandler(event) {
@@ -39,6 +71,11 @@
     console.log(this.selectedFile);
   }
 
+  handleInputChange = (event) => {
+    this.setState({
+      [event.target.name] : event.target.value
+    })
+  }
 
     render() {
       return (
@@ -47,20 +84,19 @@
             {/* <img src={logo} className="App-logo" alt="logo" /> */}
             {/* <h1 className="App-title">Welcome to React</h1> */}
           </header>
-        <p> <span className="ItemP"> Name: </span>  <input className="InputBox" type="text" name="name" /> </p>
-        <p> <span className="ItemP"> Code: </span>  <input className="InputBox" type="text" name="name" /> </p>
-        <p> <span className="ItemP"> Category: </span>  <input className="InputBox" type="text" name="name" /> </p>
-        <p> <span className="ItemP"> Description: </span>  <input className="InputBox" type="text" name="name" /> </p>
-        <p> <span className="ItemP"> Quantity: </span>  <input className="InputBox" type="text" name="name" /> </p>
-        <p> <span className="ItemP"> Misc: </span>  <input className="InputBox" type="text" name="name" /> </p>
+        <p> <input className="InputBox" type="text" name="itemName" placeholder="Enter product name" value={this.state.itemName} onChange={e => this.handleInputChange(e)}/> </p>
+        <p> <input className="InputBox" type="text" name="itemCategory" placeholder="Enter category of product" value={this.state.itemCategory} onChange={e => this.handleInputChange(e)} /> </p>
+        <p> <input className="InputBox" type="text" name="itemDesc"  placeholder="Enter product descrption" value={this.state.itemDesc} onChange={e => this.handleInputChange(e)} /> </p>
+        <p> <input className="InputBox" type="text" name="itemQty" placeholder="Enter quantity"  value={this.state.itemQty} onChange={e => this.handleInputChange(e)}/> </p>
+        <p> <input className="InputBox" type="text" name="itemPrice" placeholder="Enter product's price" value={this.state.itemPrice} onChange={e => this.handleInputChange(e)} /> </p>
+        <p> <input className="InputBox" type="text" name="itemMisc" placeholder="Enter product's related any other info " value={this.state.itemMisc}onChange={e => this.handleInputChange(e)} /> </p>
         <p> 
-          <span className="ItemP"> Pick Image: </span>  <input className="InputBox" type="file" onChange={this.fileChangedHandler} /> 
-          <button onClick={this.uploadHandler}>Upload!</button>
+        {/* <input className="InputBox" type="file" onChange={this.fileChangedHandler} placeholder="Select Image" /> 
+          <button onClick={this.uploadHandler}>Upload!</button> */}
         </p>
 
-          {/* <form onSubmit={this.handleSubmit}>    */}
-              <input className="SubmitButton" type="submit" value="Submit" />
-          {/* </form> */}
+        <button className="SubmitButton" onClick={this.handleSubmit}>Submit</button>
+
         </div>
       );
     }
