@@ -1,20 +1,31 @@
-  import React, { Component } from 'react';
+import * as Firebase from 'firebase';
+import React, { Component } from 'react';
   // import logo from './logo.svg';
-  import './App.css';
+import './App.css';
+import 'firebase/firestore'
+// require('firebase/firestore');
 
-  class App extends Component {
+//npm install firebase@5.0.4 --save
 
+//https://firebase.google.com/support/guides/firebase-web
+ 
+
+class App extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {value: '',
-    itemName:'Apple ',
-    itemCategory:'Fruit',
-    itemDesc:'An Apple a day keeps, doctor away',
-    itemQty:'6',
-    itemPrice:'12.5',
-    itemMisc:'I like Apple, & its product"'
-  };
+
+    this.state = {
+        value: '',
+        itemName:'Apple ',
+        itemCategory:'Fruit',
+        itemDesc:'An Apple a day keeps, doctor away',
+        itemQty:'6',
+        itemPrice:'12.5',
+        itemMisc:'I like Apple, & its product',
+        itemCode:''
+    };
+
     this.selectedFile = {value: ''};
 
     this.handleChange = this.handleChange.bind(this);
@@ -23,6 +34,9 @@
     // For file upload, TODO: Need to refactor
     this.fileChangedHandler = this.fileChangedHandler.bind(this);
     this.uploadHandler = this.uploadHandler.bind(this);
+
+    Firebase.initializeApp(config)
+    this.productCollectionRef = Firebase.firestore().collection('Product');
   }
 
   state = {selectedFile: null};
@@ -35,12 +49,32 @@
 
     var name = this.state.itemName;
     var category = this.state.itemCategory;
-    var price = this.state.itemPrice;
-    var qty = this.state.itemQty;
+    var price = Number(this.state.itemPrice);
+    var qty = Number(this.state.itemQty);
     var desc = this.state.itemDesc;
     var misc = this.state.itemMisc;
-    
+
+
     if (name && category &&  price && qty ) {
+
+
+    var code = '';
+      if (name.length < 3 ) {
+          code = code.concat(name.substring(0,name.length));  
+      }
+      else {
+          code = code.concat(name.substring(0,3));  
+      }
+
+      if (category.length < 3 ) {
+        code = code.concat(name.substring(0,category.length));  
+      }
+      else {
+        code = code.concat(category.substring(0,3));  
+      }
+
+      var ts = Math.round((new Date()).getTime() / 1000);
+      code = code.concat(ts);  
 
       var dict = {
         "itemName" : name,
@@ -48,17 +82,25 @@
         "itemCategory": category,
         "itemPrice" : price,
         "itemQty" : qty,
-        "itemMisc" : misc
+        "itemMisc" : misc,
+        "itemCode" : code
       }
 
-      console.log("dict : "+dict);
-
+      this.productCollectionRef.add(
+        dict
+      ).then(function(docRef) {
+        console.log("Doc Id "+docRef.id);
+      }).catch(function(error) {
+        console.log("Error "+error);
+      });
+    
     }
     else {
-            console.log("Please fill in mandatory feilds");
+        console.log("Please fill in mandatory feilds");
+        alert("Please fill in mandatory feilds");
     }
-
   }
+
 
   uploadHandler(event) {
     console.log(this.state.selectedFile)
