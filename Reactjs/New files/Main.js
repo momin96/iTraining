@@ -1,19 +1,34 @@
 import React, { Component } from "react";
  
+import {
+  Route,
+  NavLink,
+  HashRouter
+} from "react-router-dom";
+
+import App from "./App";
+import UpdateItem from "./UpdateItem";
+import AllocateItem from "./AllocateItem";
+
 class Main extends Component {
   render() {
     return (
+      <HashRouter>
         <div>
-          <h1>Simple SPA</h1>
           <ul className="header">
-            <li><a href="/App">Add new Item</a></li>
-            <li><a href="/UpdateItem">Update Item </a></li>
-            <li><a href="/AllocateItem">Allocate Items </a></li>
+
+            <li><NavLink to="/">Add new Item</NavLink></li>
+            <li><NavLink to="/UpdateItem">Update Item</NavLink></li>
+            <li><NavLink to="/AllocateItem">Allocate Items</NavLink></li> 
+
           </ul>
           <div className="content">
-             
+             <Route exact path="/" component={App}/>
+              <Route path="/UpdateItem" component={UpdateItem}/>
+             <Route path="/AllocateItem" component={AllocateItem}/> 
           </div>
         </div>
+        </HashRouter>
     );
   }
 }

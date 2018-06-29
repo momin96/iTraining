@@ -10,9 +10,16 @@ import 'firebase/firestore'
 // npm install --save react-router-dom
 // https://hackernoon.com/simple-guide-to-creating-a-single-page-app-with-react-router-6b6f709a2e3f
  
- 
+
 
 class App extends Component {
+
+componentDidMount () {
+  if (!Firebase.apps.length) {
+        Firebase.initializeApp(config);
+  }
+  this.productCollectionRef = Firebase.firestore().collection('Product');
+}
 
   constructor(props) {
     super(props);
@@ -37,8 +44,6 @@ class App extends Component {
     this.fileChangedHandler = this.fileChangedHandler.bind(this);
     this.uploadHandler = this.uploadHandler.bind(this);
 
-    Firebase.initializeApp(config)
-    this.productCollectionRef = Firebase.firestore().collection('Product');
   }
 
   state = {selectedFile: null};
@@ -124,11 +129,6 @@ class App extends Component {
     render() {
       return (
         <div className="App">
-          <header className="App-header">
-            {/* <img src={logo} className="App-logo" alt="logo" /> */}
-            {/* <h1 className="App-title">Welcome to React</h1> */}
-
-          </header>
 
         <p> <input className="InputBox" type="text" name="itemName" placeholder="Enter product name" value={this.state.itemName} onChange={e => this.handleInputChange(e)}/> </p>
         <p> <input className="InputBox" type="text" name="itemCategory" placeholder="Enter category of product" value={this.state.itemCategory} onChange={e => this.handleInputChange(e)} /> </p>
