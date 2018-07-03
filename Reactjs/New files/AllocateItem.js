@@ -16,6 +16,42 @@ function ItemList(props) {
     return finalList;
 } 
 
+function ShowProductDetail(props) {
+    if (!props.show) {
+        return null;
+    }
+
+    let selectDoc = {}
+
+    let name = '';
+    let code = '';
+    let desc = '';
+    let price = '';
+    let qty = ''; 
+
+
+    for (let i = 0 ;i < props.documents.length;i++) {
+        let doc = props.documents[i];
+         if (doc["itemCode"] === props.selectedDoc ) {
+           selectDoc = doc
+
+            code = doc["itemCode"];
+            name = doc["itemName"];
+            desc = doc["itemDesc"];
+            price = doc["itemPrice"];
+            qty = doc["itemQty"];
+            
+           break
+        }
+    }
+
+   console.log("selectDoc",selectDoc);
+
+    return (
+        <h2> showing detail </h2>
+    );
+}
+
 class AllocateItem extends Component {
 
     componentDidMount() {
@@ -26,7 +62,7 @@ class AllocateItem extends Component {
             )
             newDocsList[0] = "Select code";
             this.setState({
-                documents: newDocsList
+                documents: newDocsList                
             })
         });
     }
@@ -35,7 +71,11 @@ class AllocateItem extends Component {
         super(props);
 
         this.state = {
-            documents : []
+            documents : [],
+            selectedDocument : '',
+            customer : [],
+            selectedCustomer : '',
+            shouldShowProductDetails : false
         };
 
         this.handleOptionSelect = this.handleOptionSelect.bind(this);
@@ -48,8 +88,11 @@ class AllocateItem extends Component {
     }
 
     handleOptionSelect = (event) => {
-        console.log(event.target.value);
-
+        let code =  event.target.value;
+        this.setState({
+            selectedDocument : code,
+            shouldShowProductDetails : true
+        });
     }
 
     render() {
@@ -65,6 +108,7 @@ class AllocateItem extends Component {
                             <ItemList documents={this.state.documents} />
                     </select>
 
+                    <p> <ShowProductDetail show={this.state.shouldShowProductDetails} documents={this.state.documents} selectedDoc= {this.state.selectedDocument}  />  </p>
                          
 
                 </div>
