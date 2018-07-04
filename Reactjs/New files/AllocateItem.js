@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 import * as Firebase from 'firebase';
 import 'firebase/firestore'
 
-const config = {
-  apiKey: 'AIzaSyD1aopJR6sl8MKJvwn_GXefMI0G71la35s',
-  projectId: 'devdatabasefresh',
-};
 
 function ItemList(props) { 
     const finalList = props.documents.map(function(doc) {
@@ -16,41 +12,41 @@ function ItemList(props) {
     return finalList;
 } 
 
-function ShowProductDetail(props) {
-    if (!props.show) {
-        return null;
-    }
+class ShowProductDetail extends React.Component {
+    
+    componentWillUpdate() {
 
-    let selectDoc = {}
-
-    let name = '';
-    let code = '';
-    let desc = '';
-    let price = '';
-    let qty = ''; 
-
-
-    for (let i = 0 ;i < props.documents.length;i++) {
-        let doc = props.documents[i];
-         if (doc["itemCode"] === props.selectedDoc ) {
-           selectDoc = doc
-
-            code = doc["itemCode"];
-            name = doc["itemName"];
-            desc = doc["itemDesc"];
-            price = doc["itemPrice"];
-            qty = doc["itemQty"];
-            
-           break
+        if (!this.props.show) {
+            return null;
         }
+
+        for (let i = 0 ; i < this.props.documents.length; i++) {
+            let doc = this.props.documents[i];
+            if (doc["itemCode"] === this.props.selectedDoc ) {
+                
+                this.iName = doc["itemName"];
+                this.code = doc["itemCode"];
+                break
+            }
+        }        
+   }
+    
+
+    constructor(props) {
+        super(props);   
+
+        this.iName = '';
+        this.code = '';
+
     }
 
-   console.log("selectDoc",selectDoc);
-
-    return (
-        <h2> showing detail </h2>
-    );
+    render () {
+        return (
+            <h2> Name:  {this.code}</h2>
+        );
+    }
 }
+
 
 class AllocateItem extends Component {
 
@@ -93,6 +89,7 @@ class AllocateItem extends Component {
             selectedDocument : code,
             shouldShowProductDetails : true
         });
+        console.log("shouldShowProductDetails ",this.state.shouldShowProductDetails)
     }
 
     render() {
@@ -108,13 +105,12 @@ class AllocateItem extends Component {
                             <ItemList documents={this.state.documents} />
                     </select>
 
-                    <p> <ShowProductDetail show={this.state.shouldShowProductDetails} documents={this.state.documents} selectedDoc= {this.state.selectedDocument}  />  </p>
+                    <p> <ShowProductDetail show={this.state.shouldShowProductDetails} documents={this.state.documents} selectedDoc={this.state.selectedDocument}  />  </p>
                          
 
                 </div>
 
                 <div className="RightPanel"> 
-
                 </div>
 
             </div>
