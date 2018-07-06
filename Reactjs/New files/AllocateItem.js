@@ -5,48 +5,99 @@ import 'firebase/firestore'
 
 function ItemList(props) { 
     const finalList = props.documents.map(function(doc) {
-        var code = doc["itemCode"];
+        let code = doc["itemCode"];
         return <option key={code} value={code} >{code}</option>
     });
 
     return finalList;
 } 
 
-class ShowProductDetail extends React.Component {
+// class ShowProductDetail extends React.Component {
     
-    componentWillUpdate() {
+//     componentWillUpdate() {
 
-        if (!this.props.show) {
-            return null;
-        }
+//         if (!this.props.show) {
+//             return null;
+//         }
 
-        for (let i = 0 ; i < this.props.documents.length; i++) {
-            let doc = this.props.documents[i];
-            if (doc["itemCode"] === this.props.selectedDoc ) {
+//         for (let i = 0 ; i < this.props.documents.length; i++) {
+//             let doc = this.props.documents[i];
+//             if (doc["itemCode"] === this.props.selectedDoc ) {
                 
-                this.iName = doc["itemName"];
-                this.code = doc["itemCode"];
-                break
-            }
-        }        
-   }
+//                 this.iName = doc["itemName"];
+//                 this.code = doc["itemCode"];
+//                 break
+//             }
+//         }        
+//    }
     
 
-    constructor(props) {
-        super(props);   
+//     constructor(props) {
+//         super(props);   
 
-        this.iName = '';
-        this.code = '';
+//         this.iName = '';
+//         this.code = '';
 
+//     }
+
+//     render () {
+//         return (
+//             <span> Name:  {this.code}</span>
+//         );
+//     }
+// }
+
+const ShowProductDetail = (props) => {
+    if (!props.show) {
+        return <SelectItem/>
     }
 
-    render () {
+    let name = '';
+    let code = '';
+    let desc = '';
+    let price = '';
+    let qty = '';
+
+    for (let i = 0 ; i < props.documents.length; i++) {
+        let doc = props.documents[i];
+        if (doc["itemCode"] === props.selectedDoc ) {
+            
+            name = doc["itemName"];
+            code = doc["itemCode"];
+            desc = doc["itemDesc"];
+            price = doc["itemPrice"];
+            qty = doc["itemQty"];
+
+            break
+        }
+    } 
+    if (code === '') {
+       return <SelectItem/>
+    }
+    else {
         return (
-            <h2> Name:  {this.code}</h2>
-        );
+            <div > 
+                <span> Name:  {name}</span> 
+                <br/>
+                <span> Code:  {code}</span> 
+                <br/>
+                <span> Description:  {desc}</span> 
+                <br/>
+                <span> Price:  {price}</span> 
+                <br/>
+                <span> Quantity:  {qty}</span> 
+            </div>
+        )
     }
 }
 
+const SelectItem = (props) => {
+     return (
+        <div>
+            Please select item, for more details
+        </div>
+    )
+}
 
 class AllocateItem extends Component {
 
@@ -89,7 +140,6 @@ class AllocateItem extends Component {
             selectedDocument : code,
             shouldShowProductDetails : true
         });
-        console.log("shouldShowProductDetails ",this.state.shouldShowProductDetails)
     }
 
     render() {
