@@ -3,6 +3,20 @@ import * as Firebase from 'firebase';
 import 'firebase/firestore'
 
 
+function CustomerList(props) {
+
+    const list = props.customers.map(function(customer) {
+        
+        let id = customer["id"];
+        let data = customer["data"];
+        
+        let customerName = data["name"];
+        return <option key={id} value={data}>{customerName}</option>
+    });
+    
+    return list;
+}
+
 function ItemList(props) { 
     const finalList = props.documents.map(function(doc) {
         let code = doc["itemCode"];
@@ -49,7 +63,7 @@ function ItemList(props) {
 
 const ShowProductDetail = (props) => {
     if (!props.show) {
-        return <SelectItem/>
+        return <NoData message="Please select product for more details"/>
     }
 
     let name = '';
@@ -72,7 +86,7 @@ const ShowProductDetail = (props) => {
         }
     } 
     if (code === '') {
-       return <SelectItem/>
+        return <NoData message="Please select product for more details"/>
     }
     else {
         return (
@@ -91,10 +105,16 @@ const ShowProductDetail = (props) => {
     }
 }
 
-const SelectItem = (props) => {
+const ShowCustomerDetails = (props) => {
+    console.log("ShowCustomerDetails",props);
+
+    return null
+}
+
+const NoData = (props) => {
      return (
         <div>
-            Please select item, for more details
+            {props.message}
         </div>
     )
 }
@@ -104,12 +124,26 @@ class AllocateItem extends Component {
     componentDidMount() {
        this.productCollectionRef.onSnapshot(response => {
 
-            let newDocsList = response.docs.map(
-                doc => doc.data()
-            )
-            newDocsList[0] = "Select code";
+            let newDocsList = response.docs.map( doc => {
+                return doc.data()
+            })
+
             this.setState({
                 documents: newDocsList                
+            })
+        });
+
+        this.customerCollectionRef.onSnapshot( response => {
+            
+            let custList = response.docs.map ( doc =>{
+                return  {
+                    "id" : doc.id,
+                    "data" : doc.data()
+                } 
+            });
+
+            this.setState({
+                customers : custList
             })
         });
     }
@@ -120,25 +154,36 @@ class AllocateItem extends Component {
         this.state = {
             documents : [],
             selectedDocument : '',
-            customer : [],
+            customers : [],
             selectedCustomer : '',
             shouldShowProductDetails : false
         };
 
-        this.handleOptionSelect = this.handleOptionSelect.bind(this);
-        
+        this.handleProductSelection = this.handleProductSelection.bind(this);
+        this.handleCustomerSelection = this.handleCustomerSelection.bind(this);
+
         if (!Firebase.apps.length) {
             Firebase.initializeApp(config);
         }
             
         this.productCollectionRef = Firebase.firestore().collection('Product');
+        this.customerCollectionRef = Firebase.firestore().collection('Customer');
+
     }
 
-    handleOptionSelect = (event) => {
+    handleProductSelection = (event) => {
         let code =  event.target.value;
         this.setState({
             selectedDocument : code,
             shouldShowProductDetails : true
+        });
+    }
+
+    handleCustomerSelection = (event) => {
+        let customerDoc = event.target.value;
+
+        this.setState({
+            selectedCustomer: customerDoc
         });
     }
 
@@ -151,7 +196,8 @@ class AllocateItem extends Component {
                     <h2> Product </h2>
                     <br/>
 
-                    <select onChange={this.handleOptionSelect}>  
+                    <select name="product" onChange={this.handleProductSelection}>  
+                            <option value="SelectProduct">Select Product</option>
                             <ItemList documents={this.state.documents} />
                     </select>
 
@@ -161,6 +207,13 @@ class AllocateItem extends Component {
                 </div>
 
                 <div className="RightPanel"> 
+                     
+                     <select onChange={this.handleCustomerSelection} >
+                        <option value="SelectCustomer">Select Customer</option>
+                        <CustomerList customers={this.state.customers} />
+                    </select>
+
+                     <p> <ShowCustomerDetails  selectedCustomer={this.state.selectedCustomer} /></p> 
                 </div>
 
             </div>
