@@ -3,7 +3,6 @@ import * as Firebase from 'firebase';
 import 'firebase/firestore'
 
 
-
 function CustomerList(props) {
 
     const list = props.customers.map(function(customer) {
@@ -20,8 +19,11 @@ function CustomerList(props) {
 
 function ItemList(props) { 
     const finalList = props.products.map(function(doc) {
-        let code = doc["itemCode"];
-        return <option key={code} value={code} >{code}</option>
+        
+        let id = doc.id;
+        let name = doc.data.itemName;
+
+        return <option key={id} value={id} >{name}</option>
     });
 
     return finalList;
@@ -39,14 +41,15 @@ const ShowProductDetail = (props) => {
     let qty = '';
 
     for (let i = 0 ; i < props.products.length; i++) {
-        let doc = props.products[i];
-        if (doc["itemCode"] === props.selectedProduct ) {
+        let product = props.products[i];
+
+        if (product.id === props.selectedProduct ) {
             
-            name = doc["itemName"];
-            code = doc["itemCode"];
-            desc = doc["itemDesc"];
-            price = doc["itemPrice"];
-            qty = doc["itemQty"];
+            name = product.data["itemName"];
+            code = product.data["itemCode"];
+            desc = product.data["itemDesc"];
+            price = product.data["itemPrice"];
+            qty = product.data["itemQty"];
 
             break
         }
@@ -72,7 +75,6 @@ const ShowProductDetail = (props) => {
 }
 
 const ShowCustomerDetails = (props) => {
-
 
     if (!props.selectedCustomer || props.selectedCustomer === 'SelectCustomer') {
         return <NoData message="Please select customer for more details"/>
@@ -114,7 +116,11 @@ class AllocateItem extends Component {
        this.productCollectionRef.onSnapshot(response => {
 
             let products = response.docs.map( doc => {
-                return doc.data()
+
+                return {
+                    "id" : doc.id,   
+                    "data" : doc.data()
+                }
             })
 
             this.setState({
@@ -149,6 +155,7 @@ class AllocateItem extends Component {
 
         this.handleProductSelection = this.handleProductSelection.bind(this);
         this.handleCustomerSelection = this.handleCustomerSelection.bind(this);
+        this.handleAllocatedButton = this.handleAllocatedButton.bind(this);
 
         if (!Firebase.apps.length) {
             Firebase.initializeApp(config);
@@ -174,6 +181,20 @@ class AllocateItem extends Component {
         });
     }
 
+    handleAllocatedButton = (event) => {
+        if (!this.state.selectedCustomer || 
+            !this.state.selectedProduct ||
+            this.state.selectedProduct === "SelectProduct" ||
+            this.state.selectedCustomer === "SelectCustomer") {
+                alert("Please select both product & customer");
+        }
+        else {
+            console.log("this.state.selectedCustomer ",this.state.selectedCustomer);
+            console.log("this.state.selectedProduct ",this.state.selectedProduct);
+
+        }
+    }
+
     render() {
         return (
             <div className="App">
@@ -193,7 +214,7 @@ class AllocateItem extends Component {
                 </div>
 
                 <div className="RightPanel"> 
-                     <br/>
+                    <br/>
                     <h2> Customer </h2>
                     <br/>
                      <select onChange={this.handleCustomerSelection} >
@@ -203,10 +224,9 @@ class AllocateItem extends Component {
                     
                     <br />
                     <br />
-
                     <ShowCustomerDetails  selectedCustomer={this.state.selectedCustomer} customers={this.state.customers}/>
                 </div>
-
+                <button onClick={this.handleAllocatedButton} className=""> Allocate </button>
             </div>
         );
     }
