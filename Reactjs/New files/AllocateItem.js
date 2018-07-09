@@ -189,9 +189,27 @@ class AllocateItem extends Component {
                 alert("Please select both product & customer");
         }
         else {
-            console.log("this.state.selectedCustomer ",this.state.selectedCustomer);
-            console.log("this.state.selectedProduct ",this.state.selectedProduct);
 
+            let productData = {};
+            for (let i = 0; i < this.state.products.length; i++) {
+                let product = this.state.products[i];
+                    if (product.id === this.state.selectedProduct) {
+                        productData = product.data;
+                        break
+                    }
+            }
+
+            if (isEmpty(productData) === false) {
+                let fbRef = this.customerCollectionRef.doc(this.state.selectedCustomer).collection("AllocatedItem").doc(this.state.selectedProduct);
+                
+                fbRef.set(
+                     productData
+                ).then((succ) => {
+                    console.log("Success ",succ);
+                }).catch((fail) => {
+                    console.log("Success ",fail);
+                });
+            }
         }
     }
 
@@ -233,3 +251,12 @@ class AllocateItem extends Component {
 }
 
 export default AllocateItem;
+
+
+function isEmpty(obj) {
+    for(var key in obj) {
+        if(obj.hasOwnProperty(key))
+            return false;
+    }
+    return true;
+}
