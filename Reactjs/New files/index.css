@@ -6,7 +6,7 @@
 
 
 body {
-  background-color: #046295;
+  background-color: #FFF;
   padding: 20px;
   margin: 0;
 }
@@ -39,4 +39,23 @@ ul.header li a {
 }
 .content li {
   margin-bottom: 10px;
+}
+.App {
+  text-align: center;
+}
+
+.LeftPanel {
+  float: left;
+  padding-left: 50px;
+  height: 600px;
+  width: 800px;
+  background: #a7d8b4;
+}
+
+.RightPanel {
+  float: right;
+  padding-left: 50px;
+  height: 600px;
+  width: 800px;
+  background: #a7d8b4;
 }
