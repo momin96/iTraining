@@ -151,11 +151,14 @@ class AllocateItem extends Component {
             selectedProduct : '',
             customers : [],
             selectedCustomer : '',
+            filterText : ''
         };
 
         this.handleProductSelection = this.handleProductSelection.bind(this);
         this.handleCustomerSelection = this.handleCustomerSelection.bind(this);
         this.handleAllocatedButton = this.handleAllocatedButton.bind(this);
+        this.handleProductDetailUpdation = this.handleProductDetailUpdation.bind(this);
+        this.handleSearch = this.handleSearch.bind(this);
 
         if (!Firebase.apps.length) {
             Firebase.initializeApp(config);
@@ -164,6 +167,11 @@ class AllocateItem extends Component {
         this.productCollectionRef = Firebase.firestore().collection('Product');
         this.customerCollectionRef = Firebase.firestore().collection('Customer');
 
+    }
+
+    handleProductDetailUpdation(e) {
+        console.log("handleProductDetailUpdation");
+        console.log(e);
     }
 
     handleProductSelection = (event) => {
@@ -199,6 +207,8 @@ class AllocateItem extends Component {
                     }
             }
 
+            // this.props.onProductDetailDidUpdated(event.target.value);
+
             if (isEmpty(productData) === false) {
                 let fbRef = this.customerCollectionRef.doc(this.state.selectedCustomer).collection("AllocatedItem").doc(this.state.selectedProduct);
                 
@@ -206,11 +216,18 @@ class AllocateItem extends Component {
                      productData
                 ).then((succ) => {
                     console.log("Success ",succ);
+                    alert(productData.itemName+" Allocated to "+this.state.selectedCustomer);
                 }).catch((fail) => {
                     console.log("Success ",fail);
                 });
             }
         }
+    }
+
+    handleSearch = (event) => {
+        this.setState({
+            filterText : event.target.value
+        })
     }
 
     render() {
@@ -222,13 +239,20 @@ class AllocateItem extends Component {
                     <h2> Product </h2>
                     <br/>
 
-                    <select name="product" onChange={this.handleProductSelection}>  
+                    {/* <select name="product" onChange={this.handleProductSelection}>  
                             <option value="SelectProduct">Select Product</option>
                             <ItemList products={this.state.products} />
                     </select>
                     <br />
                     <br />
-                    <ShowProductDetail products={this.state.products} selectedProduct={this.state.selectedProduct}  />
+                    <ShowProductDetail products={this.state.products} selectedProduct={this.state.selectedProduct}  /> */}
+
+
+                    <input type="text" className="searchBox" placeholder="Search product here !!" onChange={this.handleSearch}/>
+                    <br/>
+                    <SuggestionList products={this.state.products} filterText={this.state.filterText} className="suggestionBox" />
+
+                
                 </div>
 
                 <div className="RightPanel"> 
@@ -244,13 +268,63 @@ class AllocateItem extends Component {
                     <br />
                     <ShowCustomerDetails  selectedCustomer={this.state.selectedCustomer} customers={this.state.customers}/>
                 </div>
-                <button onClick={this.handleAllocatedButton} className=""> Allocate </button>
+                <button onClick={this.handleAllocatedButton} /*onProductDetailDidUpdated={this.handleProductDetailUpdation}*/  className=""> Allocate </button>
+            <br/>
+
+            <br/>
+
+                
+            
             </div>
         );
     }
 }
 
 export default AllocateItem;
+
+
+class SuggestionList extends React.Component {
+    render () {
+
+        if (this.props.products && this.props.products.length >= 1 ) {
+
+            let filterText = this.props.filterText;
+
+            const rows = [];
+
+            this.props.products.forEach(function(product) {
+                
+                let id = product.id;
+                let data = product.data;
+                
+                if (data.itemName.indexOf(filterText) === -1 || !filterText) {
+                    return null
+                }
+                
+                rows.push(
+                     <ProductRow key={data.itemCode} itemName={data.itemName} />//<span> {data.itemName} <br/></span>            
+                );
+            }, this);
+                
+            return rows;
+        }
+
+        return null;
+    }
+}
+
+class ProductRow extends React.Component {
+    render() {
+
+        let itemName = this.props.itemName;
+
+        return (
+            <p> <a  > {itemName}  </a> </p>
+        )
+
+    }
+}
+
 
 
 function isEmpty(obj) {
@@ -260,3 +334,5 @@ function isEmpty(obj) {
     }
     return true;
 }
+
+//8310034750

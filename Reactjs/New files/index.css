@@ -19,7 +19,7 @@ ul.header li {
   margin: 0;
 }
 ul.header {
-   background-color: #a7d8b4; 
+  /* background-color: #a7d8b4; */
   padding: 0;
 }
 ul.header li a {
@@ -49,6 +49,8 @@ ul.header li a {
   padding-left: 10px;
   height: 600px;
   width: 25%;
+  /* position: relative; */
+
    background: #a7d8b4; 
 }
 
@@ -58,5 +60,23 @@ ul.header li a {
   margin-left: 50px;
   height: 600px;
   width: 25%;
-   background: #a7d8b4; 
+  /* background: #a7d8b4; */
+}
+
+.searchContainer {
+  width: 250px;
+  position: relative
+}
+
+.searchBox {
+  width: 250px;
+  height: 25px;
+}
+
+.suggestionBox {
+    width: 250px;
+    height: 400px;
+    background: coral;
+    /* position: absolute; */
+
 }
