@@ -159,6 +159,7 @@ class AllocateItem extends Component {
         this.handleCustomerSelection = this.handleCustomerSelection.bind(this);
         this.handleAllocatedButton = this.handleAllocatedButton.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
+        this.handleSuggestionSelection = this.handleSuggestionSelection.bind(this);
 
         if (!Firebase.apps.length) {
             Firebase.initializeApp(config);
@@ -223,6 +224,19 @@ class AllocateItem extends Component {
         })
     }
 
+    handleSuggestionSelection = (suggestion) => {
+        console.log("Parent : ",suggestion);
+        let id = suggestion.id
+        if (suggestion.data.itemName) {
+            // Suggestion object is product object
+
+        }
+        else if (suggestion.data.name) {
+            // Suggestion object is customer object
+            
+        }
+    }
+
     render() {
         return (
             <div className="App">
@@ -243,7 +257,7 @@ class AllocateItem extends Component {
 
                     {/* <input type="text" className="searchBox" placeholder="Search product here !!" onChange={this.handleSearch}/>
                     <br/> */}
-                    <SuggestionList products={this.state.products} placeholder="Search Product Here !!" />
+                    <Suggestion products={this.state.products} onSuggestionSelection={this.handleSuggestionSelection} placeholder="Search Product Here !!" />
 
                 
                 </div>
@@ -253,7 +267,7 @@ class AllocateItem extends Component {
                     <h2> Customer </h2>
                     <br/>
                      
-                    <SuggestionList customers={this.state.customers} placeholder="Search Customer Here !!" />
+                    <Suggestion customers={this.state.customers} onSuggestionSelection={this.handleSuggestionSelection} placeholder="Search Customer Here !!" />
 
                      
                      {/* <select onChange={this.handleCustomerSelection} >
@@ -280,7 +294,7 @@ class AllocateItem extends Component {
 export default AllocateItem;
 
 
-class SuggestionList extends React.Component {
+class Suggestion extends React.Component {
    
     constructor() {
         super();
@@ -292,8 +306,9 @@ class SuggestionList extends React.Component {
     }
 
     handleSuggestionSelection = (event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) => {
-        // console.log("suggestion ", suggestion.id);
-        // console.log("suggestionValue ", suggestionValue);
+        // console.log("id  ", suggestion.id);
+        // console.log("value ", suggestionValue);
+        this.props.onSuggestionSelection(suggestion);
     }
 
     onChange = (event, { newValue, method }) => {
@@ -305,7 +320,6 @@ class SuggestionList extends React.Component {
   
     onSuggestionsFetchRequested = ({ value }) => {
         let list = [];
-                    console.log("onSuggestionsFetchRequested ",this.props)
 
         if (this.props.products) {
             list = this.props.products;
@@ -366,13 +380,16 @@ function getSuggestions(value, list) {
 
   const regex = new RegExp('^' + escapedValue, 'i');
 
-  return list.filter(element => regex.test(element.data.itemName ? element.data.itemName : element.data.name));
+    let name = list.filter(element => regex.test(element.data.itemName ? element.data.itemName : element.data.name));
+
+    if (name.length === 0) {
+        name = list.filter(element => regex.test(element.data.itemCategory));
+    }
+    return name;
 }
 
 function getSuggestionValue(suggestion) {
   
-    console.log("getSuggestionValue ",suggestion);
-
     if (suggestion.data.itemName){
         return suggestion.data.itemName
     }
