@@ -287,13 +287,12 @@ class SuggestionList extends React.Component {
         };    
     }
 
+    handleSuggestionSelection = (event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) => {
+        console.log("suggestion ", suggestion.id);
+        console.log("suggestionValue ", suggestionValue);
+    }
+
     onChange = (event, { newValue, method }) => {
-        console.log("onChange ",newValue, event.currentTarget.children, method);
-        if (method === 'click') {
-            let c = event.currentTarget.children
-            c[0].id
-            console.log("Selected ",c[0].id)
-        }
         this.setState({
             value: newValue
         });
@@ -332,36 +331,10 @@ class SuggestionList extends React.Component {
                     getSuggestionValue={getSuggestionValue}
                     renderSuggestion={renderSuggestion}
                     inputProps={inputProps}
+                    onSuggestionSelected={this.handleSuggestionSelection}
                 />
             </div>
         );
-
-
-        // if (this.props.products && this.props.products.length >= 1 ) {
-
-            
-        //     let filterText = this.props.filterText;
-
-        //     const rows = [];
-
-        //     this.props.products.forEach(function(product) {
-                
-        //         let id = product.id;
-        //         let data = product.data;
-                
-        //         if (data.itemName.indexOf(filterText) === -1 || !filterText) {
-        //             return null
-        //         }
-                
-        //         rows.push(
-        //              <ProductRow key={data.itemCode} itemName={data.itemName} />//<span> {data.itemName} <br/></span>            
-        //         );
-        //     }, this);
-                
-        //     return rows;
-        // }
-
-        // return null;
     }
 }
 
@@ -393,17 +366,6 @@ function renderSuggestion(suggestion) {
 }
 
 
-// class ProductRow extends React.Component {
-//     render() {
-//         let itemName = this.props.itemName;
-//         return (            
-//             <p><a href="" onClick={this.suggestionClick}> {itemName} </a></p>
-//         )
-//     }
-// }
-
-
-
 function isEmpty(obj) {
     for(var key in obj) {
         if(obj.hasOwnProperty(key))
@@ -412,59 +374,6 @@ function isEmpty(obj) {
     return true;
 }
 
-const theme = {
-  container: {
-    position: 'relative'
-  },
-  input: {
-    width: 240,
-    height: 30,
-    padding: '10px 20px',
-    fontFamily: 'Helvetica, sans-serif',
-    fontWeight: 300,
-    fontSize: 16,
-    border: '1px solid #aaa',
-    borderTopLeftRadius: 4,
-    borderTopRightRadius: 4,
-    borderBottomLeftRadius: 4,
-    borderBottomRightRadius: 4,
-  },
-  inputFocused: {
-    outline: 'none'
-  },
-  inputOpen: {
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0
-  },
-  suggestionsContainer: {
-    display: 'none'
-  },
-  suggestionsContainerOpen: {
-    display: 'block',
-    position: 'absolute',
-    top: 51,
-    width: 280,
-    border: '1px solid #aaa',
-    backgroundColor: '#fff',
-    fontFamily: 'Helvetica, sans-serif',
-    fontWeight: 300,
-    fontSize: 16,
-    borderBottomLeftRadius: 4,
-    borderBottomRightRadius: 4,
-    zIndex: 2
-  },
-  suggestionsList: {
-    margin: 0,
-    padding: 0,
-    listStyleType: 'none',
-  },
-  suggestion: {
-    cursor: 'pointer',
-    padding: '10px 20px'
-  },
-  suggestionHighlighted: {
-    backgroundColor: '#ddd'
-  }
-};
-
 //8310034750
+
+//npm i react-autosuggest
