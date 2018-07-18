@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import * as Firebase from 'firebase';
+import Autosuggest from 'react-autosuggest';
 import 'firebase/firestore'
 
 
@@ -157,7 +158,6 @@ class AllocateItem extends Component {
         this.handleProductSelection = this.handleProductSelection.bind(this);
         this.handleCustomerSelection = this.handleCustomerSelection.bind(this);
         this.handleAllocatedButton = this.handleAllocatedButton.bind(this);
-        this.handleProductDetailUpdation = this.handleProductDetailUpdation.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
 
         if (!Firebase.apps.length) {
@@ -167,11 +167,6 @@ class AllocateItem extends Component {
         this.productCollectionRef = Firebase.firestore().collection('Product');
         this.customerCollectionRef = Firebase.firestore().collection('Customer');
 
-    }
-
-    handleProductDetailUpdation(e) {
-        console.log("handleProductDetailUpdation");
-        console.log(e);
     }
 
     handleProductSelection = (event) => {
@@ -206,8 +201,6 @@ class AllocateItem extends Component {
                         break
                     }
             }
-
-            // this.props.onProductDetailDidUpdated(event.target.value);
 
             if (isEmpty(productData) === false) {
                 let fbRef = this.customerCollectionRef.doc(this.state.selectedCustomer).collection("AllocatedItem").doc(this.state.selectedProduct);
@@ -248,9 +241,9 @@ class AllocateItem extends Component {
                     <ShowProductDetail products={this.state.products} selectedProduct={this.state.selectedProduct}  /> */}
 
 
-                    <input type="text" className="searchBox" placeholder="Search product here !!" onChange={this.handleSearch}/>
-                    <br/>
-                    <SuggestionList products={this.state.products} filterText={this.state.filterText} className="suggestionBox" />
+                    {/* <input type="text" className="searchBox" placeholder="Search product here !!" onChange={this.handleSearch}/>
+                    <br/> */}
+                    <SuggestionList products={this.state.products} filterText={this.state.filterText} />
 
                 
                 </div>
@@ -268,7 +261,7 @@ class AllocateItem extends Component {
                     <br />
                     <ShowCustomerDetails  selectedCustomer={this.state.selectedCustomer} customers={this.state.customers}/>
                 </div>
-                <button onClick={this.handleAllocatedButton} /*onProductDetailDidUpdated={this.handleProductDetailUpdation}*/  className=""> Allocate </button>
+                <button onClick={this.handleAllocatedButton} > Allocate </button>
             <br/>
 
             <br/>
@@ -284,46 +277,130 @@ export default AllocateItem;
 
 
 class SuggestionList extends React.Component {
+   
+    constructor() {
+        super();
+
+        this.state = {
+            value: '',
+            suggestions: []
+        };    
+    }
+
+    onChange = (event, { newValue, method }) => {
+        console.log("onChange ",newValue, event.currentTarget.children, method);
+        if (method === 'click') {
+            let c = event.currentTarget.children
+            c[0].id
+            console.log("Selected ",c[0].id)
+        }
+        this.setState({
+            value: newValue
+        });
+    };
+  
+    onSuggestionsFetchRequested = ({ value }) => {
+
+        this.setState({
+            suggestions: getSuggestions(value, this.props.products)
+        });
+    };
+
+    onSuggestionsClearRequested = () => {
+
+        this.setState({
+            suggestions: []
+        });
+    };
+
     render () {
 
-        if (this.props.products && this.props.products.length >= 1 ) {
+        const { value, suggestions } = this.state;
+        const inputProps = {
+        placeholder: "Search product here !!",
+        value,
+        onChange: this.onChange
+        };
 
-            let filterText = this.props.filterText;
-
-            const rows = [];
-
-            this.props.products.forEach(function(product) {
-                
-                let id = product.id;
-                let data = product.data;
-                
-                if (data.itemName.indexOf(filterText) === -1 || !filterText) {
-                    return null
-                }
-                
-                rows.push(
-                     <ProductRow key={data.itemCode} itemName={data.itemName} />//<span> {data.itemName} <br/></span>            
-                );
-            }, this);
-                
-            return rows;
-        }
-
-        return null;
-    }
-}
-
-class ProductRow extends React.Component {
-    render() {
-
-        let itemName = this.props.itemName;
 
         return (
-            <p> <a  > {itemName}  </a> </p>
-        )
+            <div className="container">
+                <Autosuggest 
+                    suggestions={suggestions}
+                    onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                    onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                    getSuggestionValue={getSuggestionValue}
+                    renderSuggestion={renderSuggestion}
+                    inputProps={inputProps}
+                />
+            </div>
+        );
 
+
+        // if (this.props.products && this.props.products.length >= 1 ) {
+
+            
+        //     let filterText = this.props.filterText;
+
+        //     const rows = [];
+
+        //     this.props.products.forEach(function(product) {
+                
+        //         let id = product.id;
+        //         let data = product.data;
+                
+        //         if (data.itemName.indexOf(filterText) === -1 || !filterText) {
+        //             return null
+        //         }
+                
+        //         rows.push(
+        //              <ProductRow key={data.itemCode} itemName={data.itemName} />//<span> {data.itemName} <br/></span>            
+        //         );
+        //     }, this);
+                
+        //     return rows;
+        // }
+
+        // return null;
     }
 }
+
+function escapeRegexCharacters(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function getSuggestions(value, productList) {
+    
+  const escapedValue = escapeRegexCharacters(value.trim());
+  
+  if (escapedValue === '') {
+    return [];
+  }
+
+  const regex = new RegExp('^' + escapedValue, 'i');
+
+  return productList.filter(product => regex.test(product.data.itemName));
+}
+
+function getSuggestionValue(suggestion) {
+  return suggestion.data.itemName;
+}
+
+function renderSuggestion(suggestion) {
+  return (
+    <span id={suggestion.id}>{suggestion.data.itemName}</span>
+  );
+}
+
+
+// class ProductRow extends React.Component {
+//     render() {
+//         let itemName = this.props.itemName;
+//         return (            
+//             <p><a href="" onClick={this.suggestionClick}> {itemName} </a></p>
+//         )
+//     }
+// }
 
 
 
@@ -334,5 +411,60 @@ function isEmpty(obj) {
     }
     return true;
 }
+
+const theme = {
+  container: {
+    position: 'relative'
+  },
+  input: {
+    width: 240,
+    height: 30,
+    padding: '10px 20px',
+    fontFamily: 'Helvetica, sans-serif',
+    fontWeight: 300,
+    fontSize: 16,
+    border: '1px solid #aaa',
+    borderTopLeftRadius: 4,
+    borderTopRightRadius: 4,
+    borderBottomLeftRadius: 4,
+    borderBottomRightRadius: 4,
+  },
+  inputFocused: {
+    outline: 'none'
+  },
+  inputOpen: {
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0
+  },
+  suggestionsContainer: {
+    display: 'none'
+  },
+  suggestionsContainerOpen: {
+    display: 'block',
+    position: 'absolute',
+    top: 51,
+    width: 280,
+    border: '1px solid #aaa',
+    backgroundColor: '#fff',
+    fontFamily: 'Helvetica, sans-serif',
+    fontWeight: 300,
+    fontSize: 16,
+    borderBottomLeftRadius: 4,
+    borderBottomRightRadius: 4,
+    zIndex: 2
+  },
+  suggestionsList: {
+    margin: 0,
+    padding: 0,
+    listStyleType: 'none',
+  },
+  suggestion: {
+    cursor: 'pointer',
+    padding: '10px 20px'
+  },
+  suggestionHighlighted: {
+    backgroundColor: '#ddd'
+  }
+};
 
 //8310034750
