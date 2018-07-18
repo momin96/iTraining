@@ -243,7 +243,7 @@ class AllocateItem extends Component {
 
                     {/* <input type="text" className="searchBox" placeholder="Search product here !!" onChange={this.handleSearch}/>
                     <br/> */}
-                    <SuggestionList products={this.state.products} filterText={this.state.filterText} />
+                    <SuggestionList products={this.state.products} placeholder="Search Product Here !!" />
 
                 
                 </div>
@@ -252,14 +252,18 @@ class AllocateItem extends Component {
                     <br/>
                     <h2> Customer </h2>
                     <br/>
-                     <select onChange={this.handleCustomerSelection} >
+                     
+                    <SuggestionList customers={this.state.customers} placeholder="Search Customer Here !!" />
+
+                     
+                     {/* <select onChange={this.handleCustomerSelection} >
                         <option value="SelectCustomer">Select Customer</option>
                         <CustomerList customers={this.state.customers} />
                     </select>
                     
                     <br />
                     <br />
-                    <ShowCustomerDetails  selectedCustomer={this.state.selectedCustomer} customers={this.state.customers}/>
+                    <ShowCustomerDetails  selectedCustomer={this.state.selectedCustomer} customers={this.state.customers}/> */}
                 </div>
                 <button onClick={this.handleAllocatedButton} > Allocate </button>
             <br/>
@@ -288,20 +292,30 @@ class SuggestionList extends React.Component {
     }
 
     handleSuggestionSelection = (event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) => {
-        console.log("suggestion ", suggestion.id);
-        console.log("suggestionValue ", suggestionValue);
+        // console.log("suggestion ", suggestion.id);
+        // console.log("suggestionValue ", suggestionValue);
     }
 
     onChange = (event, { newValue, method }) => {
+
         this.setState({
             value: newValue
         });
     };
   
     onSuggestionsFetchRequested = ({ value }) => {
+        let list = [];
+                    console.log("onSuggestionsFetchRequested ",this.props)
+
+        if (this.props.products) {
+            list = this.props.products;
+        }
+        else if (this.props.customers) {
+            list = this.props.customers;
+        } 
 
         this.setState({
-            suggestions: getSuggestions(value, this.props.products)
+            suggestions: getSuggestions(value, list)
         });
     };
 
@@ -316,7 +330,7 @@ class SuggestionList extends React.Component {
 
         const { value, suggestions } = this.state;
         const inputProps = {
-        placeholder: "Search product here !!",
+        placeholder: this.props.placeholder,
         value,
         onChange: this.onChange
         };
@@ -342,7 +356,7 @@ function escapeRegexCharacters(str) {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
-function getSuggestions(value, productList) {
+function getSuggestions(value, list) {
     
   const escapedValue = escapeRegexCharacters(value.trim());
   
@@ -352,16 +366,24 @@ function getSuggestions(value, productList) {
 
   const regex = new RegExp('^' + escapedValue, 'i');
 
-  return productList.filter(product => regex.test(product.data.itemName));
+  return list.filter(element => regex.test(element.data.itemName ? element.data.itemName : element.data.name));
 }
 
 function getSuggestionValue(suggestion) {
-  return suggestion.data.itemName;
+  
+    console.log("getSuggestionValue ",suggestion);
+
+    if (suggestion.data.itemName){
+        return suggestion.data.itemName
+    }
+
+    return suggestion.data.name
 }
 
 function renderSuggestion(suggestion) {
-  return (
-    <span id={suggestion.id}>{suggestion.data.itemName}</span>
+
+    return (
+    <span id={suggestion.id}>{suggestion.data.itemName ? suggestion.data.itemName : suggestion.data.name}</span>
   );
 }
 
