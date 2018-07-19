@@ -149,17 +149,18 @@ class AllocateItem extends Component {
 
         this.state = {
             products : [],
-            selectedProduct : '',
+            selectedProduct : {},
             customers : [],
-            selectedCustomer : '',
+            selectedCustomer : {},
             filterText : ''
         };
 
         this.handleProductSelection = this.handleProductSelection.bind(this);
         this.handleCustomerSelection = this.handleCustomerSelection.bind(this);
-        this.handleAllocatedButton = this.handleAllocatedButton.bind(this);
+        this.handleAllocateAction = this.handleAllocateAction.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
         this.handleSuggestionSelection = this.handleSuggestionSelection.bind(this);
+        this.onSuccessAllocation = this.onSuccessAllocation.bind(this)
 
         if (!Firebase.apps.length) {
             Firebase.initializeApp(config);
@@ -185,38 +186,41 @@ class AllocateItem extends Component {
         });
     }
 
-    handleAllocatedButton = (event) => {
-        if (!this.state.selectedCustomer || 
-            !this.state.selectedProduct ||
-            this.state.selectedProduct === "SelectProduct" ||
-            this.state.selectedCustomer === "SelectCustomer") {
+    handleAllocateAction = (event) => {
+                
+        if (isEmpty(this.state.selectedCustomer) || 
+            isEmpty(this.state.selectedProduct)) {
                 alert("Please select both product & customer");
         }
         else {
 
-            let productData = {};
-            for (let i = 0; i < this.state.products.length; i++) {
-                let product = this.state.products[i];
-                    if (product.id === this.state.selectedProduct) {
-                        productData = product.data;
-                        break
-                    }
-            }
+            let productData = this.state.selectedProduct.data
+            let productId = this.state.selectedProduct.id
+
+            let customerId = this.state.selectedCustomer.id
 
             if (isEmpty(productData) === false) {
-                let fbRef = this.customerCollectionRef.doc(this.state.selectedCustomer).collection("AllocatedItem").doc(this.state.selectedProduct);
+       
+
+                let fbRef = this.customerCollectionRef.doc(customerId).collection("AllocatedItem").doc(productId);
                 
                 fbRef.set(
                      productData
                 ).then((succ) => {
                     console.log("Success ",succ);
-                    alert(productData.itemName+" Allocated to "+this.state.selectedCustomer);
+                    alert(productData.itemName + " Allocated to " + this.state.selectedCustomer.data.name);
+                    this.onSuccessAllocation(this)
                 }).catch((fail) => {
-                    console.log("Success ",fail);
+                    console.log("Fail ",fail);
                 });
             }
         }
     }
+
+    onSuccessAllocation = (event) => {
+        console.log("onSuccessAllocation ",event)
+    }
+
 
     handleSearch = (event) => {
         this.setState({
@@ -225,15 +229,18 @@ class AllocateItem extends Component {
     }
 
     handleSuggestionSelection = (suggestion) => {
-        console.log("Parent : ",suggestion);
-        let id = suggestion.id
+
         if (suggestion.data.itemName) {
             // Suggestion object is product object
-
+            this.setState({
+                selectedProduct : suggestion
+            })
         }
         else if (suggestion.data.name) {
             // Suggestion object is customer object
-            
+            this.setState({
+                selectedCustomer : suggestion
+            })
         }
     }
 
@@ -257,7 +264,7 @@ class AllocateItem extends Component {
 
                     {/* <input type="text" className="searchBox" placeholder="Search product here !!" onChange={this.handleSearch}/>
                     <br/> */}
-                    <Suggestion products={this.state.products} onSuggestionSelection={this.handleSuggestionSelection} placeholder="Search Product Here !!" />
+                    <Suggestion products={this.state.products} onSuggestionSelection={this.handleSuggestionSelection} placeholder="Search Product or Product Category Here !!" />
 
                 
                 </div>
@@ -279,7 +286,8 @@ class AllocateItem extends Component {
                     <br />
                     <ShowCustomerDetails  selectedCustomer={this.state.selectedCustomer} customers={this.state.customers}/> */}
                 </div>
-                <button onClick={this.handleAllocatedButton} > Allocate </button>
+                <DisplayDetail product={this.state.selectedProduct} customer={this.state.selectedCustomer}  onAllocateClick={this.handleAllocateAction} /> 
+                
             <br/>
 
             <br/>
@@ -294,6 +302,24 @@ class AllocateItem extends Component {
 export default AllocateItem;
 
 
+class DisplayDetail extends React.Component {
+
+    render() {
+
+        if ( isEmpty(this.props.product) === false && isEmpty(this.props.customer) === false) {
+            return (
+                <div> Should {this.props.product.data.itemName} allocate to {this.props.customer.data.name} ?  
+                    <br/>
+                    <br/>
+                    <button onClick={this.props.onAllocateClick} > Allocate </button>
+                </div> 
+            );
+        }
+        return null;
+    }
+}
+
+
 class Suggestion extends React.Component {
    
     constructor() {
@@ -306,8 +332,6 @@ class Suggestion extends React.Component {
     }
 
     handleSuggestionSelection = (event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) => {
-        // console.log("id  ", suggestion.id);
-        // console.log("value ", suggestionValue);
         this.props.onSuggestionSelection(suggestion);
     }
 

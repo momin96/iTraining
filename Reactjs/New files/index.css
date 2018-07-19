@@ -51,7 +51,8 @@ ul.header li a {
   width: 25%;
   position: relative; 
   background: #a7d8b4; 
-  align-content: center;
+  /* align-content: center; */
+    text-align: center;
 }
 
 .RightPanel {
