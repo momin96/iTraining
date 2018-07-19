@@ -3,7 +3,6 @@ import * as Firebase from 'firebase';
 import Autosuggest from 'react-autosuggest';
 import 'firebase/firestore'
 
-
 function CustomerList(props) {
 
     const list = props.customers.map(function(customer) {
@@ -113,6 +112,32 @@ const NoData = (props) => {
 
 class AllocateItem extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            products : [],
+            selectedProduct : {},
+            customers : [],
+            selectedCustomer : {},
+            shouldClear : false
+        };
+
+        this.handleProductSelection = this.handleProductSelection.bind(this);
+        this.handleCustomerSelection = this.handleCustomerSelection.bind(this);
+        this.handleAllocateAction = this.handleAllocateAction.bind(this);
+        this.handleSuggestionSelection = this.handleSuggestionSelection.bind(this);
+        this.onSuccessAllocation = this.onSuccessAllocation.bind(this)
+
+        if (!Firebase.apps.length) {
+            Firebase.initializeApp(config);
+        }
+            
+        this.productCollectionRef = Firebase.firestore().collection('Product');
+        this.customerCollectionRef = Firebase.firestore().collection('Customer');
+
+    }
+
     componentDidMount() {
        this.productCollectionRef.onSnapshot(response => {
 
@@ -144,33 +169,6 @@ class AllocateItem extends Component {
         });
     }
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            products : [],
-            selectedProduct : {},
-            customers : [],
-            selectedCustomer : {},
-            filterText : ''
-        };
-
-        this.handleProductSelection = this.handleProductSelection.bind(this);
-        this.handleCustomerSelection = this.handleCustomerSelection.bind(this);
-        this.handleAllocateAction = this.handleAllocateAction.bind(this);
-        this.handleSearch = this.handleSearch.bind(this);
-        this.handleSuggestionSelection = this.handleSuggestionSelection.bind(this);
-        this.onSuccessAllocation = this.onSuccessAllocation.bind(this)
-
-        if (!Firebase.apps.length) {
-            Firebase.initializeApp(config);
-        }
-            
-        this.productCollectionRef = Firebase.firestore().collection('Product');
-        this.customerCollectionRef = Firebase.firestore().collection('Customer');
-
-    }
-
     handleProductSelection = (event) => {
         let product =  event.target.value;
         this.setState({
@@ -200,7 +198,6 @@ class AllocateItem extends Component {
             let customerId = this.state.selectedCustomer.id
 
             if (isEmpty(productData) === false) {
-       
 
                 let fbRef = this.customerCollectionRef.doc(customerId).collection("AllocatedItem").doc(productId);
                 
@@ -219,13 +216,7 @@ class AllocateItem extends Component {
 
     onSuccessAllocation = (event) => {
         console.log("onSuccessAllocation ",event)
-    }
-
-
-    handleSearch = (event) => {
-        this.setState({
-            filterText : event.target.value
-        })
+        suggestionWithValue('');
     }
 
     handleSuggestionSelection = (suggestion) => {
@@ -249,50 +240,35 @@ class AllocateItem extends Component {
             <div className="App">
                 
                 <div className="LeftPanel"> 
-                    <br/>
                     <h2> Product </h2>
                     <br/>
 
-                    {/* <select name="product" onChange={this.handleProductSelection}>  
-                            <option value="SelectProduct">Select Product</option>
-                            <ItemList products={this.state.products} />
-                    </select>
-                    <br />
-                    <br />
-                    <ShowProductDetail products={this.state.products} selectedProduct={this.state.selectedProduct}  /> */}
+                    <Suggestion 
+                    products={this.state.products} 
+                    onSuggestionSelection={this.handleSuggestionSelection} 
+                    placeholder="Search Product or Product Category Here !!" 
+                    />
 
-
-                    {/* <input type="text" className="searchBox" placeholder="Search product here !!" onChange={this.handleSearch}/>
-                    <br/> */}
-                    <Suggestion products={this.state.products} onSuggestionSelection={this.handleSuggestionSelection} placeholder="Search Product or Product Category Here !!" />
-
-                
                 </div>
 
                 <div className="RightPanel"> 
-                    <br/>
                     <h2> Customer </h2>
                     <br/>
                      
-                    <Suggestion customers={this.state.customers} onSuggestionSelection={this.handleSuggestionSelection} placeholder="Search Customer Here !!" />
-
-                     
-                     {/* <select onChange={this.handleCustomerSelection} >
-                        <option value="SelectCustomer">Select Customer</option>
-                        <CustomerList customers={this.state.customers} />
-                    </select>
-                    
-                    <br />
-                    <br />
-                    <ShowCustomerDetails  selectedCustomer={this.state.selectedCustomer} customers={this.state.customers}/> */}
+                    <Suggestion 
+                    customers={this.state.customers} 
+                    onSuggestionSelection={this.handleSuggestionSelection} 
+                    placeholder="Search Customer Here !!" 
+                    />
                 </div>
-                <DisplayDetail product={this.state.selectedProduct} customer={this.state.selectedCustomer}  onAllocateClick={this.handleAllocateAction} /> 
-                
-            <br/>
 
-            <br/>
-
+                    <DisplayDetail 
+                    product={this.state.selectedProduct} 
+                    customer={this.state.selectedCustomer}  
+                    onAllocateClick={this.handleAllocateAction} 
+                    /> 
                 
+                <br/>
             
             </div>
         );
@@ -328,7 +304,9 @@ class Suggestion extends React.Component {
         this.state = {
             value: '',
             suggestions: []
-        };    
+        };
+
+        suggestionWithValue = suggestionWithValue.bind(this)    
     }
 
     handleSuggestionSelection = (event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) => {
@@ -368,11 +346,10 @@ class Suggestion extends React.Component {
 
         const { value, suggestions } = this.state;
         const inputProps = {
-        placeholder: this.props.placeholder,
-        value,
-        onChange: this.onChange
-        };
-
+            placeholder: this.props.placeholder,
+            value,
+            onChange: this.onChange
+        }; 
 
         return (
             <div className="container">
@@ -384,10 +361,30 @@ class Suggestion extends React.Component {
                     renderSuggestion={renderSuggestion}
                     inputProps={inputProps}
                     onSuggestionSelected={this.handleSuggestionSelection}
+                    ref="autosuggest"
                 />
             </div>
         );
     }
+}
+
+function suggestionWithValue(newValue) {
+    
+    console.log(this.state.value)
+
+    this.refs.autosuggest.props.inputProps.value = '';
+    this.refs.autosuggest.input.value = '';
+    // this.refs.autosuggest.input.focus();
+
+    // this.setState({
+    //     value: newValue
+    // })
+
+        console.log(this.state.value)
+
+    console.log(this.props)
+
+
 }
 
 function escapeRegexCharacters(str) {
