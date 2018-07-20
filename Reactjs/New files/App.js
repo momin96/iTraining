@@ -9,8 +9,7 @@ import 'firebase/firestore'
 //https://firebase.google.com/support/guides/firebase-web
 // npm install --save react-router-dom
 // https://hackernoon.com/simple-guide-to-creating-a-single-page-app-with-react-router-6b6f709a2e3f
- 
-
+  
 
 class App extends Component {
 
@@ -39,6 +38,7 @@ componentDidMount () {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleClear = this.handleClear.bind(this);
 
     // For file upload, TODO: Need to refactor
     this.fileChangedHandler = this.fileChangedHandler.bind(this);
@@ -50,6 +50,20 @@ componentDidMount () {
 
   handleChange(event) {
     this.setState({value: event.target.value});
+  }
+
+  handleClear = (event) => {
+
+    this.setState({
+      itemCategory:'',
+      itemName:'',
+      itemDesc:'',
+      itemQty:'',
+      itemPrice:'',
+      itemMisc:'',
+      itemCode:''
+    })
+
   }
 
   handleSubmit = (event) => {
@@ -130,18 +144,16 @@ componentDidMount () {
       return (
         <div className="App">
 
-        <p> <input className="InputBox" type="text" name="itemName" placeholder="Enter product name" value={this.state.itemName} onChange={e => this.handleInputChange(e)}/> </p>
-        <p> <input className="InputBox" type="text" name="itemCategory" placeholder="Enter category of product" value={this.state.itemCategory} onChange={e => this.handleInputChange(e)} /> </p>
-        <p> <input className="InputBox" type="text" name="itemDesc"  placeholder="Enter product descrption" value={this.state.itemDesc} onChange={e => this.handleInputChange(e)} /> </p>
-        <p> <input className="InputBox" type="text" name="itemQty" placeholder="Enter quantity"  value={this.state.itemQty} onChange={e => this.handleInputChange(e)}/> </p>
-        <p> <input className="InputBox" type="text" name="itemPrice" placeholder="Enter product's price" value={this.state.itemPrice} onChange={e => this.handleInputChange(e)} /> </p>
-        <p> <input className="InputBox" type="text" name="itemMisc" placeholder="Enter product's related any other info " value={this.state.itemMisc}onChange={e => this.handleInputChange(e)} /> </p>
-        <p> 
-        {/* <input className="InputBox" type="file" onChange={this.fileChangedHandler} placeholder="Select Image" /> 
-          <button onClick={this.uploadHandler}>Upload!</button> */}
-        </p>
+        <p> <input className="InputBox" type="text"  name="itemName" placeholder="Enter product name" value={this.state.itemName} onChange={e => this.handleInputChange(e)}/> </p>
+        <p> <input className="InputBox" type="text"  name="itemCategory" placeholder="Enter category of product" value={this.state.itemCategory} onChange={e => this.handleInputChange(e)} /> </p>
+        <p> <input className="InputBox" type="text"  name="itemDesc"  placeholder="Enter product descrption" value={this.state.itemDesc} onChange={e => this.handleInputChange(e)} /> </p>
+        <p> <input className="InputBox" type="text"  name="itemQty" placeholder="Enter quantity"  value={this.state.itemQty} onChange={e => this.handleInputChange(e)}/> </p>
+        <p> <input className="InputBox" type="text"  name="itemPrice" placeholder="Enter product's price" value={this.state.itemPrice} onChange={e => this.handleInputChange(e)} /> </p>
+        <p> <input className="InputBox" type="text"  name="itemMisc" placeholder="Enter product's related any other info " value={this.state.itemMisc}onChange={e => this.handleInputChange(e)} /> </p>
 
         <button className="SubmitButton" onClick={this.handleSubmit}>Submit</button>
+        <button className="SubmitButton" onClick={this.handleClear}>Clear </button>
+
 
         </div>
       );
