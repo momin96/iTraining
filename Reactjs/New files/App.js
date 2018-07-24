@@ -139,13 +139,13 @@ class App extends Component {
 
       var dict = {
         "itemName" : name,
-        "itemDesc" : desc,
-        "itemCategory": category,
-        "itemPrice" : price,
-        "itemQty" : qty,
+        "itemDescription" : desc,
+        "itemCatagory": category,
+        "itemUnitPrice" : price,
+        "itemQuantity" : qty,
         "itemMisc" : misc,
         "itemCode" : code,
-        "itemImageURL" : imageURL
+        "itemThumbnailURL" : imageURL
       }
 
       this.productCollectionRef.add(
