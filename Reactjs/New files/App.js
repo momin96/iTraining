@@ -1,7 +1,6 @@
 import * as Firebase from 'firebase';
 import React, { Component } from 'react';
-
-  // import logo from './logo.svg';
+import { CloudinaryContext, Transformation, Image } from 'cloudinary-react';
 import './App.css';
 import 'firebase/firestore'
 
@@ -9,16 +8,26 @@ import 'firebase/firestore'
 //https://firebase.google.com/support/guides/firebase-web
 // npm install --save react-router-dom
 // https://hackernoon.com/simple-guide-to-creating-a-single-page-app-with-react-router-6b6f709a2e3f
-  
+ 
+
+// npm install cloudinary-react --save
+// https://cloudinary.com/documentation/react_integration
+
 
 class App extends Component {
 
-componentDidMount () {
-  if (!Firebase.apps.length) {
-        Firebase.initializeApp(config);
+  componentDidMount () {
+    if (!Firebase.apps.length) {
+          Firebase.initializeApp(config);
+    }
+    this.productCollectionRef = Firebase.firestore().collection('Product');
+
+     const script = document.createElement("script");
+
+      script.src = "https://widget.cloudinary.com/global/all.js";
+      script.type = 'text/javascript';
+      document.body.appendChild(script);
   }
-  this.productCollectionRef = Firebase.firestore().collection('Product');
-}
 
   constructor(props) {
     super(props);
@@ -39,10 +48,6 @@ componentDidMount () {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClear = this.handleClear.bind(this);
-
-    // For file upload, TODO: Need to refactor
-    this.fileChangedHandler = this.fileChangedHandler.bind(this);
-    this.uploadHandler = this.uploadHandler.bind(this);
 
   }
 
@@ -122,18 +127,6 @@ componentDidMount () {
     }
   }
 
-
-  uploadHandler(event) {
-    console.log(this.state.selectedFile)
-  }
-
-  fileChangedHandler = (event) => {
-    const file = event.target.files[0];
-    this.setState({selectedFile: file});
-    console.log(file);
-    console.log(this.selectedFile);
-  }
-
   handleInputChange = (event) => {
     this.setState({
       [event.target.name] : event.target.value
@@ -149,8 +142,9 @@ componentDidMount () {
         <p> <input className="InputBox" type="text"  name="itemDesc"  placeholder="Enter product descrption" value={this.state.itemDesc} onChange={e => this.handleInputChange(e)} /> </p>
         <p> <input className="InputBox" type="text"  name="itemQty" placeholder="Enter quantity"  value={this.state.itemQty} onChange={e => this.handleInputChange(e)}/> </p>
         <p> <input className="InputBox" type="text"  name="itemPrice" placeholder="Enter product's price" value={this.state.itemPrice} onChange={e => this.handleInputChange(e)} /> </p>
-        <p> <input className="InputBox" type="text"  name="itemMisc" placeholder="Enter product's related any other info " value={this.state.itemMisc}onChange={e => this.handleInputChange(e)} /> </p>
-
+        <p> <input className="InputBox" type="text"  name="itemMisc" placeholder="Enter product's related any other info " value={this.state.itemMisc}onChange={e => this.handleInputChange(e)} /> </p>        
+        
+        <ImageUpload />
         <button className="SubmitButton" onClick={this.handleSubmit}>Submit</button>
         <button className="SubmitButton" onClick={this.handleClear}>Clear </button>
 
@@ -161,3 +155,47 @@ componentDidMount () {
   }
 
   export default App;
+
+
+class ImageUpload extends React.Component {
+  constructor (props) {
+    super(props);
+    this.state = {
+      // onFinish: props.onFinish
+    };
+    this.onUploadFinish = this.onUploadFinish.bind(this);
+  }
+
+  componentDidMount() {
+    document.getElementById("upload_widget_opener").addEventListener("click", () => {
+      global.window.cloudinary.openUploadWidget({
+          name: 'viatech', // cloud_
+          upload: 'mfhwgw6g' // _preset
+        },
+        (error, result) => {
+          this.onUploadFinish(error, result)
+        }
+      );
+    }, false);
+  }
+
+  onUploadFinish(error, result) {
+    console.log("onUploadFinish error= ", error,  "result = ", result)
+    if(error) {
+      alert("Some error occured ",error);
+      return;
+    }
+    else {
+      alert("Image uploaded succesfully");
+    }
+  }
+
+  render() {
+    return (
+
+      <div>
+       <button id="upload_widget_opener">Upload Image</button>
+   </div>
+    );
+  }
+}
