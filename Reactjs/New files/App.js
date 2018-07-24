@@ -27,34 +27,68 @@ class App extends Component {
       script.src = "https://widget.cloudinary.com/global/all.js";
       script.type = 'text/javascript';
       document.body.appendChild(script);
+
+
+        document.getElementById("upload_widget_opener").addEventListener("click", () => {
+          global.window.cloudinary.openUploadWidget({
+              name: 'viatech', //cloud_
+              preset: 'mfhwgw6g', //upload_
+              folder: 'Item'
+            },
+            (error, result) => {
+              this.onUploadFinish(error, result)
+            }
+          );
+        }, false);
   }
 
   constructor(props) {
     super(props);
 
     this.state = {
-        value: '',
         itemName:'Apple ',
         itemCategory:'Fruit',
         itemDesc:'An Apple a day keeps, doctor away',
         itemQty:'6',
         itemPrice:'12.5',
         itemMisc:'I like Apple, & its product',
-        itemCode:''
+        itemCode:'',
+        imageURL:''
     };
-
-    this.selectedFile = {value: ''};
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClear = this.handleClear.bind(this);
+    this.onUploadFinish = this.onUploadFinish.bind(this);
 
   }
 
-  state = {selectedFile: null};
+  // https://res.cloudinary.com/viatech/image/upload/v1532432302/Item/ivsakm66sdfcacbxjfza.jpg
+  // https://res.cloudinary.com/viatech/image/upload/v1530357102/Item/5.jpg
+ 
+    onUploadFinish(error, result) {
+        console.log("onUploadFinish error= ", error,  "result = ", result)
+        if(error) {
+            alert("Some error occured ",error);
+            return;
+        }
+        else {
+            // { thumbnail_url
+            // url
+            // secure_url }
+            console.log("result ",result);
+            let res = result[0];
+
+            console.log("baseURL ",res.thumbnail_url);
+            this.setState({
+              imageURL:res.thumbnail_url
+            })
+            alert("Image uploaded succesfully");
+        }
+    }
 
   handleChange(event) {
-    this.setState({value: event.target.value});
+      this.setState({value: event.target.value});
   }
 
   handleClear = (event) => {
@@ -66,7 +100,8 @@ class App extends Component {
       itemQty:'',
       itemPrice:'',
       itemMisc:'',
-      itemCode:''
+      itemCode:'',
+      imageURL:''
     })
 
   }
@@ -79,7 +114,7 @@ class App extends Component {
     var qty = Number(this.state.itemQty);
     var desc = this.state.itemDesc;
     var misc = this.state.itemMisc;
-
+    let imageURL = this.state.imageURL
 
     if (name && category &&  price && qty ) {
 
@@ -109,7 +144,8 @@ class App extends Component {
         "itemPrice" : price,
         "itemQty" : qty,
         "itemMisc" : misc,
-        "itemCode" : code
+        "itemCode" : code,
+        "itemImageURL" : imageURL
       }
 
       this.productCollectionRef.add(
@@ -143,11 +179,11 @@ class App extends Component {
         <p> <input className="InputBox" type="text"  name="itemQty" placeholder="Enter quantity"  value={this.state.itemQty} onChange={e => this.handleInputChange(e)}/> </p>
         <p> <input className="InputBox" type="text"  name="itemPrice" placeholder="Enter product's price" value={this.state.itemPrice} onChange={e => this.handleInputChange(e)} /> </p>
         <p> <input className="InputBox" type="text"  name="itemMisc" placeholder="Enter product's related any other info " value={this.state.itemMisc}onChange={e => this.handleInputChange(e)} /> </p>        
+        <div> <button id="upload_widget_opener">Upload Image</button> </div>
+        <p></p>
         
-        <ImageUpload />
         <button className="SubmitButton" onClick={this.handleSubmit}>Submit</button>
         <button className="SubmitButton" onClick={this.handleClear}>Clear </button>
-
 
         </div>
       );
@@ -155,47 +191,3 @@ class App extends Component {
   }
 
   export default App;
-
-
-class ImageUpload extends React.Component {
-  constructor (props) {
-    super(props);
-    this.state = {
-      // onFinish: props.onFinish
-    };
-    this.onUploadFinish = this.onUploadFinish.bind(this);
-  }
-
-  componentDidMount() {
-    document.getElementById("upload_widget_opener").addEventListener("click", () => {
-      global.window.cloudinary.openUploadWidget({
-          name: 'viatech', // cloud_
-          upload: 'mfhwgw6g' // _preset
-        },
-        (error, result) => {
-          this.onUploadFinish(error, result)
-        }
-      );
-    }, false);
-  }
-
-  onUploadFinish(error, result) {
-    console.log("onUploadFinish error= ", error,  "result = ", result)
-    if(error) {
-      alert("Some error occured ",error);
-      return;
-    }
-    else {
-      alert("Image uploaded succesfully");
-    }
-  }
-
-  render() {
-    return (
-
-      <div>
-       <button id="upload_widget_opener">Upload Image</button>
-   </div>
-    );
-  }
-}
