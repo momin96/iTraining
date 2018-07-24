@@ -3,31 +3,18 @@ import * as Firebase from 'firebase';
 import Autosuggest from 'react-autosuggest';
 import 'firebase/firestore'
 
-function CustomerList(props) {
-
-    const list = props.customers.map(function(customer) {
-        
-        let id = customer["id"];
-        let data = customer["data"];
-        
-        let customerName = data["name"];
-        return <option key={id} value={id}>{customerName}</option>
-    });
+/*      
+    Keys 
     
-    return list;
-}
-
-function ItemList(props) { 
-    const finalList = props.products.map(function(doc) {
-        
-        let id = doc.id;
-        let name = doc.data.itemName;
-
-        return <option key={id} value={id} >{name}</option>
-    });
-
-    return finalList;
-} 
+        "itemName" : name,
+        "itemDescription" : desc,
+        "itemCatagory": category,
+        "itemUnitPrice" : price,
+        "itemQuantity" : qty,
+        "itemMisc" : misc,
+        "itemCode" : code,
+        "itemThumbnailURL" : imageURL
+*/   
 
 const ShowProductDetail = (props) => {
     if (!props.selectedProduct || props.selectedProduct === "SelectProduct") {
@@ -123,11 +110,10 @@ class AllocateItem extends Component {
             shouldClear : false
         };
 
-        this.handleProductSelection = this.handleProductSelection.bind(this);
-        this.handleCustomerSelection = this.handleCustomerSelection.bind(this);
         this.handleAllocateAction = this.handleAllocateAction.bind(this);
         this.handleSuggestionSelection = this.handleSuggestionSelection.bind(this);
         this.onSuccessAllocation = this.onSuccessAllocation.bind(this)
+        this.handleCancelAction = this.handleCancelAction.bind(this);
 
         if (!Firebase.apps.length) {
             Firebase.initializeApp(config);
@@ -169,21 +155,6 @@ class AllocateItem extends Component {
         });
     }
 
-    handleProductSelection = (event) => {
-        let product =  event.target.value;
-        this.setState({
-            selectedProduct : product,
-        });
-    }
-
-    handleCustomerSelection = (event) => {
-        let customerDoc = event.target.value;
-                
-        this.setState({
-            selectedCustomer: customerDoc
-        });
-    }
-
     handleAllocateAction = (event) => {
                 
         if (isEmpty(this.state.selectedCustomer) || 
@@ -212,6 +183,11 @@ class AllocateItem extends Component {
                 });
             }
         }
+    }
+
+    handleCancelAction = (event) => {
+        console.log("handleCancelAction ",event)
+
     }
 
     onSuccessAllocation = (event) => {
@@ -247,6 +223,7 @@ class AllocateItem extends Component {
                     products={this.state.products} 
                     onSuggestionSelection={this.handleSuggestionSelection} 
                     placeholder="Search Product or Product Category Here !!" 
+                    ref="pRef"
                     />
 
                 </div>
@@ -259,13 +236,15 @@ class AllocateItem extends Component {
                     customers={this.state.customers} 
                     onSuggestionSelection={this.handleSuggestionSelection} 
                     placeholder="Search Customer Here !!" 
+                    refs="cRef"
                     />
                 </div>
 
                     <DisplayDetail 
                     product={this.state.selectedProduct} 
                     customer={this.state.selectedCustomer}  
-                    onAllocateClick={this.handleAllocateAction} 
+                    onAllocateClick={this.handleAllocateAction}
+                    onCancelClick={this.handleCancelAction} 
                     /> 
                 
                 <br/>
@@ -277,17 +256,17 @@ class AllocateItem extends Component {
 
 export default AllocateItem;
 
-
 class DisplayDetail extends React.Component {
 
     render() {
 
         if ( isEmpty(this.props.product) === false && isEmpty(this.props.customer) === false) {
             return (
-                <div> Should {this.props.product.data.itemName} allocate to {this.props.customer.data.name} ?  
+                <div> Should allocate <i>{this.props.product.data.itemName} </i> to <i>{this.props.customer.data.name} </i> ?  
                     <br/>
                     <br/>
                     <button onClick={this.props.onAllocateClick} > Allocate </button>
+                    <button onClick={this.props.onCancelClick} > Cancel </button>
                 </div> 
             );
         }
@@ -306,7 +285,9 @@ class Suggestion extends React.Component {
             suggestions: []
         };
 
-        suggestionWithValue = suggestionWithValue.bind(this)    
+        suggestionWithValue = suggestionWithValue.bind(this)
+        
+        console.log("constructor",this)
     }
 
     handleSuggestionSelection = (event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) => {
@@ -318,6 +299,9 @@ class Suggestion extends React.Component {
         this.setState({
             value: newValue
         });
+
+        console.log("onChange",this.state.value)
+
     };
   
     onSuggestionsFetchRequested = ({ value }) => {
@@ -372,18 +356,17 @@ function suggestionWithValue(newValue) {
     
     console.log(this.state.value)
 
-    this.refs.autosuggest.props.inputProps.value = '';
-    this.refs.autosuggest.input.value = '';
+    // this.refs.autosuggest.props.inputProps.value = '';
+    // this.refs.autosuggest.input.value = '';
     // this.refs.autosuggest.input.focus();
 
-    // this.setState({
-    //     value: newValue
-    // })
+    this.setState({
+        value: newValue
+    })
 
         console.log(this.state.value)
 
     console.log(this.props)
-
 
 }
 
@@ -433,7 +416,5 @@ function isEmpty(obj) {
     }
     return true;
 }
-
-//8310034750
 
 //npm i react-autosuggest
