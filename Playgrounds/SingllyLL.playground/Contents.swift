@@ -23,6 +23,8 @@ protocol Linkable {
     func display()
     func insert(item val: T, atIndex index: Int)
     func item(atIndex index: Int) -> T?
+    
+    func reverse()
 }
 
 class SingllyLinkedList<T>: Linkable {
@@ -158,6 +160,51 @@ class SingllyLinkedList<T>: Linkable {
         
         return nil
     }
+    
+    func reverse() {
+        
+        var front = firstNode
+        var headPointer = front
+        var tailPointer = headPointer
+        var temp : Node<T>?
+        
+        while headPointer != nil {
+            
+            headPointer = headPointer?.next
+
+            temp = headPointer
+            
+            tailPointer?.next = temp
+            
+//            tailPointer?.next = nil
+
+            tailPointer = headPointer
+
+        }
+        
+        print("firstNode --> \(firstNode?.dataVal)    tailPointer --> \(tailPointer?.next?.next?.dataVal)    head --> \(headPointer?.next?.dataVal) ")
+
+    }
+}
+
+
+extension SingllyLinkedList: CustomStringConvertible {
+    var description: String {
+        var text = "["
+        
+        
+        var headPointer = firstNode
+        
+        while headPointer != nil {
+            text = text + "\(String(describing: headPointer?.dataVal))"
+            headPointer = headPointer?.next
+            if headPointer != nil {
+                text += ", "
+            }
+        }
+        text = text + "]"
+        return text
+    }
 }
 
 var sll = SingllyLinkedList<String>()
@@ -180,3 +227,8 @@ let item = sll.item(atIndex: index)
 if let i = item {
     print("Item at index \(index) is \(i)")
 }
+
+print(sll.description)
+
+//sll.reverse()
+//sll.display()
