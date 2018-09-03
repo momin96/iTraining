@@ -8,6 +8,22 @@ final class Node<T> {
     init(dataVal val: T) {
         dataVal = val
     }
+    
+    static func displayLinked(node : Node<T>?) {
+        
+        print("\n------ \(#function) ------")
+        
+        guard node != nil else {
+            print("Nil Node")
+            return
+        }
+        
+        var currPointer = node
+        while currPointer != nil {
+            print("\(String(describing: (currPointer?.dataVal)!))")
+            currPointer = currPointer?.next
+        }
+    }
 }
 
 protocol Linkable {
@@ -24,7 +40,7 @@ protocol Linkable {
     func insert(item val: T, atIndex index: Int)
     func item(atIndex index: Int) -> T?
     
-    func reverse()
+    func reverse() -> Node<T>?
 }
 
 class SingllyLinkedList<T>: Linkable {
@@ -161,29 +177,28 @@ class SingllyLinkedList<T>: Linkable {
         return nil
     }
     
-    func reverse() {
-        
-        var front = firstNode
-        var headPointer = front
-        var tailPointer = headPointer
-        var temp : Node<T>?
+    func reverse() -> Node<T>? {
+                
+        var headPointer = firstNode?.next
+        var tailPointer = firstNode
+        var aheadPointer : Node<T>?
         
         while headPointer != nil {
-            
-            headPointer = headPointer?.next
 
-            temp = headPointer
+            aheadPointer = headPointer?.next
             
-            tailPointer?.next = temp
+//            print("tail \(String(describing: tailPointer?.dataVal))  headed \(String(describing: headPointer?.dataVal)) , ahead \(String(describing: aheadPointer?.dataVal))")
             
-//            tailPointer?.next = nil
-
+            headPointer?.next = tailPointer
+            
             tailPointer = headPointer
 
+            headPointer = aheadPointer
         }
         
-        print("firstNode --> \(firstNode?.dataVal)    tailPointer --> \(tailPointer?.next?.next?.dataVal)    head --> \(headPointer?.next?.dataVal) ")
-
+        firstNode?.next = nil
+        
+        return tailPointer
     }
 }
 
@@ -205,6 +220,7 @@ extension SingllyLinkedList: CustomStringConvertible {
         text = text + "]"
         return text
     }
+    
 }
 
 var sll = SingllyLinkedList<String>()
@@ -214,8 +230,8 @@ sll.append(fromFront: "first")
 sll.append(fromFront: "second")
 sll.append(fromFront: "Third")
 sll.append(fromFront: "Forth")
-sll.insert(item: "Fifth", atIndex: 2)
-sll.insert(item: "Sixth", atIndex: 5)
+sll.insert(item: "Fifth", atIndex: 5)
+sll.insert(item: "Sixth", atIndex: 6)
 sll.insert(item: "seven", atIndex: 7)
 sll.insert(item: "nine", atIndex: 8)
 
@@ -230,5 +246,15 @@ if let i = item {
 
 print(sll.description)
 
-//sll.reverse()
+let reverseList = sll.reverse()
+
+
+//print("Reverse list \(reverseList?.dataVal as Any), front node \(String(describing: sll.firstNode?.next?.dataVal))")
 //sll.display()
+
+Node.displayLinked(node: reverseList)
+
+
+
+
+
